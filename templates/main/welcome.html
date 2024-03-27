@@ -1,0 +1,83 @@
+@extends('base.base')
+@section('content')
+
+<div class="welcome">
+
+    <a class="<?php if($user[0]->role_id != 3) echo 'tag-none';?>" href="{{ route ('home_create') }}"><p
+            class="add-order-btn">Добавить</p></a>
+
+    <div class="table">
+        <table id="customers" class="main-table">
+            <tr>
+                <th>#</th>
+                <th>Рег №</th>
+                <th>Дата регистрации</th>
+                <th>Тип РКК</th>
+                <th>Вид документа</th>
+                <th>Корреспондент</th>
+                <th>Срок</th>
+                <th>Дней</th>
+                <th><i class="fa fa-spin fa-gear"></i></th>
+            </tr>
+            @foreach ($orders as $order)
+
+            <?php $farq = abs(strtotime($order['srok']) - strtotime(date("Y-m-d")));$yil = floor($farq / (365 * 60 * 60 * 24));$oy = floor(($farq - $yil * 365 * 60 * 60 * 24) / (30 * 60 * 60 * 24));$kun = floor(($farq - $yil * 365 * 60 * 60 * 24 - $oy * 30 * 60 * 60 * 24) / (60 * 60 * 24)); ?>
+
+            <tr class="<?php if($order['status']){ echo 'clgreen'; } else {if(strtotime($order['srok'])-strtotime(date("
+                Y-m-d
+            ")) < 0) echo 'clred'; if(strtotime($order['srok'])-strtotime(date("Y-m-d")) > 0 && $kun==1) echo
+            'cltomato';}?>">
+
+            <td class="td-id"><a href="{{ route('file', $order['id']) }}">{{ $order['id'] }}</a></td>
+
+            <td>{{ $order['reg_nomer'] }}</td>
+
+            <td class="td-doc_date">{{ $order['doc_date'] }}</td>
+
+            <td class="td-tipconcart">{{ $order['tipconcart'] }}</td>
+
+            <td class="td-tip_doc">{{ $order['tip_doc'] }}</td>
+
+            <td class="td-korrespond">{{ $order['korrespond'] }}</td>
+
+            <td class="srok-doc">{{ $order['srok'] }}</td>
+
+            <td><?php if ($order['status']) {
+                                echo '<i class="fa fa-check"></i>';
+                } else {
+                if (strtotime($order['srok']) - strtotime(date("Y-m-d")) < 0) echo '-';
+                echo $kun + 1;
+                } ?>
+            </td>
+
+            <td class="<?php if($user[0]->role_id == 3) echo 'td-edit'; else echo 'tag-none';?>"><a
+                    href="{{ route('home_edit', $order['id']) }}"><i
+                    class="order-editor fa fa-edit"></i></a><i class="order-remover fa fa-trash"></i>
+            </td>
+            </tr>
+
+            @endforeach
+
+        </table>
+
+        <form class="delete-order" method="post" action="{{ route ('home_delete') }}" enctype="multipart/form-data">
+
+            @csrf
+            <input name="id" id="delete_id" type="text" readonly><br><br>
+
+            <nav>
+                <button type="submit">Удалить</button>
+
+                <a href=""><p>Закрыть</p></a>
+            </nav>
+
+        </form>
+    </div>
+
+</div>
+
+<br>
+
+@yield('home')
+
+@endsection

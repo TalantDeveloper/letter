@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="back-effect">
+    <table id="customers" class="main-table" readonly>
+        <tr>
+            <th>#</th>
+            <th>Рег №</th>
+            <th>Дата регистрации</th>
+            <th>Тип РКК</th>
+            <th>Вид документа</th>
+            <th>Корреспондент</th>
+            <th>Срок</th>
+            <th>Дней</th>
+            <th><i class="fa fa-spin fa-gear"></i></th>
+        </tr>
+        @foreach ($orders as $data)
+        <tr>
+            <td class="td-id">{{ $data->id }}</td>
+            <td>{{ $data->doc_nomer }}/{{ $data->reg_nomer }}</td>
+            <td class="td-doc_date">{{ $data->doc_date }}</td>
+            <td class="td-tipconcart">{{ $data->tipconcart }}</td>
+            <td class="td-tip_doc">{{ $data->tip_doc }}</td>
+            <td class="td-korrespond">{{ $data->korrespond }}</td>
+            <td class="srok-doc">{{ $data->srok }}</td>
+            <td>{{ $data->srok }}</td>
+            <td class="td-edit"><a href="{% url 'home-update' data.id %}"><i class="order-editor fa fa-edit"></i></a><i
+                    class="order-remover fa fa-trash"></i></td>
+        </tr>
+        @endforeach
+    </table>
+    <div class="order-control">
+        <form class="order_create" action="{{ route ('home_update') }}" method="post" enctype="multipart/form-data">
+            @csrf
+            <a href="{{ route('index', '3') }}"><i class="close fa fa-remove"></i></a>
+            <span>
+                <p>#:</p>
+                <input name="id" type="text" value="{{ $order[0]->id }}" readonly>
+            </span>
+            <nav>
+                <span>
+                    <p>Тип контрольной карточки:</p>
+                    <select name="tipconcart" id="tipconcart">
+                        <option
+                                @if ($order[0]->tipconcart == 16)
+                            selected="selected"
+                        @endif value="16">16</option>
+                        <option
+                                @if ($order[0]->tipconcart == 26)
+                            selected="selected"
+                        @endif value="26">26</option>
+                        <option
+                                @if ($order[0]->tipconcart == 36)
+                            selected="selected"
+                        @endif value="36">36</option>
+                        <option
+                                @if ($order[0]->tipconcart == 46)
+                            selected="selected"
+                        @endif value="46">46</option>
+                        <option
+                                @if ($order[0]->tipconcart == "ТДСИ фуқаролари")
+                            selected="selected"
+                        @endif value="ТДСИ фуқаролари">ТДСИ фуқаролари</option>
+
+                    </select>
+                </span>
+            </nav>
+            <hr>
+            <nav>
+                <span>
+                    <p><i class="fa fa-users"></i> Группа:</p>
+                    <select name="guruh" id="update_order_guruh" value="{{ $order[0]->guruh }}">
+                        @foreach ($org_group as $data)
+                            <option
+                                    @if ($order[0]->guruh == $data->id)
+                                selected="selected"
+                            @endif value="{{ $data->id }}">{{ $data->name }}</option>
+                        @endforeach
+                    </select>
+                </span>
+                <br>
+                <span>
+                    <p>Корреспондент:</p>
+                    <ul class="select-lists">
+                    	<i class="fa fa-angle-down"></i>
+                    	<input name="korrespond" value="{{ $order[0]->korrespond }}" readonly/>
+                    	<nav>
+                    		@foreach ($org as $data)
+                    			<li><em style="display:none">{{ $data->group_id }}</em><strong
+                                        style="display:none">{{ $data->id }}</strong><b
+                                        style="font-weight:normal">{{ $data->name }}</b></li>
+                        	@endforeach
+                    	</nav>
+                	</ul>
+                </span>
+            </nav>
+            <hr>
+            <nav>
+                <span>
+                    <p>Тип документа:</p>
+                    <select name="tip_doc">
+<option value="{{ $order[0]->tip_doc }}">{{ $order[0]->tip_doc }}</option>
+<option class="tag-none 1b" value="Ўзбекистон Республикаси Пpезидентининг фаpмони">Ўзбекистон Республикаси Пpезидентининг фаpмони</option>
+<option class="tag-none 1b" value="Ўзбекистон Республикаси Пpезиденти фаpмойиш">Ўзбекистон Республикаси Пpезиденти фаpмойиш</option>
+<option class="tag-none 1b" value="Ўзбекистон Республикасиниг Конуни">Ўзбекистон Республикасиниг Конуни</option>
+<option class="tag-none 1b" value="Ўзбекистон Республикаси Олий Мажлисининг Каpоpи">Ўзбекистон Республикаси Олий Мажлисининг Каpоpи</option>
+<option class="tag-none 1b" value="ЎР Президентининг  протокол топшириги">ЎР Президентининг  протокол топшириги</option>
+<option class="tag-none 1b" value="ЎР Президентининг топшириги">ЎР Президентининг топшириги</option>
+<option class="tag-none 1b" value="ЎР Президентининг огиз топшириги">ЎР Президентининг огиз топшириги</option>
+<option class="tag-none 1b" value="ЎР Пpезиденти Аппаpатининг топшиpиги">ЎР Пpезиденти Аппаpатининг топшиpиги</option>
+<option class="tag-none 1b" value="Ўзбекистон Респуб-си Олий Мажлисининг фармоиши">Ўзбекистон Респуб-си Олий Мажлисининг фармоиши</option>
+<option class="tag-none 1b" value="Ўзбекистон Респуб-си Олий Мажлисининг хужжатлаpи">Ўзбекистон Респуб-си Олий Мажлисининг хужжатлаpи</option>
+<option class="tag-none 1b"
+        value="ЎР Олий Мажлиси Кўмиталаpнинг хужжатлаpи">ЎР Олий Мажлиси Кўмиталаpнинг хужжатлаpи</option>
+<option class="tag-none 1b" value="Ўзбекистон Республикаси Хисоб Палатаси топшиpиги">Ўзбекистон Республикаси Хисоб Палатаси топшиpиги</option>
+<option class="tag-none 1b" value="Ўзбекистон Республикаси Президентининг Карори">Ўзбекистон Республикаси Президентининг Карори</option>
+<option class="tag-none 1b" value="ЎР Олий Мажлисининг Фан, таълим, маданият ва спорт масалалари Кўмитаси">ЎР Олий Мажлисининг Фан, таълим, маданият ва спорт масалалари Кўмитаси</option>
+<option class="tag-none 1b" value="Ўзбекистон Республикаси Олий Мажлиси Сенатининг Девони">Ўзбекистон Республикаси Олий Мажлиси Сенатининг Девони</option>
+<option class="tag-none 2b" value="Вазиpлаp Махкамаси мажлиси хужжатлаpининг лойихаси">Вазиpлаp Махкамаси мажлиси хужжатлаpининг лойихаси</option>
+<option class="tag-none 2b" value="Узб. Республикаси Бош вазиpининг топшиpиги">Узб. Республикаси Бош вазиpининг топшиpиги</option>
+<option class="tag-none 2b" value="Ўзбекистон Республикаси ВМ буйpуги">Ўзбекистон Республикаси ВМ буйpуги</option>
+<option class="tag-none 2b"
+        value="Ўзбекистон Республикаси ВМ мажлис баёни">Ўзбекистон Республикаси ВМ мажлис баёни</option>
+<option class="tag-none 2b" value="Бош Вазир уринбосарининг топшириги">Бош Вазир уринбосарининг топшириги</option>
+<option class="tag-none 2b" value="Бош вазиp хузуpида ўтказилган мажлиснинг баёни">Бош вазиp хузуpида ўтказилган мажлиснинг баёни</option>
+<option class="tag-none 2b" value="Пpотокол заседаний пpезидиума КМ">Пpотокол заседаний пpезидиума КМ</option>
+<option class="tag-none 2b" value="Ахборотнома">Ахборотнома</option>
+<option class="tag-none 2b" value="ЎР ВМ комплекс мажлиснинг баёни">ЎР ВМ комплекс мажлиснинг баёни</option>
+<option class="tag-none 2b" value="ЎР ВМ котибият (департамент, бўлим) мажлиснинг баёни">ЎР ВМ котибият (департамент, бўлим) мажлиснинг баёни</option>
+<option class="tag-none 2b"
+        value="ЎР ВМ карори бажарилиши назорат режаси">ЎР ВМ карори бажарилиши назорат режаси</option>
+<option class="tag-none 2b"
+        value="ЎР ВМ фармойиши бажарилиши назорат режаси">ЎР ВМ фармойиши бажарилиши назорат режаси</option>
+<option class="tag-none 2b" value="ЎР Пpезидентининг фаpмони бажарилиши назорат режаси">ЎР Пpезидентининг фаpмони бажарилиши назорат режаси</option>
+<option class="tag-none 2b" value="Телефонограмма">Телефонограмма</option>
+<option class="tag-none 2b" value="Топширик ВМ">Топширик ВМ</option>
+<option class="tag-none 2b" value="ВМ иш режаси">ВМ иш режаси</option>
+<option class="tag-none 2b" value="ВМ дастури">ВМ дастури</option>
+<option class="tag-none 2b" value="Хат">Хат</option>
+<option class="tag-none 2b" value="Узбекистон Республикаси ВМ карори">Узбекистон Республикаси ВМ карори</option>
+<option class="tag-none 2b" value="Узбекистон Республикаси ВМ фармойиши">Узбекистон Республикаси ВМ фармойиши</option>
+<option class="tag-none 2b" value="ВМ назорат режаси">ВМ назорат режаси</option>
+<option class="tag-none 2b" value="Хайъат каролари">Хайъат каролари</option>
+<option class="tag-none 2b" value="Кушма карорлар">Кушма карорлар</option>
+<option class="tag-none 3b" value="Хат">Хат</option>
+<option class="tag-none 3b" value="ТДСИ Ректорининг буйруги">ТДСИ Ректорининг буйруги</option>
+<option class="tag-none 3b" value="Институт кенгашининг карори">Институт кенгашининг карори</option>
+<option class="tag-none 3b" value="Ректорат кенгашининг карори">Ректорат кенгашининг карори</option>
+<option class="tag-none 4b" value="Хат">Хат</option>
+<option class="tag-none 4b" value="Таклиф килмок">Таклиф килмок</option>
+<option class="tag-none 4b" value="Ариза">Ариза</option>
+<option class="tag-none 4b" value="Шикоят">Шикоят</option>
+<option class="tag-none 4b" value="Мурожаат">Мурожаат</option>
+<option class="tag-none 4b" value="Хайъат каролари">Хайъат каролари</option>
+<option class="tag-none 4b" value="Кушма карорлар">Кушма карорлар</option>
+<option class="tag-none 4b" value="Буйрук">Буйрук</option>
+<option class="tag-none 4b" value="Факсограмма">Факсограмма</option>
+<option class="tag-none 4b" value="Факс">Факс</option>
+<option class="tag-none 4b" value="Курсатма Хати">Курсатма Хати</option>
+<option class="tag-none 4b" value="Алока Хати">Алока Хати</option>
+<option class="tag-none 4b" value="Модемнома">Модемнома</option>
+<option class="tag-none 4b" value="Модемограмма">Модемограмма</option>
+<option class="tag-none 4b" value="Жадвал">Жадвал</option>
+<option class="tag-none 4b" value="Саволнома">Саволнома</option>
+<option class="tag-none 4b" value="Хабарнома">Хабарнома</option>
+<option class="tag-none 4b" value="Низом">Низом</option>
+<option class="tag-none 4b" value="Саволнома">Саволнома</option>
+<option class="tag-none 4b" value="Ички буйрук">Ички буйрук</option>
+                    </select>
+                </span>
+                <br>
+                <span>
+                    <p>Дата регистрации:</p>
+                    <p class="tag-none" id="date_reg0">{{ $order[0]->reg_date }}</p>
+                    <input id="date_reg" name="reg_date" type="datetime-local"/>
+                </span>
+                <br>
+                <span>
+                    <p>Регистрационный номер:</p>
+                    <input name="reg_nomer" type="text" value="{{ $order[0]->reg_nomer }}"/>
+                </span>
+                <br>
+                <span>
+                    <p>Дата документа:</p>
+                    <p class="tag-none" id="date_doc0">{{ $order[0]->doc_date }}</p>
+                    <input id="date_doc" name="doc_date" type="datetime-local"/>
+                </span>
+                <br>
+                <span>
+                    <p>Номер документа:</p>
+                    <input name="doc_nomer" type="text" value="{{ $order[0]->doc_nomer }}"/>
+                </span>
+                <br>
+                <p>Краткое содержание:</p>
+                <textarea name="kratkoy_soder" cols="30" rows="10">{{ $order[0]->kratkoy_soder }}</textarea>
+                <hr>
+            </nav>
+            <nav>
+                <label class="controlnoe" for="controlnoe"><input type="checkbox" id="controlnoe" @if ($order[0]->kontrolnoy
+                    == "on") checked @endif > Контрольное <input style="opacity: 0;" id="controlnoe_val"
+                                                                 name="kontrolnoy" type="text" value="off"></label>
+                <br><br>
+                <span>
+                    <p class="tag-none" id="srok0">{{ $order[0]->srok }}</p>
+                    <p>Срок: </p><input id="srok" name="srok" type="datetime-local" value="{{ $order[0]->srok }}"/>
+                </span>
+                <br>
+                <p>Резолюция:</p>
+                <textarea name="rezolyutsiya" cols="30" rows="10">{{ $order[0]->rezolyutsiya }}</textarea>
+                <br><br>
+                <span>
+                    <p><b>Автор резолюции:</b></p>
+                    <select name="avtor_rezolyutsiya" value="{{ $order[0]->avtor_rezolyutsiya }}">
+                        <option @if ($order[0]->avtor_rezolyutsiya == "Хайдаров Нодиржон Қодирович") selected="selected" @endif value="Хайдаров Нодиржон Қодирович">Хайдаров Нодиржон Қодирович</option>
+                        <option @if ($order[0]->avtor_rezolyutsiya == "Баймаков Сайфиддин Рисбаевич") selected="selected" @endif value="Баймаков Сайфиддин Рисбаевич">Баймаков Сайфиддин Рисбаевич</option>
+                        <option @if ($order[0]->avtor_rezolyutsiya == "Шомуродов Қахрамон Эркинович") selected="selected" @endif value="Шомуродов Қахрамон Эркинович">Шомуродов Қахрамон Эркинович</option>
+                        <option @if ($order[0]->avtor_rezolyutsiya == "Ярмухамедов Бехзод Хамидович") selected="selected" @endif value="Ярмухамедов Бехзод Хамидович">Ярмухамедов Бехзод Хамидович</option>
+                        <option @if ($order[0]->avtor_rezolyutsiya == "Юнусов Равшан Алимжанович") selected="selected" @endif value="Юнусов Равшан Алимжанович">Юнусов Равшан Алимжанович</option>
+                        <option @if ($order[0]->avtor_rezolyutsiya == "Ахмедов Саидазиз Пўлатович") selected="selected" @endif value="Ахмедов Саидазиз Пўлатович">Ахмедов Саидазиз Пўлатович</option>
+                    </select>
+                </span>
+                <br>
+                <span>
+                    <p>Вид решения:</p>
+                    <select name="vid_resheniya" value="{{ $order[0]->vid_resheniya }}">
+                        <option @if ($order[0]->vid_resheniya == "Анонимлиги тасдиқланди") selected="selected" @endif value="Анонимлиги тасдиқланди">Анонимлиги тасдиқланди</option>
+                        <option @if ($order[0]->vid_resheniya == "Қайтарилди") selected="selected" @endif value="Қайтарилди">Қайтарилди</option>
+                        <option @if ($order[0]->vid_resheniya == "Қондирилди ва чоралар кўрилди") selected="selected" @endif value="Қондирилди ва чоралар кўрилди">Қондирилди ва чоралар кўрилди</option>
+                        <option @if ($order[0]->vid_resheniya == "Кўриб чиқилмоқда") selected="selected" @endif value="Кўриб чиқилмоқда">Кўриб чиқилмоқда</option>
+                        <option @if ($order[0]->vid_resheniya == "Малумот учун қабул қилинди") selected="selected" @endif value="Малумот учун қабул қилинди">Малумот учун қабул қилинди</option>
+                        <option @if ($order[0]->vid_resheniya == "Рад этилди") selected="selected" @endif value="Рад этилди">Рад этилди</option>
+                        <option @if ($order[0]->vid_resheniya == "Тегиш идоралар ва ҳокимятларга юборилган") selected="selected" @endif value="Тегиш идоралар ва ҳокимятларга юборилган">Тегиш идоралар ва ҳокимятларга юборилган</option>
+                        <option @if ($order[0]->vid_resheniya == "Тушунтирилди") selected="selected" @endif value="Тушунтирилди">Тушунтирилди</option>
+                        <option @if ($order[0]->vid_resheniya == "Ҳудудий идораларга юборилган") selected="selected" @endif value="Ҳудудий идораларга юборилган">Ҳудудий идораларга юборилган</option>
+                    </select>
+                </span>
+            </nav>
+            <nav>
+                <span class="save-del">
+                    <input type="submit" value="Сохранить">
+                </span>
+            </nav>
+            <hr>
+        </form>
+    </div>
+</div>
+</body>
+</html>
