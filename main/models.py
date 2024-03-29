@@ -86,26 +86,8 @@ class Letter(models.Model):
     type_solution = models.ForeignKey(TypeSolution, on_delete=models.SET_NULL, null=True, verbose_name="Yechim turi")
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+class File(models.Model):
+    file = models.FileField(upload_to=upload_file, verbose_name="File")
 
 
 
