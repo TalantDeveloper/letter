@@ -8,18 +8,22 @@
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
     <link rel="stylesheet" href="{% static 'css/icons/css/font-awesome.css' %}">
     <link rel="stylesheet" href="{% static 'css/icons/css/font-awesome.min.css' %}">
-    <script src="{% static 'static/scripts/jquery.js' %}"></script>
+    <script src="{% static 'js/jquery.js' %}"></script>
     <title>Electron hujjat almashish</title>
 
 </head>
 <body>
 <div class="container mini-admin">
     <header id="header">
-        <a href="{% url 'main:index' %}" style="color:#FFF;">
-            <nav><img src="{% static 'images/logo-wide.png' %}" alt="alt"/>
-                <p>E-Xat</p></nav>
+        <a href="{% url 'main:welcome' %}" style="color:#FFF;">
+            <nav>
+                <img src="{% static 'images/logo-wide.png' %}" alt="alt"/>
+                <p>
+                    E-Xat
+                </p>
+            </nav>
         </a>
-        <a href="{% url 'main:index' %}">
+        <a href="{% url 'main:welcome' %}">
             <p class="title">
                 <i class="fa fa-envelope"></i>
                 Платформа обмена информацией Ташкентского государственного стоматологического института
@@ -28,41 +32,34 @@
 
         <span>
             <a href="/">
-            <p class="title">
-                <em style="color:tomato" class="fa fa-sign-out">
-                </em>
-                Выход
-            </p>
-        </a>
+                <p class="title">
+                    <em style="color:tomato" class="fa fa-sign-out"></em>
+                    Выход
+                </p>
+            </a>
             |
-                <b>
-                    User name
-                </b>
+            <em>
+                <b>{{ center.user.username }}</b>
                 <br>
-                <em>
-                    User markaz
-                </em>
-            <img
-                    src="{% static 'images/user.png' %}" alt="/">
+                {{ center }}
+            </em>
+            <img src="{% static 'images/user.png' %}" alt="/">
         </span>
     </header>
     <div class="main">
         <div class="content">
             <div class="left-bar">
                 <ul class="data-sort">
-
-                    @if ($user[0]['id'] == 53 or $user[0]['id'] == 55)
                     <li class="data-sort-otdel">
                         <label for="radio02">
-                            <a href="{% url 'main:markaz' %}">
+                            <a href="{% url 'main:welcome' %}">
                                 Добавить отдел
                             </a>
                         </label>
                     </li>
-                    @endif
                     <li class="data-sort-sotrudnik">
                         <label for="radio01">
-                            <a href="{% url 'main:xodim' %}">
+                            <a href="{% url 'main:welcome' %}">
                                 Добавить сотрудника
                             </a>
                         </label>
@@ -70,21 +67,21 @@
                     <br>
                     <li class="data-sort-today">
                         <label for="radio1">
-                            <a href="{% url 'main:today' %}">
+                            <a href="{% url 'main:welcome' %}">
                                 Сегодния
                             </a>
                         </label>
                     </li>
                     <li>
                         <label for="radio2">
-                            <a href="{% url 'main:index' %}">
+                            <a href="{% url 'main:welcome' %}">
                                 Всего
                             </a>
                         </label>
                     </li>
                     <li>
                         <label for="radio3">
-                            <a class="clgreen" href="{% url 'main:finished' %}">
+                            <a class="clgreen" href="{% url 'main:welcome' %}">
                                 Выполненные
                             </a>
                         </label>
@@ -96,7 +93,7 @@
                     </li>
                     <li class="clred">
                         <label for="radio4">
-                            <a class="clred" href="{% url 'main:timeout' %}">
+                            <a class="clred" href="{% url 'main:welcome' %}">
                                 Просроченные
                             </a>
                         </label>
@@ -155,7 +152,7 @@
                     <hr style="border:none;border-bottom: 1px dashed #ccc;">
                     <br>
                     <li class="<?php if($user[0]->role_id != 3) echo 'none';?>">
-                        <a href="{% url 'main:hisobot' %}">
+                        <a href="{% url 'main:welcome' %}">
                             <p class="clprint">
                                 Выпустить отчет
                                 <i class="fa fa-print"></i>

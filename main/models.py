@@ -38,10 +38,10 @@ class Center(models.Model):
     update_at = models.DateTimeField(auto_now=True, verbose_name="O'zgartirilgan vaqt")
 
     def __str__(self):
-        return f"{self.short} - {self.name} - Xodim({self.user.first_name} {self.user.last_name})."
+        return f"{self.name}"
 
 
-class ControlCard(models.Model):
+class ControlCard(models.Model):  # Тип РКК
     name = models.CharField(max_length=256, verbose_name="Nazorat kartasi turi")
 
     create_at = models.DateTimeField(auto_now_add=True, verbose_name="Yaratilgan vaqt")

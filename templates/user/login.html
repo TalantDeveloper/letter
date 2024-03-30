@@ -1,6 +1,5 @@
-{% load static %}
-
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <title>Elektron hujjat almashish</title>
@@ -13,6 +12,7 @@
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="{% static 'fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
     <!--===============================================================================================-->
+    <link rel="shortcut icon" type="icon" href="{% static 'images/icons/favicon.ico' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/login/animate.css' %}">
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="{% static 'css/login/hamburgers.min.css' %}">
@@ -36,7 +36,7 @@
             <div class="login100-pic js-tilt" data-tilt>
                 <img src="{% static 'images/logotip.png' %}" alt="IMG">
             </div>
-            <form class="login100-form validate-form" action="{{ route('auth') }}" method="post">
+            <form class="login100-form validate-form" action="{% url 'main:login' %}" method="post">
                 {% csrf_token %}
                 <span class="login100-form-title">
 						Elektron xujjat almashuv platformasi
