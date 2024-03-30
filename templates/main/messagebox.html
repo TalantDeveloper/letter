@@ -1,0 +1,89 @@
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    .msg {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+    }
+
+    .msg::after {
+        content: "";
+        background: #fff;
+        opacity: 0.9;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+    }
+
+    .msg nav {
+        box-shadow: 0 0 7px #ccc;
+        border-radius: 2px;
+        padding: 25px;
+        position: relative;
+        background: #fff;
+        z-index: 1;
+        over-flow: hidden;
+    }
+
+    p {
+        font-size: 20px;
+    }
+
+    a {
+        display: flex;
+        justify-content: right;
+        text-decoration: none;
+    }
+
+    a p {
+        background: #20B2AA;
+        color: #fff;
+        padding: 7px 10px;
+        border-radius: 3px;
+        font-size: 18px;
+    }
+
+    hr {
+        border-top: 1px solid #20B2AA;
+        color: #20B2AA;
+    }
+
+    h4 {
+        background: #20B2AA;
+        padding: 10px;
+        color: #fff;
+        font-size: 18px;
+        margin: -25px -25px 25px -25px;
+    }
+</style>
+<section style="background-image: url(https://e-xat.tsdi.uz/static/images/bg.png);">
+    <div class="msg">
+        <nav>
+            <h4>
+                MessageBox
+            </h4>
+            <p>
+                Bugungi sanada sizda hech qanday buyruq mavjud emas...
+            </p>
+            <br>
+            <hr>
+            <br>
+            <p>
+                У вас нет заказов на сегодня...
+            </p>
+            <br>
+            <a href="{{ route('index') }}">
+                <p>
+                    Закрыть
+                </p>
+            </a>
+        </nav>
+    </div>
+</section>

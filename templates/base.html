@@ -1,29 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load static %}
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ asset('static/styles/main.css') }}">
-    <link rel="stylesheet" href="{{ asset('static/styles/icons/css/font-awesome.css') }}">
-    <link rel="stylesheet" href="{{ asset('static/styles/icons/css/font-awesome.min.css') }}">
-    <script src="{{ asset('static/scripts/jquery.js') }}"></script>
-    <title>Kabutar</title>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/icons/css/font-awesome.css' %}">
+    <link rel="stylesheet" href="{% static 'css/icons/css/font-awesome.min.css' %}">
+    <script src="{% static 'static/scripts/jquery.js' %}"></script>
+    <title>Electron hujjat almashish</title>
 
 </head>
 <body>
 <div class="container mini-admin">
     <header id="header">
-        <a href="{{ route('index') }}" style="color:#FFF;">
-            <nav><img src="{{ asset('static/images/logo-wide.png') }}" alt="alt"/>
+        <a href="{% url 'main:index' %}" style="color:#FFF;">
+            <nav><img src="{% static 'images/logo-wide.png' %}" alt="alt"/>
                 <p>E-Xat</p></nav>
         </a>
-        <a href="{{ route('index') }}"><p class="title"><i class="fa fa-envelope"></i>Платформа обмена информацией
-            Ташкентского государственного стоматологического института</p></a>
+        <a href="{% url 'main:index' %}">
+            <p class="title">
+                <i class="fa fa-envelope"></i>
+                Платформа обмена информацией Ташкентского государственного стоматологического института
+            </p>
+        </a>
 
-        <span><a href="/"><p class="title"><em style="color:tomato"
-                                               class="fa fa-sign-out"></em>Выход</p></a>|<p><b><?php echo session('user'); ?></b><br><em><?php echo session('markaz'); ?></em></p><img
-                src="{{ asset('static/images/user.png') }}" alt="/"></span>
+        <span>
+            <a href="/">
+            <p class="title">
+                <em style="color:tomato" class="fa fa-sign-out">
+                </em>
+                Выход
+            </p>
+        </a>
+            |
+                <b>
+                    User name
+                </b>
+                <br>
+                <em>
+                    User markaz
+                </em>
+            <img
+                    src="{% static 'images/user.png' %}" alt="/">
+        </span>
     </header>
     <div class="main">
         <div class="content">
@@ -31,43 +52,116 @@
                 <ul class="data-sort">
 
                     @if ($user[0]['id'] == 53 or $user[0]['id'] == 55)
-                    <li class="data-sort-otdel"><label for="radio02"><a href="{{ route('markaz') }}">Добавить
-                        отдел</a></label></li>
+                    <li class="data-sort-otdel">
+                        <label for="radio02">
+                            <a href="{% url 'main:markaz' %}">
+                                Добавить отдел
+                            </a>
+                        </label>
+                    </li>
                     @endif
-                    <li class="data-sort-sotrudnik"><label for="radio01"><a href="{{ route('xodim') }}">Добавить
-                        сотрудника</a></label></li>
+                    <li class="data-sort-sotrudnik">
+                        <label for="radio01">
+                            <a href="{% url 'main:xodim' %}">
+                                Добавить сотрудника
+                            </a>
+                        </label>
+                    </li>
                     <br>
-                    <li class="data-sort-today"><label for="radio1"><a href="{{ route('today') }}">Сегодния</a></label>
+                    <li class="data-sort-today">
+                        <label for="radio1">
+                            <a href="{% url 'main:today' %}">
+                                Сегодния
+                            </a>
+                        </label>
                     </li>
-                    <li><label for="radio2"><a href="{{ route('index') }}">Всего</a></label></li>
-                    <li><label for="radio3"><a class="clgreen" href="{{ route('finished') }}">Выполненные</a></label>
+                    <li>
+                        <label for="radio2">
+                            <a href="{% url 'main:index' %}">
+                                Всего
+                            </a>
+                        </label>
                     </li>
-                    <li class="clyellow"><label for="radio5">Срок истекает</label></li>
-                    <li class="clred"><label for="radio4"><a class="clred"
-                                                             href="{{ route('timeout') }}">Просроченные</a></label></li>
+                    <li>
+                        <label for="radio3">
+                            <a class="clgreen" href="{% url 'main:finished' %}">
+                                Выполненные
+                            </a>
+                        </label>
+                    </li>
+                    <li class="clyellow">
+                        <label for="radio5">
+                            Срок истекает
+                        </label>
+                    </li>
+                    <li class="clred">
+                        <label for="radio4">
+                            <a class="clred" href="{% url 'main:timeout' %}">
+                                Просроченные
+                            </a>
+                        </label>
+                    </li>
                 </ul>
-                <h3>Сегодния:</h3>
+                <h3>
+                    Сегодния:
+                </h3>
                 <ul class="main-stat">
-                    <li><i class="fa fa-file-word-o"></i>
-                        <p>Всего</p>
-                        <p><?php echo session('allorder'); ?></p></li>
-                    <li><i class="fa fa-file-word-o"></i>
-                        <p>На контроле</p>
-                        <p>123</p></li>
-                    <li><i class="fa fa-file-word-o"></i>
-                        <p>Выполнено</p>
-                        <p>123</p></li>
-                    <li><i class="fa fa-file-word-o"></i>
-                        <p>Просроченный</p>
-                        <p>123</p></li>
-                    <li><i class="fa fa-file-word-o"></i>
-                        <p>Срок истекает</p>
-                        <p>123</p></li>
+                    <li>
+                        <i class="fa fa-file-word-o"></i>
+                        <p>
+                            Всего
+                        </p>
+                        <p>
+                            <?php echo session('allorder'); ?>
+                        </p>
+                    </li>
+                    <li>
+                        <i class="fa fa-file-word-o"></i>
+                        <p>
+                            На контроле
+                        </p>
+                        <p>
+                            123
+                        </p>
+                    </li>
+                    <li>
+                        <i class="fa fa-file-word-o"></i>
+                        <p>
+                            Выполнено
+                        </p>
+                        <p>
+                            123
+                        </p>
+                    </li>
+                    <li>
+                        <i class="fa fa-file-word-o"></i>
+                        <p>
+                            Просроченный
+                        </p>
+                        <p>
+                            123
+                        </p>
+                    </li>
+                    <li>
+                        <i class="fa fa-file-word-o"></i>
+                        <p>
+                            Срок истекает
+                        </p>
+                        <p>
+                            123
+                        </p>
+                    </li>
                     <br>
                     <hr style="border:none;border-bottom: 1px dashed #ccc;">
                     <br>
-                    <li class="<?php if($user[0]->role_id != 3) echo 'none';?>"><a href="{{ route('hisobot') }}"><p
-                            class="clprint">Выпустить отчет <i class="fa fa-print"></i></p></a></li>
+                    <li class="<?php if($user[0]->role_id != 3) echo 'none';?>">
+                        <a href="{% url 'main:hisobot' %}">
+                            <p class="clprint">
+                                Выпустить отчет
+                                <i class="fa fa-print"></i>
+                            </p>
+                        </a>
+                    </li>
                     <p>
                         <SCRIPT language="javascript" type="text/javascript">
                             top_js = "1.0";
@@ -99,7 +193,9 @@
 
             <div class="main-bar">
 
-                @yield('content')
+                {% block content %}
+
+                {% endblock %}
 
             </div>
         </div>
@@ -108,5 +204,5 @@
 </div>
 </body>
 
-<script type="text/JavaScript" src="{{ asset('static/scripts/main.js') }}"></script>
+<script type="text/JavaScript" src="{% static 'js/main.js' %}"></script>
 </html>

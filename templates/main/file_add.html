@@ -1,0 +1,535 @@
+{% extends './main/welcome.html' %}
+
+{% block home %}
+
+    <form method="post" action="{{ route ('fayl_create', $order[0]->id) }}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="add-content">
+            <p class="add-content-title">
+                <i style="color: red" class="fa fa-file-pdf-o"> </i>
+                {{ $order[0]->id }}
+                <em style="color: #bfbfba"> 
+                    |
+                </em>
+                Срок документа:
+                <em class="add-content-srok-doc">
+                    {{ $order[0]->srok }}
+                </em>
+            </p>
+            <br>
+            <label class="file" for="file">
+                Добавить файл
+                <input class="tag-none" name="myfile" id="file" type="file"/>
+            </label>
+            <br>
+            <br>
+            <ul class="added-file">
+                <li>
+                    <a class="file-path" href="#">
+                        <i class="fa fa-file-pdf-o"></i>
+                        <b id="file-name"></b>
+                    </a>
+                    <p>
+                        <em>
+                            Приклепил(a):
+                        </em>
+                        Aliyev vali,
+                        <time>
+                            27.02.2022
+                        </time>
+                    </p>
+                    <input type="submit" value="Cохранить"/>
+                </li>
+            </ul>
+        </div>
+    </form>
+    <div class="add-content">
+        <table style="height: auto;width:40%" id="customers" class="file-list">
+            @foreach ($files as $file)
+            <form method="post" action="{{ route('fayl_destroy', $order[0]->id) }}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <tr>
+                    <td>
+                        {{ $file->id }}
+                        <input class="tag-none" name="id" type="text" value="{{ $file->id }}"/>
+                    </td>
+                    <td>
+                        {{ $file->xodim }}
+                    </td>
+                    <td>
+                        <a href="{{ asset('files/'.$file->file_name) }}" style="color: #444;">
+                            {{ $file->file_name }}
+                        </a>
+                    </td>
+                    <td class="<?php if($user[0]->fio == $file->xodim) echo 'td-edit'; else echo 'tag-none';?>">
+                        <button type="submit">
+                            <i class="order-remover fa fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            </form>
+            @endforeach
+        </table>
+    </div>
+    <br>
+    <div class="add-content">
+        <p class="add-content-title">
+            <i style="color: red" class="fa fa-file-pdf-o"> </i>
+            {{ $order[0]->id }}
+            <em style="color: #bfbfba">
+                |
+            </em>
+            Поручения по документу
+        </p>
+        <br>
+        <label class="file <?php if($user[0]->role_id != 3) echo 'tag-none';?>" id="show-add-box">
+            Назначить
+        </label>
+        <br>
+        <br>
+        <table style="height: auto;width:80%" id="customers" class="person-list">
+            <tr>
+                <th style="text-align: center;">
+                    # / id
+                </th>
+                <th>
+                    Oтдел
+                </th>
+                <th>
+                    Сотрудник
+                </th>
+                <th>
+
+                </th>
+                <th>
+                    Дата регистрации
+                </th>
+                <th>
+                    Срок
+                </th>
+                <th>
+                    #
+                </th>
+            </tr>
+            @foreach ($manager as $data)
+            <tr>
+                <td>
+                    <i class="fa fa-clock-o"></i>
+                    {{ $data->id }}
+                </td>
+                <td class="tag-none naz-id">
+                    <input class="manager_id" name="id" type="text" value="{{ $data->id }}">
+                </td>
+                <td class="manager_markaz_id">
+                    {{ $data->markaz_id }}
+                </td>
+                <td class="manager_xodim_id">
+                    {{ $data->xodim_id }}
+                </td>
+                <td class="manager_rezolyutsiya">
+                    {{ $data->rezolyutsiya }}
+                </td>
+                <td class="manager_registr_date">
+                    {{ $data->registr_date }}
+                </td>
+                <td class="manager_srok">
+                    {{ $data->srok }}
+                </td>
+                <td class="td-edit" style="width: 60px;<?php if($user[0]->role_id != 3) echo 'display: none';?>">
+                    <i class="person-editor fa fa-edit"></i>
+                    <form method="post" action="{{ route('manager_delete', $order[0]->id) }}"
+                          enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input class="tag-none manager_id" name="id" type="text" value="{{ $data->id }}">
+                        <button type="submit">
+                            <i class="order-remover fa fa-trash"></i>
+                        </button>
+                    </form>
+                    <form method="post" action="{% url 'manager_status' %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input class="tag-none" type="text" name="id" value="{{ $data->id }}">
+                        <input class="tag-none status-manager-val" name="status" type="text"
+                               value="{{ $data->status }}">
+                        <i style="color: green;" class="@if ($data->status == 'on') fa fa-check-circle @endif"></i>
+                    </form>
+                </td>
+            </tr>
+            @endforeach
+        </table>
+    </div>
+    <div class="order-control file-box">
+        <form class="file-create" action="{{ route('manager_create', $order[0]->id) }}" method="post"
+              enctype="multipart/form-data">
+            {% csrf_token %}
+            <a href="{{ route('file', $order[0]->id) }}">
+                <i class="close fa fa-remove"></i>
+            </a>
+            <h3 style="text-align: center;color: #444;padding-bottom: 5px;">
+                Поручение
+            </h3>
+            <hr>
+            <input class="tag-none" type="text" name="order_id" value="{{$order[0]->id}}" readonly>
+            <nav>
+            <span>
+                <p>
+                    <i class="fa fa-folder"></i>
+                    Отдел:
+                </p>
+                <select class="markaz-value" name="markaz_id">
+                    @foreach ($center as $data)
+                        <option value="{{ $data->name }}">
+                            {{ $data->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </span>
+                <br>
+                <br>
+                <span>
+                <p>
+                    <i class="fa fa-users"></i>
+                    Вибрат сотрудника
+                </p>
+                <select class="xodim-value" name="xodim_id">
+                    @foreach ($xodim as $data)
+                        <option value="{{ $data->fio }}">{{ $data->fio }}
+                            <i>{{ $data->center_id }}</i>
+                        </option>
+                    @endforeach
+                </select>
+            </span>
+                <br>
+            </nav>
+            <hr>
+            <nav>
+            <span>
+                <p>
+                    Дата регистратсии резолюции:
+                </p>
+                <p class="tag-none" id="nazreg_date0">
+                    {{ $order[0]->reg_date }}
+                </p>
+                <input id="nazreg_date" name="registr_date" type="datetime-local">
+            </span>
+                <br>
+                <p>
+                    Резолюция:
+                </p>
+                <textarea name="rezolyutsiya" cols="30" rows="10">
+
+                </textarea>
+                <br>
+                <br>
+                <span>
+                <p>
+                    <b>
+                        Автор резолюции:
+                    </b>
+                </p>
+            </span>
+            </nav>
+            <nav>
+            <span>
+                <p class="tag-none" id="nazsrok0">
+                    {{ $order[0]->srok }}
+                </p>
+                <p>
+                    Срок:
+                </p>
+                <input id="nazsrok" name="srok" type="datetime-local">
+            </span>
+            </nav>
+            <input class="tag-none" type="text" name="status" value="off" readonly>
+            <hr>
+            <nav>
+            <span>
+                <p>
+                    <b>
+                        Снято с контроля:
+                    </b>
+                </p>
+            </span>
+                <br>
+                <span>
+                <p>
+                    <b>
+                        Регистрированно:
+                    </b>
+                </p>
+            </span>
+                <br>
+                <span>
+                <p>
+                    <b>
+                        Сотрудником:
+                    </b>
+                </p>
+            </span>
+                <br>
+                <span>
+                <p>
+                    <b>
+                        Редактирован:
+                    </b>
+                </p>
+            </span>
+            </nav>
+            <nav>
+            <span class="save-del">
+                <input class="bos" type="submit" value="Сохранить">
+            </span>
+            </nav>
+            <hr>
+        </form>
+    </div>
+    <br>
+    <br>
+    <div class="order-short-info">
+        <p class="add-content-title">
+            <i style="color: red" class="fa fa-file-pdf-o"> </i>
+            {{ $order[0]->id }}
+            <em
+                    style="color: #bfbfba">
+                |
+            </em>
+            {{ $order[0]->doc_nomer }}
+            /
+            {{ $order[0]->reg_nomer }}
+        </p>
+        <br>
+        <span>
+     	<p>
+            <b style="margin-right:15px">
+            Номер документа:
+        </b>
+            {{ $order[0]->doc_nomer }}
+        </p>
+    </span>
+        <br>
+        <span>
+     	<p>
+            <b style="margin-right:15px">
+            Характер вопроса:
+        </b>
+            {{ $order[0]->xarakter_vopros }}
+        </p>
+    </span>
+        <br>
+        <span>
+     	<p>
+            <b style="margin-right:15px">
+                Краткое содержание:
+            </b>
+            {{ $order[0]->kratkoy_soder }}
+        </p>
+    </span>
+        <br>
+        <span>
+     	<p>
+            <b style="margin-right:15px">
+                Сопроводительное письмо:
+            </b>
+            {{ $order[0]->sopro_pismo }}
+        </p>
+    </span>
+        <br>
+        <span>
+     	<p>
+            <b style="margin-right:15px">
+                Сопроводительное Дата:
+            </b>
+            {{ $order[0]->sopro_date }}
+        </p>
+    </span>
+        <br>
+        <span>
+     	<p>
+            <b style="margin-right:15px">
+            Сопроводительное Номер:
+        </b>
+            {{ $order[0]->sopro_nomer }}
+        </p>
+    </span>
+        <br>
+        <span>
+     	<p>
+            <b style="margin-right:15px">
+            Срок:
+            </b>
+            {{ $order[0]->srok }}
+        </p>
+    </span>
+        <br>
+        <span>
+     	<p>
+            <b style="margin-right:15px">
+            Резолюция:
+            </b>
+            <em style="color: tomato">
+                {{ $order[0]->rezolyutsiya }}
+            </em>
+        </p>
+    </span>
+        <br>
+        <span>
+     	<p>
+            <b style="margin-right:15px">
+                Автор резолюции:
+            </b>
+            {{ $order[0]->avtor_rezolyutsiya }}
+        </p>
+    </span>
+        <br>
+        <span>
+     	<p>
+            <b style="margin-right:15px">
+                Вид решения:
+            </b>
+            {{ $order[0]->vid_resheniya }}
+        </p>
+    </span>
+    </div>
+    <div class="order-control file-box-update">
+        <form class="file-create" action="{{ route('manager_update', $order[0]->id) }}" method="post"
+              enctype="multipart/form-data">
+            {% csrf_token %}
+            <a href="{{ route ('file', $order[0]->id) }}">
+                <i class="close fa fa-remove"></i>
+            </a>
+            <h3 style="text-align: center;color: #444;padding-bottom: 5px;">
+                Поручение
+            </h3>
+            <hr>
+            <p>
+                #:
+                <input id="updatenaz_id" name="id" type="text" readonly>
+            </p>
+            <p id="prosta" style="">
+
+            </p>
+            <nav>
+            <span>
+                <p>
+                    <i class="fa fa-folder"></i> 
+                    Отдел:
+                </p>
+                <select class="updatenaz_markaz" name="markaz_id">
+                    @foreach ($center as $data)
+                        <option value="{{ $data->name }}">
+                            {{ $data->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </span>
+                <br>
+                <br>
+                <span>
+                <p>
+                    <i class="fa fa-users"></i> 
+                    Вибрат сотрудника
+                </p>
+                <select class="updatenaz_xodim" name="xodim_id">
+                    @foreach ($xodim as $data)
+                        <option value="{{ $data->fio }}">
+                            {{ $data->fio }}
+                        </option>
+                    @endforeach
+                </select>
+            </span>
+                <br>
+            </nav>
+            <hr>
+            <nav>
+            <span>
+                <p>
+                    Дата регистратсии резолюции:
+                </p>
+                <p class="tag-none" id="updatenazreg_date0">
+                    {{ $order[0]->reg_date }}
+                </p>
+                <input id="updatenazreg_date" name="registr_date" type="datetime-local">
+            </span>
+                <br>
+                <p>
+                    Резолюция:
+                </p>
+                <textarea id="updaterez" name="rezolyutsiya" cols="30" rows="10">
+                    
+                </textarea>
+                <br>
+                <br>
+                <span>
+                <p>
+                    <b>
+                        Автор резолюции:
+                    </b>
+                </p>
+            </span>
+            </nav>
+            <nav>
+                <label class="nazctrl" for="nazctrl">
+                    <input type="checkbox" id="nazctrl" value="off">
+                    Контрольное
+                    <input class="tag-none" id="nazctrl_val" name="kontrolnoy" type="text" value="off">
+                </label>
+                <br>
+                <br>
+                <span>
+                <p class="tag-none" id="updatenazsrok0">
+                    {{ $order[0]->srok }}
+                </p>
+                <p>
+                    Срок: 
+                </p>
+                    <input id="updatenazsrok" name="srok" type="datetime-local">
+            </span>
+            </nav>
+            <hr>
+            <nav>
+            <span>
+                <p>
+                    <b>
+                        Снято с контроля:
+                    </b>
+                </p>
+            </span>
+                <br>
+                <span>
+                <p>
+                    <b>
+                        Регистрированно:
+                    </b>
+                </p>
+            </span>
+                <br>
+                <span>
+                <p>
+                    <b>
+                        Сотрудником:
+                    </b>
+                </p>
+            </span>
+                <br>
+                <span>
+                <p>
+                    <b>
+                        Редактирован:
+                    </b>
+                </p>
+            </span>
+            </nav>
+            <nav>
+                <label class="snyat" for="snyat"><input type="checkbox" id="snyat" value="off">
+                    Снять с контроля
+                    <input class="tag-none" id="snyat_val" name="snyat" type="text" value="off">
+                </label>
+            </nav>
+            <nav>
+            <span class="save-del">
+                <input class="bos" type="submit" value="Сохранить">
+            </span>
+            </nav>
+            <hr>
+        </form>
+    </div>
+{% endblock %}

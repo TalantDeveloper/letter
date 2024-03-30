@@ -1,44 +1,67 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<table id="customers" class="main-table" readonly>
-    <tr>
-        <th>#</th>
-        <th>Рег №</th>
-        <th>Дата регистрации</th>
-        <th>Тип РКК</th>
-        <th>Вид документа</th>
-        <th>Корреспондент</th>
-        <th>Срок</th>
-        <th>Дней</th>
-        <th><i class="fa fa-spin fa-gear"></i></th>
-    </tr>
-    @foreach ($orders as $data)
-    <tr>
-        <td class="td-id">{{ $data->id }}</td>
-        <td>{{ $data->doc_nomer }}/{{ $data->reg_nomer }}</td>
-        <td class="td-doc_date">{{ $data->doc_date }}</td>
-        <td class="td-tipconcart">{{ $data->tipconcart }}</td>
-        <td class="td-tip_doc">{{ $data->tip_doc }}</td>
-        <td class="td-korrespond">{{ $data->korrespond }}</td>
-        <td class="srok-doc">{{ $data->srok }}</td>
-        <td>{{ $data->srok }}</td>
-        <td class="td-edit"><a href="{% url 'home-update' data.id %}"><i
-                class="order-editor fa fa-edit"></i></a><i class="order-remover fa fa-trash"></i></td>
-    </tr>
-    @endforeach
-</table>
-<div class="order-control">
-    <form action="" method="post" enctype="multipart/form-data">
+{% extends 'base.html' %}
 
-        <a href=""><i class="close fa fa-remove"></i></a>
-        <nav>
+{% block content %}
+
+
+    <div class="back-effect">
+        <table id="customers" class="main-table" readonly>
+            <tr>
+                <th>#</th>
+                <th>Рег №</th>
+                <th>Дата регистрации</th>
+                <th>Тип РКК</th>
+                <th>Вид документа</th>
+                <th>Корреспондент</th>
+                <th>Срок</th>
+                <th>Дней</th>
+                <th><i class="fa fa-spin fa-gear"></i></th>
+            </tr>
+            @foreach ($orders as $data)
+            <tr>
+                <td class="td-id">
+                    {{ $data->id }}
+                </td>
+                <td>
+                    {{ $data->doc_nomer }}/{{ $data->reg_nomer }}
+                </td>
+                <td class="td-doc_date">
+                    {{ $data->doc_date }}
+                </td>
+                <td class="td-tipconcart">
+                    {{ $data->tipconcart }}
+                </td>
+                <td class="td-tip_doc">
+                    {{ $data->tip_doc }}
+                </td>
+                <td class="td-korrespond">
+                    {{ $data->korrespond }}
+                </td>
+                <td class="srok-doc">
+                    {{ $data->srok }}
+                </td>
+                <td>
+                    {{ $data->srok }}
+                </td>
+                <td class="td-edit">
+                    <a href="{% url 'home-update' data.id %}">
+                        <i class="order-editor fa fa-edit"></i>
+                    </a>
+                    <i class="order-remover fa fa-trash"></i>
+                </td>
+            </tr>
+            @endforeach
+        </table>
+        <div class="order-control">
+            <form action="{{ route('home_store') }}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <a href="{{ route('index', '3') }}">
+                    <i class="close fa fa-remove"></i>
+                </a>
+                <nav>
                 <span>
-                    <p>Тип контрольной карточки:</p>
+                    <p>
+                        Тип контрольной карточки:
+                    </p>
                     <select name="tipconcart" id="tipconcart">
                         <option value="16">16</option>
                         <option value="26">26</option>
@@ -47,41 +70,57 @@
                         <option value="ТДСИ фуқаролари">ТДСИ фуқаролари</option>
                     </select>
                 </span>
-        </nav>
-        <hr>
-        <nav>
+                </nav>
+                <hr>
+                <nav>
                 <span>
-                    <p><i class="fa fa-users"></i> Группа:</p>
+                    <p>
+                        <i class="fa fa-users"></i> 
+                        Группа:
+                    </p>
                     <select name="guruh" id="select-org_group">
-                         
-                    		<option value="{{ $data->id }}"><label>{{ $data->name }}</label></option>
-                        
+                        @foreach ($org_group as $data)
+                            <option value="{{ $data->id }}"><label>{{ $data->name }}</label></option>
+                        @endforeach
                     </select>
                 </span>
-            <br>
-            <span>
-                    <p>Корреспондент:</p>
+                    <br>
+                    <span>
+                    <p>
+                        Корреспондент:
+                    </p>
                     <ul class="select-lists">
                     	<i class="fa fa-angle-down"></i>
                     	<input name="korrespond" placeholder="-------"/>
-                    	
                     	<nav class="create-select-lists">
-                            
-                    			<li><em style="display:none">{{ $data->group_id }}</em><strong
-                                        style="display:none">{{ $data->id }}</strong><b
-                                        style="font-weight:normal">{{ $data->name }}</b></li>
-                        	
+                            @foreach ($org as $data)
+                                <li>
+                                    <em style="display:none">
+                                        {{ $data->group_id }}
+                                    </em>
+                                    <strong style="display:none">
+                                        {{ $data->id }}
+                                    </strong>
+                                    <b style="font-weight:normal">
+                                        {{ $data->name }}
+                                    </b>
+                                </li>
+                            @endforeach
                     	</nav>
                 	</ul>
                 </span>
 
-        </nav>
-        <hr>
-        <nav>
+                </nav>
+                <hr>
+                <nav>
                 <span>
-                    <p>Тип документа:</p>
+                    <p>
+                        Тип документа:
+                    </p>
                     <select name="tip_doc" id="tip_doc">
-                        <option class="" value="Ариза">Ариза</option>
+                        <option class="" value="Ариза">
+                            Ариза
+                        </option>
 						<option class="tag-none 1b" value="Ўзбекистон Республикаси Пpезидентининг фаpмони">Ўзбекистон Республикаси Пpезидентининг фаpмони</option>
 						<option class="tag-none 1b" value="Ўзбекистон Республикаси Пpезиденти фаpмойиш">Ўзбекистон Республикаси Пpезиденти фаpмойиш</option>
 						<option class="tag-none 1b" value="Ўзбекистон Республикасиниг Конуни">Ўзбекистон Республикасиниг Конуни</option>
@@ -150,43 +189,69 @@
 						<option class="tag-none 4b" value="Ички буйрук">Ички буйрук</option>
                     </select>
                 </span>
-            <br>
-            <span>
-                    <p>Дата регистрации:</p>
+                    <br>
+                    <span>
+                    <p>
+                        Дата регистрации:
+                    </p>
                     <input name="reg_date" type="datetime-local"/>
                 </span>
-            <br>
-            <span>
-                    <p>Регистрационный номер:</p>
+                    <br>
+                    <span>
+                    <p>
+                        Регистрационный номер:
+                    </p>
                     <input name="reg_nomer" type="text"/>
                 </span>
-            <br>
-            <span>
-                    <p>Дата документа:</p>
+                    <br>
+                    <span>
+                    <p>
+                        Дата документа:
+                    </p>
                     <input name="doc_date" type="datetime-local"/>
                 </span>
-            <br>
-            <span>
-                    <p>Номер документа:</p>
+                    <br>
+                    <span>
+                    <p>
+                        Номер документа:
+                    </p>
                     <input name="doc_nomer" type="text" value=""/>
                 </span>
-            <br>
-            <p>Краткое содержание:</p>
-            <textarea name="kratkoy_soder" id="" cols="30" rows="10"></textarea>
-        </nav>
-        <nav>
-            <label class="controlnoe" for="controlnoe"><input type="checkbox" id="controlnoe" value="off"> Контрольное
-                <input style="opacity: 0;" id="controlnoe_val" name="kontrolnoy" type="text" value="off"></label>
-            <br><br>
-            <span>
-                    <p>Срок: </p><input id="srok" name="srok" type="datetime-local">
+                    <br>
+                    <p>
+                        Краткое содержание:
+                    </p>
+                    <textarea name="kratkoy_soder" id="" cols="30" rows="10"></textarea>
+                </nav>
+                <nav>
+                    <label class="controlnoe" for="controlnoe">
+                        <input type="checkbox" id="controlnoe" value="off">
+                        Контрольное 
+                        <input style="opacity: 0;" id="controlnoe_val" name="kontrolnoy" type="text" value="off">
+                    </label>
+                    <br>
+                    <br>
+                    <span>
+                    <p>
+                        Срок: 
+                    </p>
+                        <input id="srok" name="srok" type="datetime-local">
                 </span>
-            <br>
-            <p>Резолюция:</p>
-            <textarea name="rezolyutsiya" id="" cols="30" rows="10"></textarea>
-            <br><br>
-            <span>
-                    <p><b>Автор резолюции:</b></p>
+                    <br>
+                    <p>
+                        Резолюция:
+                    </p>
+                    <textarea name="rezolyutsiya" id="" cols="30" rows="10">
+                        
+                    </textarea>
+                    <br>
+                    <br>
+                    <span>
+                    <p>
+                        <b>
+                            Автор резолюции:
+                        </b>
+                    </p>
                     <select name="avtor_rezolyutsiya" id="">
                         <option value="Хайдаров Нодиржон Қодирович">Хайдаров Нодиржон Қодирович</option>
                         <option value="Баймаков Сайфиддин Рисбаевич">Баймаков Сайфиддин Рисбаевич</option>
@@ -196,9 +261,11 @@
                         <option value="Ахмедов Саидазиз Пўлатович">Ахмедов Саидазиз Пўлатович</option>
                     </select>
                 </span>
-            <br>
-            <span>
-                    <p>Вид решения:</p>
+                    <br>
+                    <span>
+                    <p>
+                        Вид решения:
+                    </p>
                     <select name="vid_resheniya" id="">
                         <option value="Анонимлиги тасдиқланди">Анонимлиги тасдиқланди</option>
                         <option value="Қайтарилди">Қайтарилди</option>
@@ -211,14 +278,14 @@
                         <option value="Ҳудудий идораларга юборилган">Ҳудудий идораларга юборилган</option>
                     </select>
                 </span>
-        </nav>
-        <nav>
+                </nav>
+                <nav>
                 <span class="save-del">
                     <input class="bos" type="submit" value="Сохранить">
                 </span>
-        </nav>
-        <hr>
-    </form>
-</div>
-</body>
-</html>
+                </nav>
+                <hr>
+            </form>
+        </div>
+    </div>
+{% endblock %}

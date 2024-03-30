@@ -171,5 +171,5 @@ class Manager(models.Model):
 
     @property
     def get_centers(self):
-        senter = [center.name for center in self.centers.all()]
-        return senter
+        center = [center.name for center in self.centers.all()]
+        return center

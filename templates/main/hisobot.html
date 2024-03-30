@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <p>
+        <input class="print" type="button" value="Распечатать" id="btPrint" onclick="createPDF()"/>
+        <br>
+        <br>
+    </p>
+    <div id="tab">
+        <table id="customers" class="main-table">
+            <tr>
+                <th>#</th>
+                <th>Рег №</th>
+                <th>Oтдел</th>
+                <th>Сотрудник</th>
+                <th>Краткое содержание</th>
+                <th>Резолюция</th>
+                <th>Дата регистрации</th>
+                <th>Срок</th>
+                <th>Дней</th>
+            </tr>
+            @foreach ($xisobots as $xisobot)
+            <?php $farq=abs(strtotime($xisobot['srok'])-strtotime(date("Y-m-d")));$yil=floor($farq/(365*60*60*24));$oy = floor(($farq - $yil * 365*60*60*24) / (30*60*60*24));?>
+            <tr style="color: #333">
+                <td class="td-id">
+                    {{ $xisobot['id'] }}
+                </td>
+                <td>
+                    {{ $xisobot['reg_nomer'] }}
+                </td>
+                <td>
+                    {{ $xisobot['markaz'] }}
+                </td>
+                <td>
+                    {{ $xisobot['xodim'] }}
+                </td>
+                <td>
+                    {{ $xisobot['kratkoy_soder'] }}
+                </td>
+                <td>
+                    {{ $xisobot['rezolyutsiya'] }}
+                </td>
+                <td>
+                    {{ $xisobot['reg_date'] }}
+                </td>
+                <td>
+                    {{ $xisobot['srok'] }}
+                </td>
+                <td class="clred">
+                    {{ floor(($farq - $yil * 365*60*60*24 - $oy*30*60*60*24)/ (60*60*24))+1 }}
+                </td>
+            </tr>
+            @endforeach
+        </table>
+    </div>
+    <script>
+        function createPDF() {
+            var sTable = document.getElementById('tab').innerHTML;
+            var style = "<style>";
+            style = style + "table {width: 100%;font: 14px Calibri;}";
+            style = style + "table, th, td {border: solid 1px #AAA; border-collapse: collapse;";
+            style = style + "padding: 2px 3px;text-align: center;}";
+            style = style + "</style>";
+
+            // CREATE A WINDOW OBJECT.
+            var win = window.open('', '', 'height=700,width=700');
+
+            win.document.write('<html><head>');
+            win.document.write('<title>Profile</title>');   // <title> FOR PDF HEADER.
+            win.document.write(style);          // ADD STYLE INSIDE THE HEAD TAG.
+            win.document.write('</head>');
+            win.document.write('<body>');
+            win.document.write(sTable);         // THE TABLE CONTENTS INSIDE THE BODY TAG.
+            win.document.write('</body></html>');
+            win.document.close(); 	// CLOSE THE CURRENT WINDOW.
+
+            win.print();    // PRINT THE CONTENTS.
+        }
+    </script>
+
+{% endblock %}
