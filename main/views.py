@@ -2,19 +2,21 @@ from django.shortcuts import render, redirect
 from .models import Manager, CheckFile, ControlFile, Letter, Center
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
-from .functions import content_need
+from .functions import content_need, manager_today, manager_control_file, manager_out
 
 
 def login_view(request):
     if request.method == 'POST':
+        print("Post")
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
         if user:
+            print("Kirdi")
             login(request, user)
-            return redirect("/")
+            return redirect("main:welcome")
         else:
-            return redirect('admin/')
+            return redirect('main:login')
     return render(request, 'user/login.html')
 
 
@@ -23,3 +25,20 @@ def welcome(request):
     content = content_need(request)
     return render(request, 'main/welcome.html', context=content)
 
+
+@login_required
+def today_view(request):
+    content = manager_today(request)
+    return render(request, 'main/welcome.html', context=content)
+
+
+@login_required
+def finish_view(request):
+    content = manager_control_file(request)
+    return render(request, 'main/welcome.html', context=content)
+
+
+@login_required
+def manager_out_view(request):
+    content = manager_out(request)
+    return render(request, 'main/welcome.html', context=content)

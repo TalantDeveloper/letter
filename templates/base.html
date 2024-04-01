@@ -50,54 +50,55 @@
         <div class="content">
             <div class="left-bar">
                 <ul class="data-sort">
-                    <li class="data-sort-otdel">
-                        <label for="radio02">
-                            <a href="{% url 'main:welcome' %}">
-                                Добавить отдел
-                            </a>
-                        </label>
-                    </li>
-                    <li class="data-sort-sotrudnik">
-                        <label for="radio01">
-                            <a href="{% url 'main:welcome' %}">
-                                Добавить сотрудника
-                            </a>
-                        </label>
-                    </li>
-                    <br>
+                    {% if center.user_is_status %}
+                        <li class="data-sort-otdel">
+                            <label for="radio02">
+                                <a href="{% url 'main:welcome' %}">
+                                    Markaz qo'shish
+                                </a>
+                            </label>
+                        </li>
+                        <li class="data-sort-sotrudnik">
+                            <label for="radio01">
+                                <a href="{% url 'main:welcome' %}">
+                                    Xodim qo'shish
+                                </a>
+                            </label>
+                        </li>
+                        <br>
+                    {% endif %}
                     <li class="data-sort-today">
                         <label for="radio1">
-                            <a href="{% url 'main:welcome' %}">
-                                Сегодния
+                            <a href="{% url 'main:today' %}">
+                                Bugun
                             </a>
                         </label>
                     </li>
-                    <li>
-                        <label for="radio2">
-                            <a href="{% url 'main:welcome' %}">
-                                Всего
-                            </a>
-                        </label>
-                    </li>
-                    <li>
-                        <label for="radio3">
-                            <a class="clgreen" href="{% url 'main:welcome' %}">
-                                Выполненные
-                            </a>
-                        </label>
-                    </li>
-                    <li class="clyellow">
-                        <label for="radio5">
-                            Срок истекает
-                        </label>
-                    </li>
-                    <li class="clred">
-                        <label for="radio4">
-                            <a class="clred" href="{% url 'main:welcome' %}">
-                                Просроченные
-                            </a>
-                        </label>
-                    </li>
+                    <a href="{% url 'main:welcome' %}">
+                        <li>
+                            <label for="radio2">
+                                Jami
+                            </label>
+                        </li>
+                    </a>
+                    <a class="clgreen" href="{% url 'main:finish' %}">
+                        <li>
+                            <label for="radio3">
+
+                                Bajarildi
+
+                            </label>
+                        </li>
+                    </a>
+                    <a class="clred" href="{% url 'main:timeout' %}">
+                        <li class="clred">
+                            <label for="radio4">
+
+                                Muddati o'tgan
+
+                            </label>
+                        </li>
+                    </a>
                 </ul>
                 <h3>
                     Сегодния:
@@ -106,46 +107,46 @@
                     <li>
                         <i class="fa fa-file-word-o"></i>
                         <p>
-                            Всего
+                            Hammasi
                         </p>
                         <p>
-                            <?php echo session('allorder'); ?>
-                        </p>
-                    </li>
-                    <li>
-                        <i class="fa fa-file-word-o"></i>
-                        <p>
-                            На контроле
-                        </p>
-                        <p>
-                            123
+                            {{ jami }}
                         </p>
                     </li>
                     <li>
                         <i class="fa fa-file-word-o"></i>
                         <p>
-                            Выполнено
+                            Nazoratda
                         </p>
                         <p>
-                            123
-                        </p>
-                    </li>
-                    <li>
-                        <i class="fa fa-file-word-o"></i>
-                        <p>
-                            Просроченный
-                        </p>
-                        <p>
-                            123
+                            {{ nazoratda }}
                         </p>
                     </li>
                     <li>
                         <i class="fa fa-file-word-o"></i>
                         <p>
-                            Срок истекает
+                            Bajarilgan
                         </p>
                         <p>
-                            123
+                            {{ bajarilgan }}
+                        </p>
+                    </li>
+                    <li>
+                        <i class="fa fa-file-word-o"></i>
+                        <p>
+                            Muddati o'tgan
+                        </p>
+                        <p>
+                            {{ muddati_utgan }}
+                        </p>
+                    </li>
+                    <li>
+                        <i class="fa fa-file-word-o"></i>
+                        <p>
+                            Muddati bor
+                        </p>
+                        <p>
+                            {{ muddat_bor }}
                         </p>
                     </li>
                     <br>
@@ -154,7 +155,7 @@
                     <li class="<?php if($user[0]->role_id != 3) echo 'none';?>">
                         <a href="{% url 'main:welcome' %}">
                             <p class="clprint">
-                                Выпустить отчет
+                                Hisobotni chiqarish
                                 <i class="fa fa-print"></i>
                             </p>
                         </a>

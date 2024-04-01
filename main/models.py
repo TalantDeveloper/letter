@@ -40,6 +40,9 @@ class Center(models.Model):
     def __str__(self):
         return f"{self.name}"
 
+    def user_is_status(self):
+        return self.user.is_superuser
+
 
 class ControlCard(models.Model):  # Тип РКК
     name = models.CharField(max_length=256, verbose_name="Nazorat kartasi turi")
@@ -146,22 +149,29 @@ class Manager(models.Model):
     centers = models.ManyToManyField(Center, verbose_name="Markazlar")
     letter = models.ForeignKey(Letter, on_delete=models.SET_NULL, null=True, verbose_name="Xat")
     check_file = models.ForeignKey(CheckFile, on_delete=models.SET_NULL, null=True, verbose_name="So'rov file")
-    control_file = models.ForeignKey(ControlFile, on_delete=models.SET_NULL, null=True, verbose_name="Javob file")
+    control_file = models.ForeignKey(ControlFile, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Javob file")
     lifetime = models.DateField(verbose_name="Muddat")
 
     control = models.BooleanField(default=False, verbose_name="Tasdiqlash")
 
+    @property
     def time_on(self):
-        if self.lifetime.strftime("%Y%m%d") >= datetime.now().strftime("%Y%m%d"):
+        day = datetime.now().date() - self.lifetime
+        return day
+
+    @property
+    def time_today(self):
+        if self.lifetime == datetime.now().date():
             return True
         else:
             return False
 
+    @property
     def time_off(self):
-        if self.lifetime.strftime("%Y%m%d") < datetime.now().strftime("%Y%m%d"):
-            return False
-        else:
+        if self.lifetime < datetime.now().date():
             return True
+        else:
+            return False
 
     def check_control(self):
         if self.control:
@@ -170,6 +180,13 @@ class Manager(models.Model):
             return False
 
     @property
+    def check_control_file(self):
+        if self.control_file:
+            return True
+        else:
+            return False
+
+    @property
     def get_centers(self):
-        center = [center.name for center in self.centers.all()]
+        center = [center for center in self.centers.all()]
         return center
