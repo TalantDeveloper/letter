@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from .models import Center, Manager
+from .models import Center, Manager, ControlCard, Group, Reporter, DocumentType, AuthorResolution, TypeSolution
 
 
 # def all_manager_count(request):
@@ -86,4 +86,17 @@ def manager_out(request):
         if not man.control_file and man.lifetime < datetime.now().date():
             managers.append(man)
     content['managers'] = managers
+    return content
+
+
+def get_models_list(request):
+    content = {
+        'centers': Center.objects.all(),  # Markazlar.
+        'control_cards': ControlCard.objects.all(),  # Тип контрольной карточки Nazorat kartasining turi
+        'groups': Group.objects.all(),  # Группа Guruh
+        'reporters': Reporter.objects.all(),  # Корреспондент Muhbir
+        'document_types': DocumentType.objects.all(),  # Тип документа Hujjat turi
+        'author_resolutions': AuthorResolution.objects.all(),  # # Автор резолюции Qaror muallifi
+        'type_solutions': TypeSolution.objects.all(),  # Вид решения Yechim turi
+    }
     return content

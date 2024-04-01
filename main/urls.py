@@ -8,6 +8,9 @@ urlpatterns = [
     path('welcome/', views.welcome, name='welcome'),
     path('today/', views.today_view, name='today'),
     path('finish/', views.finish_view, name='finish'),
-    path('timeout/', views.manager_out_view, name='timeout')
+    path('timeout/', views.manager_out_view, name='timeout'),
+
+    path('manager-add/', views.create_manager_view, name='manager-add'),
+
 ]
 

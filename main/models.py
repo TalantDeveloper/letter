@@ -84,7 +84,7 @@ class DocumentType(models.Model):  # Тип документа Hujjat turi
         return f"{self.name}"
 
 
-class AuthorResolution(models.Model):
+class AuthorResolution(models.Model):  # Автор резолюции Qaror muallifi
     name = models.CharField(max_length=255, verbose_name="Qaror muallifi")
 
     create_at = models.DateTimeField(auto_now_add=True, verbose_name="Yaratilgan vaqt")
@@ -94,7 +94,7 @@ class AuthorResolution(models.Model):
         return f"{self.name}"
 
 
-class TypeSolution(models.Model): # Вид решения
+class TypeSolution(models.Model): # Вид решения Yechim turi
     name = models.CharField(max_length=255, verbose_name="Yechim turi")
 
     create_at = models.DateTimeField(auto_now_add=True, verbose_name="Yaratilgan vaqt")
