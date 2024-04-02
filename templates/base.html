@@ -1,206 +1,423 @@
 <!DOCTYPE html>
-<html lang="en">
 {% load static %}
+<html dir="ltr" lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/main.css' %}">
-    <link rel="icon" type="image/png" href="{% static 'images/icons/favicon.ico' %}"/>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="keywords" content="Toshkent Davlat Stomatologiya Instituti"/>
+    <meta name="description" content="Davlat tashkiloti bo'ylab elektron hujjat almashish"/>
+    <meta name="robots" content="noindex,nofollow"/>
+    <title>Elektron hujjat almashish</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/icons/favicon.ico' %}"/>
+    <!-- Custom CSS -->
+    <link href="{% static 'assets/libs/flot/css/float-chart.css' %}" rel="stylesheet"/>
 
-    <link rel="stylesheet" href="{% static 'css/icons/css/font-awesome.css' %}">
-    <link rel="stylesheet" href="{% static 'css/icons/css/font-awesome.min.css' %}">
-
-    <script src="{% static 'js/jquery.js' %}"></script>
-    <title>Electron hujjat almashish</title>
-
+    <!-- Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/extra-libs/multicheck/multicheck.css' %}"/>
+    <link href="{% static 'assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.css' %}" rel="stylesheet"/>
+    <link href="{% static 'dist/css/style.min.css' %}" rel="stylesheet"/>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 </head>
+
 <body>
-<div class="container mini-admin">
-    <header id="header">
-        <a href="{% url 'main:welcome' %}" style="color:#FFF;">
-            <nav>
-                <img src="{% static 'images/logo-wide.png' %}" alt="alt"/>
-                <p>
-                    E-Xat
-                </p>
-            </nav>
-        </a>
-        <a href="{% url 'main:welcome' %}">
-            <p class="title">
-                <i class="fa fa-envelope"></i>
-                Toshkent davlat stomatologiya institutining axborot almashinuv platformasi
-            </p>
-        </a>
-
-        <span>
-            <a href="/">
-                <p class="title">
-                    <em style="color:tomato" class="fa fa-sign-out"></em>
-                    Chiqish
-                </p>
-            </a>
-            |
-            <em>
-                <b>{{ center.user.username }}</b>
-                <br>
-                {{ center }}
-            </em>
-            <img src="{% static 'images/user.png' %}" alt="/">
-        </span>
-    </header>
-    <div class="main">
-        < class="content">
-        <div class="left-bar">
-            <ul class="data-sort">
-                {% if center.user_is_status %}
-                    <li class="data-sort-otdel">
-                        <label for="radio02">
-                            <a href="{% url 'main:welcome' %}">
-                                Markaz qo'shish
-                            </a>
-                        </label>
-                    </li>
-                    <li class="data-sort-sotrudnik">
-                        <label for="radio01">
-                            <a href="{% url 'main:welcome' %}">
-                                Xodim qo'shish
-                            </a>
-                        </label>
-                    </li>
-                    <br>
-                {% endif %}
-                <li class="data-sort-today">
-                    <label for="radio1">
-                        <a href="{% url 'main:today' %}">
-                            Bugun
-                        </a>
-                    </label>
-                </li>
-                <a href="{% url 'main:welcome' %}">
-                    <li>
-                        <label for="radio2">
-                            Jami
-                        </label>
-                    </li>
-                </a>
-                <a class="clgreen" href="{% url 'main:finish' %}">
-                    <li>
-                        <label for="radio3">
-
-                            Bajarildi
-
-                        </label>
-                    </li>
-                </a>
-                <a class="clred" href="{% url 'main:timeout' %}">
-                    <li class="clred">
-                        <label for="radio4">
-                            Muddati o'tgan
-                        </label>
-                    </li>
-                </a>
-            </ul>
-            <h3>
-                Сегодния:
-            </h3>
-            <ul class="main-stat">
-                <li>
-                    <i class="fa fa-file-word-o"></i>
-                    <p>
-                        Hammasi
-                    </p>
-                    <p>
-                        {{ jami }}
-                    </p>
-                </li>
-                <li>
-                    <i class="fa fa-file-word-o"></i>
-                    <p>
-                        Nazoratda
-                    </p>
-                    <p>
-                        {{ nazoratda }}
-                    </p>
-                </li>
-                <li>
-                    <i class="fa fa-file-word-o"></i>
-                    <p>
-                        Bajarilgan
-                    </p>
-                    <p>
-                        {{ bajarilgan }}
-                    </p>
-                </li>
-                <li>
-                    <i class="fa fa-file-word-o"></i>
-                    <p>
-                        Muddati o'tgan
-                    </p>
-                    <p>
-                        {{ muddati_utgan }}
-                    </p>
-                </li>
-                <li>
-                    <i class="fa fa-file-word-o"></i>
-                    <p>
-                        Muddati bor
-                    </p>
-                    <p>
-                        {{ muddat_bor }}
-                    </p>
-                </li>
-                <br>
-                <hr style="border:none;border-bottom: 1px dashed #ccc;">
-                <br>
-                <li class="<?php if($user[0]->role_id != 3) echo 'none';?>">
-                    <a href="{% url 'main:welcome' %}">
-                        <p class="clprint">
-                            Hisobotni chiqarish
-                            <i class="fa fa-print"></i>
-                        </p>
-                    </a>
-                </li>
-                <p>
-                    <SCRIPT language="javascript" type="text/javascript">
-                        top_js = "1.0";
-                        top_r = "id=37043&r=" + escape(document.referrer) + "&pg=" + escape(wi >
-                    </SCRIPT>
-                    <SCRIPT language="javascript1.1" type="text/javascript">
-                        top_js = "1.1";
-                        top_r += "&j=" + (navigator.javaEnabled() ? "Y" : "N")
-                    </SCRIPT>
-                    <SCRIPT language="javascript1.2" type="text/javascript">
-                        top_js = "1.2";
-                        top_r += "&wh=" + screen.width + 'x' + screen.height + "&px=" +
-                            (((navigator.appName.substring(0, 3) == "Mic")) ? screen.colorDepth : screen.pixel >
-                    </SCRIPT>
-                    <SCRIPT language="javascript1.3" type="text/javascript">
-                        top_js = "1.3";
-                    </SCRIPT>
-                    <SCRIPT language="JavaScript" type="text/javascript">
-                        top_rat = "&col=0063AF&t=ffffff&p=E6850F";
-                        top_r += "&js=" + top_js + "";
-                        document.wr >
-                    </SCRIPT>
-                    <NOSCRIPT>
-                        <A href="http://www.uz/ru/res/visitor/index?id=37043" target=_top><IMG height=31 sr>
-                    </NOSCRIPT>
-                </p>
-            </ul>
-        </div>
-
-        <div class="main-bar">
-
-            {% block content %}
-
-            {% endblock %}
-
-        </div>
+<!-- ============================================================== -->
+<!-- Preloader - style you can find in spinners.css -->
+<!-- ============================================================== -->
+<div class="preloader">
+    <div class="lds-ripple">
+        <div class="lds-pos"></div>
+        <div class="lds-pos"></div>
     </div>
 </div>
+<!-- ============================================================== -->
+<!-- Main wrapper - style you can find in pages.scss -->
+<!-- ============================================================== -->
+<div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+     data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
+    <!-- ============================================================== -->
+    <!-- Topbar header - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <header class="topbar" data-navbarbg="skin5">
+        <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+            <div class="navbar-header" data-logobg="skin5">
+                <!-- ============================================================== -->
+                <!-- Logo -->
+                <!-- ============================================================== -->
+                <a class="navbar-brand" href="{% url 'main:welcome' %}">
+                    <!-- Logo icon -->
+                    <b class="logo-icon ps-2">
+                        <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
+                        <!-- Dark Logo icon -->
+                        <img src="{% static 'images/logotip.png' %}" alt="homepage" class="light-logo" width="45"/>
+                    </b>
+                    <!--End Logo icon -->
+                    <!-- Logo text -->
+                    <span class="logo-text ms-2">
+                <!-- dark Logo text -->
+                E-Xat Stomatologiya
+              </span>
+                    <!-- Logo icon -->
+                    <!-- <b class="logo-icon"> -->
+                    <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
+                    <!-- Dark Logo icon -->
+                    <!-- <img src="../assets/images/logo-text.png" alt="homepage" class="light-logo" /> -->
 
+                    <!-- </b> -->
+                    <!--End Logo icon -->
+                </a>
+                <!-- ============================================================== -->
+                <!-- End Logo -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- Toggle which is visible on mobile only -->
+                <!-- ============================================================== -->
+                <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)">
+                    <i class="ti-menu ti-close"></i>
+                </a>
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Logo -->
+            <!-- ============================================================== -->
+            <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin5">
+                <!-- ============================================================== -->
+                <!-- toggle and nav items -->
+                <!-- ============================================================== -->
+                <ul class="navbar-nav float-start me-auto">
+                    <li class="nav-item d-none d-lg-block">
+                        <a class="nav-link sidebartoggler waves-effect waves-light" href="javascript:void(0)"
+                           data-sidebartype="mini-sidebar">
+                            <i class="mdi mdi-menu font-24"></i>
+                        </a>
+                    </li>
+                    <!-- ============================================================== -->
+                    <!-- create new -->
+                    <!-- ============================================================== -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                  <span class="d-none d-md-block">
+                      Elektron hujjatlar
+                      <i class="fa fa-angle-down"></i>
+                  </span>
+                            <span class="d-block d-md-none">
+                                <i class="fa fa-plus"></i>
+                            </span>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li>
+                                <a class="dropdown-item" href="{% url 'main:manager-add' %}">
+                                    Yangi Xat qo'shish
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">
+                                    Another action
+                                </a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider"/>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- ============================================================== -->
+                    <!-- Search -->
+                    <!-- ============================================================== -->
+
+                </ul>
+                <!-- ============================================================== -->
+                <!-- Right side toggle and nav items -->
+                <!-- ============================================================== -->
+                <ul class="navbar-nav float-end">
+                    <!-- ============================================================== -->
+                    <!-- Comment -->
+                    <!-- ============================================================== -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="mdi mdi-bell font-24"></i>
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="{% url 'main:welcome' %}">Barcha hatlar</a></li>
+                            <li><a class="dropdown-item" href="{% url 'main:today' %}">Bunga hatlar</a></li>
+                            <li>
+                                <a class="dropdown-item" href="{% url 'main:finish' %}">Muddati tugagan</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- ============================================================== -->
+                    <!-- End Comment -->
+                    <!-- ============================================================== -->
+                    <!-- ============================================================== -->
+                    <!-- Messages -->
+                    <!-- ============================================================== -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle waves-effect waves-dark" href="#" id="2" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="font-24 mdi mdi-comment-processing"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end  mailbox animated bounceInDown" aria-labelledby="2">
+                            <ul class="list-style-none">
+                                <li>
+                                    <div class="">
+                                        <!-- Message -->
+                                        <a href="javascript:void(0)" class="link border-top">
+                                            <div class="d-flex no-block align-items-center p-10">
+                                                <span class="btn btn-success btn-circle d-flex align-items-center justify-content-center ">
+                                                    <i class="mdi mdi-calendar text-white fs-4"></i>
+                                                </span>
+                                                <div class="ms-2">
+                                                    <h5 class="mb-0">
+                                                        Event today
+                                                    </h5>
+                                                    <span class="mail-desc">
+                                                        Just a reminder that event
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <!-- Message -->
+                                    </div>
+                                </li>
+                            </ul>
+                        </ul>
+                    </li>
+                    <!-- ============================================================== -->
+                    <!-- End Messages -->
+                    <!-- ============================================================== -->
+
+                    <!-- ============================================================== -->
+                    <!-- User profile and search -->
+                    <!-- ============================================================== -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic"
+                           href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="{% static 'assets/images/users/1.jpg' %}" alt="user" class="rounded-circle"
+                                 width="31"/>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end user-dd animated" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">
+                                <i class="mdi mdi-account me-2 ms-2"></i>
+                                {{ center.user.username }}
+                            </a>
+
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">
+                                <i class="fa fa-power-off me-1 ms-1"></i>
+                                {{ center }}
+                            </a>
+                            <div class="ps-4 p-10">
+                                <a href="javascript:void(0)" class="btn btn-sm btn-success btn-rounded text-white">
+                                    View Profile
+                                </a>
+                            </div>
+                        </ul>
+                    </li>
+                    <!-- ============================================================== -->
+                    <!-- User profile and search -->
+                    <!-- ============================================================== -->
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <!-- ============================================================== -->
+    <!-- End Topbar header -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Left Sidebar - style you can find in sidebar.scss  -->
+    <!-- ============================================================== -->
+    <aside class="left-sidebar" data-sidebarbg="skin5">
+        <!-- Sidebar scroll-->
+        <div class="scroll-sidebar">
+            <!-- Sidebar navigation-->
+            <nav class="sidebar-nav">
+                <ul id="sidebarnav" class="pt-4">
+
+                    {% if center.user_is_status %}
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#"
+                               aria-expanded="false">
+                                <i class="mdi mdi-pencil"></i>
+                                <span class="hide-menu">
+                                Yangi xodim qo'shish
+                            </span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#"
+                               aria-expanded="false">
+                                <i class="mdi mdi-border-outside"></i>
+                                <span class="hide-menu">
+                                Yangi bo'lim qo'shish
+                            </span>
+                            </a>
+                        </li>
+                    {% endif %}
+                    <li class="sidebar-item">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{% url 'main:welcome' %}"
+                           aria-expanded="false">
+                            <i class="mdi mdi-view-dashboard"></i>
+                            <span class="hide-menu">
+                                Dashboard
+                            </span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{% url 'main:welcome' %}"
+                           aria-expanded="false">
+                            <i class="mdi mdi-chart-bar"></i>
+                            <span class="hide-menu">
+                                Jami
+                            </span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{% url 'main:finish' %}"
+                           aria-expanded="false">
+                            <i class="mdi mdi-chart-bubble"></i>
+                            <span class="hide-menu">
+                                Bajarildi
+                            </span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{% url 'main:timeout' %}"
+                           aria-expanded="false">
+                            <i class="mdi mdi-border-inside"></i>
+                            <span class="hide-menu">
+                                Muddati o'tgan
+                            </span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)"
+                           aria-expanded="false">
+                            <i class="mdi mdi-receipt"></i>
+                            <span class="hide-menu">
+                                Hisobot
+                            </span>
+                        </a>
+                        <ul aria-expanded="false" class="collapse first-level">
+                            <li class="sidebar-item">
+                                <a href="#" class="sidebar-link">
+                                    <i class="mdi mdi-note-outline"></i>
+                                    <span class="hide-menu">
+                                        Hammasi {{ jami }}
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a href="#" class="sidebar-link">
+                                    <i class="mdi mdi-note-plus"></i>
+                                    <span class="hide-menu">
+                                        Nazoratda  {{ nazoratda }}
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a href="#" class="sidebar-link">
+                                    <i class="mdi mdi-note-plus"></i>
+                                    <span class="hide-menu">
+                                        Bajarilgan  {{ bajarilgan }}
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a href="#" class="sidebar-link">
+                                    <i class="mdi mdi-note-plus"></i>
+                                    <span class="hide-menu">
+                                        Muddati o'tgan  {{ muddati_utgan }}
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a href="#" class="sidebar-link">
+                                    <i class="mdi mdi-note-plus"></i>
+                                    <span class="hide-menu">
+                                        Muddati bor  <b>{{ muddat_bor }}</b>
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="sidebar-item p-3">
+                        <a href="#" target="_blank"
+                           class="w-100 btn btn-cyan d-flex align-items-center text-white">
+                            <i class="mdi mdi-cloud-download font-20 me-2"></i>
+                            Hisobotni yuklash
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <!-- End Sidebar navigation -->
+        </div>
+        <!-- End Sidebar scroll-->
+    </aside>
+    <!-- ============================================================== -->
+    <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+    <!-- ============================================================== -->
+
+    {% block content %}
+
+    {% endblock %}
+    <!-- ============================================================== -->
+    <!-- Page wrapper  -->
+    <!-- ============================================================== -->
+
+    <!-- ============================================================== -->
+    <!-- End Page wrapper  -->
+    <!-- ============================================================== -->
+</div>
+<!-- ============================================================== -->
+<!-- End Wrapper -->
+<!-- ============================================================== -->
+<!-- ============================================================== -->
+<!-- All Jquery -->
+<!-- ============================================================== -->
+<script src="{% static 'assets/libs/jquery/dist/jquery.min.js' %}"></script>
+<!-- Bootstrap tether Core JavaScript -->
+<script src="{% static 'assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js' %}"></script>
+<script src="{% static 'assets/extra-libs/sparkline/sparkline.js' %}"></script>
+<!--Wave Effects -->
+<script src="{% static 'dist/js/waves.js' %}"></script>
+<!--Menu sidebar -->
+<script src="{% static 'dist/js/sidebarmenu.js' %}"></script>
+<!--Custom JavaScript -->
+<script src="{% static 'dist/js/custom.min.js' %}"></script>
+<!--This page JavaScript -->
+<!-- <script src="../dist/js/pages/dashboards/dashboard1.js"></script> -->
+<!-- Charts js Files -->
+<script src="{% static 'dist/js/custom.min.js' %}"></script>
+<script src="{% static 'assets/libs/flot/jquery.flot.js' %}"></script>
+<script src="{% static 'assets/libs/flot/jquery.flot.pie.js' %}"></script>
+<script src="{% static 'assets/libs/flot/jquery.flot.time.js' %}"></script>
+<script src="{% static 'assets/libs/flot/jquery.flot.stack.js' %}"></script>
+<script src="{% static 'assets/libs/flot/jquery.flot.crosshair.js' %}"></script>
+<script src="{% static 'assets/libs/flot.tooltip/js/jquery.flot.tooltip.min.js' %}"></script>
+<script src="{% static 'dist/js/pages/chart/chart-page-init.js' %}"></script>
+<!-- For Table -->
+<script src="{% static 'assets/extra-libs/multicheck/datatable-checkbox-init.js' %}"></script>
+<script src="{% static 'assets/extra-libs/multicheck/jquery.multicheck.js' %}"></script>
+<script src="{% static 'assets/extra-libs/DataTables/datatables.min.js' %}"></script>
+
+
+<script>
+    /****************************************
+     *       Basic Table                   *
+     ****************************************/
+    $("#zero_config").DataTable();
+</script>
 </body>
-
-<script type="text/JavaScript" src="{% static 'js/main.js' %}"></script>
 </html>

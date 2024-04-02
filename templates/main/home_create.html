@@ -1,253 +1,335 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-    
-    <div class="back-effect">
 
-        <div class="order-control">
-            <form method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                <nav>
-                <span>
-                    <p>
-                        Nazorat kartasining turi:
-                    </p>
-                    <select name="control_card" id="tipconcart">
-                        {% for control_card in control_cards %}
-                            <option value="{{ control_card.name }}">{{ control_card.name }}</option>
-                        {% endfor %}
-                        <option value="16">16</option>
-                        <option value="26">26</option>
-                        <option value="36">36</option>
-                        <option value="46">46</option>
-                        <option value="ТДСИ фуқаролари">ТДСИ фуқаролари</option>
-                    </select>
-                </span>
-                </nav>
-                <hr>
-                <nav>
-                <span>
-                    <p>
-                        <i class="fa fa-users"></i> 
-                        Guruhi:
-                    </p>
-                    <select name="group" id="select-org_group">
-                        {% for group in groups %}
-                            <option value="{{ group.name }}">
-                                {{ group.name }}
-                            </option>
-                        {% endfor %}
-                    </select>
-                </span>
-                    <br>
-                    <span>
-                    <p>
-                        Muhbir:
-                    </p>
-                    <select name="group" id="select-org_group">
-                        {% for reporter in reporters %}
-                            <option value="{{ reporter.name }}">
-                                {{ reporter.name }}
-                            </option>
-                        {% endfor %}
-                    </select>
-                        
-                </span>
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/libs/select2/dist/css/select2.min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/libs/jquery-minicolors/jquery.minicolors.css' %}"/>
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'assets/libs/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/libs/quill/dist/quill.snow.css' %}"/>
 
-                </nav>
-                <hr>
-                <nav>
-                <span>
-                    <p>
-                        Тип документа:
-                    </p>
-                    <select name="tip_doc" id="tip_doc">
-                        {% for document_type in document_types %}
-                            <option class="tag-none 1b" value="{{ document_type.name }}">
-                                {{ document_type.name }}
-                            </option>
-                        {% endfor %}
+    <div class="page-wrapper">
 
-                        <option class="" value="Ариза">
-                            Ариза
-                        </option>
-						<option class="" value="Ўзбекистон Республикаси Пpезидентининг фаpмони">Ўзбекистон Республикаси Пpезидентининг фаpмони</option>
-						<option class="" value="Ўзбекистон Республикаси Пpезиденти фаpмойиш">Ўзбекистон Республикаси Пpезиденти фаpмойиш</option>
-						<option class=""
-                                value="Ўзбекистон Республикасиниг Конуни">Ўзбекистон Республикасиниг Конуни</option>
-						<option class="" value="Ўзбекистон Республикаси Олий Мажлисининг Каpоpи">Ўзбекистон Республикаси Олий Мажлисининг Каpоpи</option>
-						<option class="" value="ЎР Президентининг  протокол топшириги">ЎР Президентининг  протокол топшириги</option>
-						<option class="" value="ЎР Президентининг топшириги">ЎР Президентининг топшириги</option>
-						<option class=""
-                                value="ЎР Президентининг огиз топшириги">ЎР Президентининг огиз топшириги</option>
-						<option class="" value="ЎР Пpезиденти Аппаpатининг топшиpиги">ЎР Пpезиденти Аппаpатининг топшиpиги</option>
-						<option class="" value="Ўзбекистон Респуб-си Олий Мажлисининг фармоиши">Ўзбекистон Респуб-си Олий Мажлисининг фармоиши</option>
-						<option class="" value="Ўзбекистон Респуб-си Олий Мажлисининг хужжатлаpи">Ўзбекистон Респуб-си Олий Мажлисининг хужжатлаpи</option>
-						<option class="" value="ЎР Олий Мажлиси Кўмиталаpнинг хужжатлаpи">ЎР Олий Мажлиси Кўмиталаpнинг хужжатлаpи</option>
-						<option class="" value="Ўзбекистон Республикаси Хисоб Палатаси топшиpиги">Ўзбекистон Республикаси Хисоб Палатаси топшиpиги</option>
-						<option class="" value="Ўзбекистон Республикаси Президентининг Карори">Ўзбекистон Республикаси Президентининг Карори</option>
-						<option class="" value="ЎР Олий Мажлисининг Фан, таълим, маданият ва спорт масалалари Кўмитаси">ЎР Олий Мажлисининг Фан, таълим, маданият ва спорт масалалари Кўмитаси</option>
-						<option class="" value="Ўзбекистон Республикаси Олий Мажлиси Сенатининг Девони">Ўзбекистон Республикаси Олий Мажлиси Сенатининг Девони</option>
-						<option class="" value="Вазиpлаp Махкамаси мажлиси хужжатлаpининг лойихаси">Вазиpлаp Махкамаси мажлиси хужжатлаpининг лойихаси</option>
-						<option class="" value="Узб. Республикаси Бош вазиpининг топшиpиги">Узб. Республикаси Бош вазиpининг топшиpиги</option>
-						<option class=""
-                                value="Ўзбекистон Республикаси ВМ буйpуги">Ўзбекистон Республикаси ВМ буйpуги</option>
-						<option class="" value="Ўзбекистон Республикаси ВМ мажлис баёни">Ўзбекистон Республикаси ВМ мажлис баёни</option>
-						<option class=""
-                                value="Бош Вазир уринбосарининг топшириги">Бош Вазир уринбосарининг топшириги</option>
-						<option class="" value="Бош вазиp хузуpида ўтказилган мажлиснинг баёни">Бош вазиp хузуpида ўтказилган мажлиснинг баёни</option>
-						<option class=""
-                                value="Пpотокол заседаний пpезидиума КМ">Пpотокол заседаний пpезидиума КМ</option>
-						<option class="" value="Ахборотнома">Ахборотнома</option>
-						<option class=""
-                                value="ЎР ВМ комплекс мажлиснинг баёни">ЎР ВМ комплекс мажлиснинг баёни</option>
-						<option class="" value="ЎР ВМ котибият (департамент, бўлим) мажлиснинг баёни">ЎР ВМ котибият (департамент, бўлим) мажлиснинг баёни</option>
-						<option class="" value="ЎР ВМ карори бажарилиши назорат режаси">ЎР ВМ карори бажарилиши назорат режаси</option>
-						<option class="" value="ЎР ВМ фармойиши бажарилиши назорат режаси">ЎР ВМ фармойиши бажарилиши назорат режаси </option>
-						<option class="" value="ЎР Пpезидентининг фаpмони бажарилиши назорат режаси"> ЎР Пpезидентининг фаpмони бажарилиши назорат режаси </option>
-						<option class="" value="Телефонограмма">Телефонограмма</option>
-						<option class="" value="Топширик ВМ">Топширик ВМ</option>
-						<option class="" value="ВМ иш режаси">ВМ иш режаси</option>
-						<option class="" value="ВМ дастури">ВМ дастури</option>
-						<option class="" value="Хат">Хат</option>
-						<option class=""
-                                value="Узбекистон Республикаси ВМ карори">Узбекистон Республикаси ВМ карори</option>
-						<option class="" value="Узбекистон Республикаси ВМ фармойиши">Узбекистон Республикаси ВМ фармойиши</option>
-						<option class="" value="ВМ назорат режаси">ВМ назорат режаси</option>
-						<option class="" value="Хайъат каролари">Хайъат каролари</option>
-						<option class="" value="Кушма карорлар">Кушма карорлар</option>
-						<option class="" value="Хат">Хат</option>
-						<option class="" value="ТДСИ Ректорининг буйруги">ТДСИ Ректорининг буйруги</option>
-						<option class="" value="Институт кенгашининг карори">Институт кенгашининг карори</option>
-						<option class="" value="Ректорат кенгашининг карори">Ректорат кенгашининг карори</option>
-						<option class="" value="Хат">Хат</option>
-						<option class="" value="Таклиф килмок">Таклиф килмок</option>
-						<option class="" value="Ариза">Ариза</option>
-						<option class="" value="Шикоят">Шикоят</option>
-						<option class="" value="Мурожаат">Мурожаат</option>
-						<option class="" value="Хайъат каролари">Хайъат каролари</option>
-						<option class="" value="Кушма карорлар">Кушма карорлар</option>
-						<option class="" value="Буйрук">Буйрук</option>
-						<option class="" value="Факсограмма">Факсограмма</option>
-						<option class="" value="Факс">Факс</option>
-						<option class="" value="Курсатма Хати">Курсатма Хати</option>
-						<option class="" value="Алока Хати">Алока Хати</option>
-						<option class="" value="Модемнома">Модемнома</option>
-						<option class="" value="Модемограмма">Модемограмма</option>
-						<option class="" value="Жадвал">Жадвал</option>
-						<option class="" value="Саволнома">Саволнома</option>
-						<option class="" value="Хабарнома">Хабарнома</option>
-						<option class="" value="Низом">Низом</option>
-						<option class="" value="Саволнома">Саволнома</option>
-						<option class="" value="Ички буйрук">Ички буйрук</option>
-                    </select>
-                </span>
-                    <br>
-                    <span>
-                    <p>
-                        Дата регистрации:
-                    </p>
-                    <input name="reg_date" type="datetime-local"/>
-                </span>
-                    <br>
-                    <span>
-                    <p>
-                        Регистрационный номер:
-                    </p>
-                    <input name="reg_nomer" type="text"/>
-                </span>
-                    <br>
-                    <span>
-                    <p>
-                        Дата документа:
-                    </p>
-                    <input name="doc_date" type="datetime-local"/>
-                </span>
-                    <br>
-                    <span>
-                    <p>
-                        Номер документа:
-                    </p>
-                    <input name="doc_nomer" type="text" value=""/>
-                </span>
-                    <br>
-                    <p>
-                        Краткое содержание:
-                    </p>
-                    <textarea name="kratkoy_soder" id="" cols="30" rows="10"></textarea>
-                </nav>
-                <nav>
-                    <label class="controlnoe" for="controlnoe">
-                        <input type="checkbox" id="controlnoe" value="off">
-                        Контрольное
-                        <input style="opacity: 0;" id="controlnoe_val" name="kontrolnoy" type="text" value="off">
-                    </label>
-                    <br>
-                    <br>
-                    <span>
-                    <p>
-                        Срок: 
-                    </p>
-                        <input id="srok" name="srok" type="datetime-local">
-                </span>
-                    <br>
-                    <p>
-                        Резолюция:
-                    </p>
-                    <textarea name="rezolyutsiya" id="" cols="30" rows="10">
-                        
-                    </textarea>
-                    <br>
-                    <br>
-                    <span>
-                    <p>
-                        <b>
-                            Qaror muallifi:
-                        </b>
-                    </p>
-                    <select name="avtor_rezolyutsiya" id="">
-                        {% for author_resolution in author_resolutions %}
-                            <option value="{{ author_resolution.name }}">{{ author_resolution.name }}</option>
-                        {% endfor %}
-                        <option value="Хайдаров Нодиржон Қодирович">Хайдаров Нодиржон Қодирович</option>
-                        <option value="Баймаков Сайфиддин Рисбаевич">Баймаков Сайфиддин Рисбаевич</option>
-                        <option value="Шомуродов Қахрамон Эркинович">Шомуродов Қахрамон Эркинович</option>
-                        <option value="Ярмухамедов Бехзод Хамидович">Ярмухамедов Бехзод Хамидович</option>
-                        <option value="Юнусов Равшан Алимжанович">Юнусов Равшан Алимжанович</option>
-                        <option value="Ахмедов Саидазиз Пўлатович">Ахмедов Саидазиз Пўлатович</option>
-                    </select>
-                </span>
-                    <br>
-                    <span>
-                    <p>
-                        Yechim turi:
-                    </p>
-                    <select name="vid_resheniya" id="">
-                        {% for type_solution in type_solutions %}
-                            <option value="{{ type_solution.name }}">
-                                {{ type_solution.name }}
-                            </option>
-                        {% endfor %}
-                        <option value="Анонимлиги тасдиқланди">Анонимлиги тасдиқланди</option>
-                        <option value="Қайтарилди">Қайтарилди</option>
-                        <option value="Қондирилди ва чоралар кўрилди">Қондирилди ва чоралар кўрилди</option>
-                        <option value="Кўриб чиқилмоқда">Кўриб чиқилмоқда</option>
-                        <option value="Малумот учун қабул қилинди">Малумот учун қабул қилинди</option>
-                        <option value="Рад этилди">Рад этилди</option>
-                        <option value="Тегиш идоралар ва ҳокимятларга юборилган">Тегиш идоралар ва ҳокимятларга юборилган</option>
-                        <option value="Тушунтирилди">Тушунтирилди</option>
-                        <option value="Ҳудудий идораларга юборилган">Ҳудудий идораларга юборилган</option>
-                    </select>
-                </span>
-                </nav>
-                <nav>
+        <!-- ============================================================== -->
+        <!-- Container fluid  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid">
+            <!-- ============================================================== -->
+            <!-- Start Page Content -->
+            <!-- ============================================================== -->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <form class="form-horizontal" method="post">
+                            {% csrf_token %}
+                            <div class="card-body">
+                                <h4 class="card-title">Xat yuborish</h4>
+                                <!-- Nazorat kartasining turi:  Тип РКК-->
+                                <div class="form-group row">
+                                    <label for="fname" class="col-sm-3 text-end control-label col-form-label">
+                                        Nazorat kartasining turi:
+                                    </label>
+                                    <!-- Nazorat kartasining turi:  Тип РКК-->
+                                    <div class="col-md-9">
+                                        <select class="select2 form-select shadow-none"
+                                                style="width: 100%; height: 36px">
+                                            <option>Select</option>
+                                            {% for control_card in control_cards %}
+                                                <option value="{{ control_card.name }}">{{ control_card.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <!-- tugadi Nazorat kartasining turi:  Тип РКК-->
+                                <!-- Guruhi -->
+                                <div class="form-group row">
+                                    <label for="fname" class="col-sm-3 text-end control-label col-form-label">
+                                        Guruh:
+                                    </label>
+                                    <!-- Guruh -->
+                                    <div class="col-md-9">
+                                        <select class="select2 form-select shadow-none"
+                                                style="width: 100%; height: 36px">
+                                            <option>Select</option>
+                                            {% for group in groups %}
+                                                <option value="{{ group.name }}">{{ group.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <!-- tugadi Guruhi -->
 
-                <span class="save-del">
-                    <input class="bos" type="submit" value="Сохранить">
-                </span>
-                </nav>
-                <hr>
-            </form>
+                                <!-- Корреспондент Muhbir -->
+                                <div class="form-group row">
+                                    <label for="fname" class="col-sm-3 text-end control-label col-form-label">
+                                        Muhbir:
+                                    </label>
+                                    <!-- Muhbir -->
+                                    <div class="col-md-9">
+                                        <select class="select2 form-select shadow-none"
+                                                style="width: 100%; height: 36px">
+                                            <option>Select</option>
+                                            {% for reporter in reporters %}
+                                                <option value="{{ reporter.name }}">{{ reporter.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <!-- Tugadi Корреспондент Muhbir -->
+
+                                <!-- Тип документа Hujjat turi -->
+                                <div class="form-group row">
+                                    <label for="fname" class="col-sm-3 text-end control-label col-form-label">
+                                        Hujjat turi:
+                                    </label>
+                                    <!-- Hujjat turi -->
+                                    <div class="col-md-9">
+                                        <select class="select2 form-select shadow-none"
+                                                style="width: 100%; height: 36px">
+                                            <option>Select</option>
+                                            {% for document_type in document_types %}
+                                                <option value="{{ document_type.name }}">{{ document_type.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <!-- tugadi Тип документа Hujjat turi -->
+
+                                <div class="mt-3">
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-striped" role="progressbar"
+                                             style="width: 100%" aria-valuenow="10" aria-valuemin="0"
+                                             aria-valuemax="100">
+                                        </div>
+                                    </div>
+                                </div>  <!-- chiziq -->
+
+                                <!-- Ro'yhatga olingan raqami va sanasi Тип документа: -->
+                                <div class="form-group row">
+                                    <label for="fname" class="col-md-6 control-label col-form-label">
+                                        Ro'yhatga olingan raqami:
+                                    </label>
+                                    <label for="fname" class="col-md-6 text-end control-label col-form-label">
+                                        Ro'yhatga olingan sana:
+                                    </label>
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control col-md-6" id="fname"
+                                               placeholder="First Name Here"/>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="date" class="form-control col-md-6" id="fname"
+                                               placeholder="First Name Here"/>
+                                    </div>
+                                </div>
+                                <!-- tugadi Ro'yhatga olingan raqami va sanasi Тип документа: -->
+
+                                <hr>
+
+                                <!-- Hujjat sanasi va raqami Дата документа: -->
+                                <div class="form-group row">
+                                    <label for="fname" class="col-md-6 control-label col-form-label">
+                                        Hujjat raqami:
+                                    </label>
+                                    <label for="fname" class="col-md-6 text-end control-label col-form-label">
+                                        Hujjat sanasi:
+                                    </label>
+                                    <div class="col-md-6">
+                                        <input type="text" class="form-control" id="fname"
+                                               placeholder="First Name Here"/>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="date" class="form-control" id="fname"
+                                               placeholder="First Name Here"/>
+                                    </div>
+
+                                </div>
+                                <!-- tugadi Hujjat sanasi va raqami Дата документа: -->
+
+                                <div class="mt-3">
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-striped" role="progressbar"
+                                             style="width: 100%" aria-valuenow="10" aria-valuemin="0"
+                                             aria-valuemax="100">
+                                        </div>
+                                    </div>
+                                </div> <!-- Chiziq -->
+                                
+                                <!-- Xulosa Краткое содержание: -->
+                                <div class="form-group row">
+                                    <label for="cono1" class="col-sm-3 text-end control-label col-form-label">
+                                        Xulosa
+                                    </label>
+                                    <div class="col-sm-9">
+                                        <textarea class="form-control" name="summery">
+
+                                        </textarea>
+                                    </div>
+                                </div>
+                                <!-- tugadi Xulosa Краткое содержание: -->
+
+                                <!-- Muddat Срок: -->
+                                <div class="form-group row">
+                                    <label for="fname" class="col-sm-3 text-end control-label col-form-label">
+                                        Bajarilish muddati:
+                                    </label>
+                                    <div class="col-sm-9">
+                                        <input type="date" class="form-control" id="fname"
+                                               placeholder="First Name Here"/>
+                                    </div>
+                                </div>
+                                <!-- tugadi Muddat Срок: -->
+
+                                <!-- Rezolutsiya Резолюция: -->
+                                <div class="form-group row">
+                                    <label for="cono1" class="col-sm-3 text-end control-label col-form-label">
+                                        Rezolutsiya
+                                    </label>
+                                    <div class="col-sm-9">
+                                        <textarea class="form-control" name="summery">
+
+                                        </textarea>
+                                    </div>
+                                </div>
+                                <!-- tugadi Rezolutsiya Резолюция: -->
+
+                                <!-- Qaror muallifi: -->
+                                <div class="form-group row">
+                                    <label for="fname" class="col-sm-3 text-end control-label col-form-label">
+                                        Qaror muallifi:
+                                    </label>
+                                    <!-- qaror muallifi -->
+                                    <div class="col-md-9">
+                                        <select class="select2 form-select shadow-none"
+                                                style="width: 100%; height: 36px">
+                                            <option>Select</option>
+                                            {% for author_resolution in author_resolutions %}
+                                                <option value="{{ author_resolution.name }}">{{ author_resolution.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <!-- tugadi Qaror muallifi: -->
+
+                                <!-- Yechim turi: -->
+                                <div class="form-group row">
+                                    <label for="fname" class="col-sm-3 text-end control-label col-form-label">
+                                        Yechim turi:
+                                    </label>
+                                    <!-- yechim turi -->
+                                    <div class="col-md-9">
+                                        <select class="select2 form-select shadow-none"
+                                                style="width: 100%; height: 36px">
+                                            <option>Select</option>
+                                            {% for type_solution in type_solutions %}
+                                                <option value="{{ type_solution.name }}">{{ type_solution.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <!-- tugadi Yechim turi: -->
+
+                                <!-- Buyruq fayl yuklash: -->
+                                <div class="form-group row">
+                                    <label for="fname" class="col-sm-3 text-end control-label col-form-label">
+                                        Buyruq:
+                                    </label>
+                                    <div class="col-sm-9">
+                                        <input type="file" class="form-control" id="validatedCustomFile" required/>
+                                        <div class="invalid-feedback">
+                                            Example invalid custom file feedback
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- tugadi Buyruq fayl yuklash: -->
+
+                                <div class="">
+                                    <label for="centers">Bo'limlarni tanlang:</label>
+                                    <select name="centers" id="cars" multiple="multiple" style="width: 350px" size="15">
+                                        {% for center in centers %}
+                                            <option value="{{ center.name }}">{{ center.name }}
+                                                - {{ center.user.first_name }} {{ center.user.last_name }}</option>
+                                        {% endfor %}
+                                        
+                                    </select>
+                                </div>
+                                <br><br>
+                            </div>
+                            <div class="border-top">
+                                <div class="card-body">
+                                    <button type="button" class="btn btn-lg btn-outline-success" id="ts-success">
+                                        Success
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- Right sidebar -->
+            <!-- ============================================================== -->
+            <!-- .right-sidebar -->
+            <!-- ============================================================== -->
+            <!-- End Right sidebar -->
+            <!-- ============================================================== -->
         </div>
+        <!-- ============================================================== -->
+        <!-- End Container fluid  -->
+
     </div>
+
+
+    <script src="{% static 'assets/libs/inputmask/dist/min/jquery.inputmask.bundle.min.js' %}"></script>
+    <script src="{% static 'dist/js/pages/mask/mask.init.js' %}"></script>
+    <script src="{% static 'assets/libs/select2/dist/js/select2.full.min.js' %}"></script>
+    <script src="{% static 'assets/libs/select2/dist/js/select2.min.js' %}"></script>
+    <script src="{% static 'assets/libs/jquery-asColor/dist/jquery-asColor.min.js' %}"></script>
+    <script src="{% static 'assets/libs/jquery-asGradient/dist/jquery-asGradient.js' %}"></script>
+    <script src="{% static 'assets/libs/jquery-asColorPicker/dist/jquery-asColorPicker.min.js' %}"></script>
+    <script src="{% static 'assets/libs/jquery-minicolors/jquery.minicolors.min.js' %}"></script>
+    <script src="{% static 'assets/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js' %}"></script>
+    <script src="{% static 'assets/libs/quill/dist/quill.min.js' %}"></script>
+    <script>
+        //***********************************//
+        // For select 2
+        //***********************************//
+        $(".select2").select2();
+
+        /*colorpicker*/
+        $(".demo").each(function () {
+            //
+            // Dear reader, it's actually very easy to initialize MiniColors. For example:
+            //
+            //  $(selector).minicolors();
+            //
+            // The way I've done it below is just for the demo, so don't get confused
+            // by it. Also, data- attributes aren't supported at this time...they're
+            // only used for this demo.
+            //
+            $(this).minicolors({
+                control: $(this).attr("data-control") || "hue",
+                position: $(this).attr("data-position") || "bottom left",
+
+                change: function (value, opacity) {
+                    if (!value) return;
+                    if (opacity) value += ", " + opacity;
+                    if (typeof console === "object") {
+                        console.log(value);
+                    }
+                },
+                theme: "bootstrap",
+            });
+        });
+        /*datwpicker*/
+        jQuery(".mydatepicker").datepicker();
+        jQuery("#datepicker-autoclose").datepicker({
+            autoclose: true,
+            todayHighlight: true,
+        });
+        var quill = new Quill("#editor", {
+            theme: "snow",
+        });
+    </script>
+    
 {% endblock %}

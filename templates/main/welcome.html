@@ -2,93 +2,183 @@
 
 {% block content %}
 
-    <div class="welcome">
-        <div class="table">
-            <table id="customers" class="main-table">
-                <tr>
-                    <th>#</th>
-                    <th>Рег №</th>
-                    <th>Дата регистрации</th>
-                    <th>Тип РКК</th>
-                    <th>Вид документа</th>
-                    <th>Корреспондент</th>
-                    <th>Срок</th>
-                    <th>Дней</th>
-                    <th><i class="fa fa-spin fa-gear"></i></th>
-                </tr>
-                {% for manager in managers %}
-                    <tr class="">
-                        <td class="td-id">
-                            <a href="{% url 'main:welcome' %}">
-                                {{ manager.letter.id }}
-                            </a>
-                        </td>
-                        <td>
-                            {{ manager.letter.registration_number }}
-                        </td>
-
-                        <td class="td-doc_date">
-                            {{ manager.letter.registration_date }}
-                        </td>
-
-                        <td class="td-tipconcart"> <!-- Tip RKK -->
-                            {{ manager.letter.control_card }}
-                        </td>
-
-                        <td class="td-tip_doc"> <!-- Тип документа Hujjat turi -->
-                            {{ manager.letter.document_type }}
-                        </td>
-
-                        <td class="td-korrespond"> <!-- Корреспондент Muhbir -->
-                            {{ manager.letter.reporter }}
-                        </td>
-
-                        <td class="srok-doc"> <!-- Срок Muddat -->
-                            {{ manager.lifetime }}
-                        </td>
-
-                        <td>
-                            {{ manager.time_on }}
-                        </td>
-                        <td class="td-edit">
-                            <a href="{% url 'main:welcome' %}">
-                                <i class="order-editor fa fa-edit"></i>
-                            </a>
-                            <i class="order-remover fa fa-trash"></i>
-                        </td>
-                    </tr>
-                {% empty %}
-                    <p>
-                        Sizga hozircha hech qanday xat biriktrilmagan.
-                    </p>
-                {% endfor %}
-
-            </table>
-
-            <form class="delete-order" method="post" action="{% url 'main:welcome' %}" enctype="multipart/form-data">
-
-                {% csrf_token %}
-                <input name="id" id="delete_id" type="text" readonly><br><br>
-                <nav>
-                    <button type="submit">
-                        Удалить
-                    </button>
-
-                    <a href="">
-                        <p>Закрыть
-                        </p>
-                    </a>
-                </nav>
-
-            </form>
+    <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Bread crumb and right sidebar toggle  Tepasi  -->
+        <!-- ============================================================== -->
+        <div class="page-breadcrumb">
+            <div class="row">
+                <div class="col-12 d-flex no-block align-items-center">
+                    <h4 class="page-title">
+                        Toshkent davlat stomatologiya institutining axborot almashinuv platformasi
+                    </h4>
+                    <div class="ms-auto text-end">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a href="#">
+                                        Dashboard
+                                    </a>
+                                </li>
+                                <li class="breadcrumb-item active" aria-current="page">
+                                    Library
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
         </div>
+        <!-- ============================================================== -->
+        <!-- End Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Container fluid  jami, yangi, jarayonda, bajarilgan, muddati o'tgan  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid">
+            <!-- ============================================================== -->
+            <!-- Sales Cards  -->
+            <!-- ============================================================== -->
+            <div class="row">
+                <!-- Column -->
+                <div class="col-md-6 col-lg-3 col-xlg-3">
+                    <div class="card card-hover">
+                        <div class="box bg-cyan text-center">
+                            <h1 class="font-light text-white">
+                                <i class="mdi mdi-view-dashboard"></i>
+                            </h1>
+                            <h6 class="text-white">Barcha hatlar {{ jami }}</h6>
+                        </div>
+                    </div>
+                </div>
+                <!-- Column -->
+                <div class="col-md-6 col-lg-3 col-xlg-3">
+                    <div class="card card-hover">
+                        <div class="box bg-success text-center">
+                            <h1 class="font-light text-white">
+                                <i class="mdi mdi-chart-areaspline"></i>
+                            </h1>
+                            <h6 class="text-white">Bajarilgan {{ bajarilgan }}</h6>
+                        </div>
+                    </div>
+                </div>
+                <!-- Column -->
+                <div class="col-md-6 col-lg-3 col-xlg-3">
+                    <div class="card card-hover">
+                        <div class="box bg-warning text-center">
+                            <h1 class="font-light text-white">
+                                <i class="mdi mdi-collage"></i>
+                            </h1>
+                            <h6 class="text-white">Nazoratda {{ nazoratda }}</h6>
+                        </div>
+                    </div>
+                </div>
+                <!-- Column -->
+                <div class="col-md-6 col-lg-3 col-xlg-3">
+                    <div class="card card-hover">
+                        <div class="box bg-danger text-center">
+                            <h1 class="font-light text-white">
+                                <i class="mdi mdi-border-outside"></i>
+                            </h1>
+                            <h6 class="text-white">Muddati o'tgan {{ muddati_utgan }}</h6>
+                        </div>
+                    </div>
+                </div>
+                <!-- Column -->
 
+                <!-- Column -->
+            </div>
+            <!-- ============================================================== -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Xatlar</h5>
+                            <div class="table-responsive">
+                                <table id="zero_config" class="table table-striped table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Reg / №</th>
+                                        <th>Ro'yxatga olingan sana</th>
+                                        <th>Nazorat kartasi</th>
+                                        <th>Hujjat turi</th>  <!-- Вид документа -->
+                                        <th>Muhbir</th>  <!-- Корреспондент Muhbir -->
+                                        <th>Muddat</th>  <!-- Срок Muddat -->
+                                        <th>Qolgan kun</th>  <!-- Дней Qolgan kun -->
+                                        <th><i class="mdi mdi-settings fs-8"></i></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for manager in managers %}
+                                        <tr>
+                                            <td>{{ manager.letter.id }}</td>
+                                            <td>{{ manager.letter.registration_number }}
+                                                / {{ manager.letter.document_number }}</td>
+                                            <td>{{ manager.letter.registration_date }}</td>
+                                            <td>{{ manager.letter.control_card }}</td>
+                                            <td>{{ manager.letter.document_type }}</td>
+                                            <td>{{ manager.letter.reporter }}</td>
+                                            <td>{{ manager.lifetime }}</td>
+                                            <td>{{ manager.time_on }}</td>
+                                            <td>
+                                                <a href="{% url 'main:welcome' %}">
+                                                    <span class="btn btn-success btn-circle d-flex align-items-center justify-content-center ">
+                                                        <i class="mdi mdi-pencil text-white fs-4"></i>
+                                                    </span>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% empty %}
+                                        <td valign="top" colspan="8" class="dataTables_empty">
+                                            Jadvalda ma'lumotlar mavjud emas
+                                        </td>
+                                    {% endfor %}
+                                    </tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Reg / №</th>
+                                        <th>Ro'yxatga olingan sana</th>
+                                        <th>Nazorat kartasi</th>
+                                        <th>Hujjat turi</th>  <!-- Вид документа -->
+                                        <th>Muhbir</th>  <!-- Корреспондент Muhbir -->
+                                        <th>Muddat</th>  <!-- Срок Muddat -->
+                                        <th>Qolgan kun</th>  <!-- Дней Qolgan kun -->
+                                        <th><i class="mdi mdi-settings fs-8"></i></th>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Container fluid  -->
+        <!-- ============================================================== -->
+
+        <!-- ============================================================== -->
+        <!-- footer -->
+        <!-- ============================================================== -->
+
+        <footer class="footer text-center">
+            All Rights Reserved by Matrix-admin. Designed and Developed by
+            <a href="https://www.wrappixel.com">
+                TalantDeveloper
+            </a>.
+        </footer>
+        <!-- ============================================================== -->
+        <!-- End footer -->
+        <!-- ============================================================== -->
     </div>
-
-    <br>
 
     {% block home %}
 
     {% endblock %}
+
+
 
 {% endblock %}
