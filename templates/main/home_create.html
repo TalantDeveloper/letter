@@ -20,7 +20,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="card">
-                        <form class="form-horizontal" method="post">
+                        <form class="form-horizontal" method="POST" enctype="multipart/form-data">
                             {% csrf_token %}
                             <div class="card-body">
                                 <h4 class="card-title">Xat yuborish</h4>
@@ -31,13 +31,15 @@
                                     </label>
                                     <!-- Nazorat kartasining turi:  Тип РКК-->
                                     <div class="col-md-9">
-                                        <select class="select2 form-select shadow-none"
-                                                style="width: 100%; height: 36px">
-                                            <option>Select</option>
-                                            {% for control_card in control_cards %}
-                                                <option value="{{ control_card.name }}">{{ control_card.name }}</option>
-                                            {% endfor %}
-                                        </select>
+                                        <label>
+                                            <select class="select2 form-select shadow-none"
+                                                    style="width: 100%; height: 36px" name="control_card">
+                                                <option>Select</option>
+                                                {% for control_card in control_cards %}
+                                                    <option value="{{ control_card.name }}">{{ control_card.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </label>
                                     </div>
                                 </div>
                                 <!-- tugadi Nazorat kartasining turi:  Тип РКК-->
@@ -48,13 +50,15 @@
                                     </label>
                                     <!-- Guruh -->
                                     <div class="col-md-9">
-                                        <select class="select2 form-select shadow-none"
-                                                style="width: 100%; height: 36px">
-                                            <option>Select</option>
-                                            {% for group in groups %}
-                                                <option value="{{ group.name }}">{{ group.name }}</option>
-                                            {% endfor %}
-                                        </select>
+                                        <label>
+                                            <select class="select2 form-select shadow-none"
+                                                    style="width: 100%; height: 36px" name="group">
+                                                <option>Select</option>
+                                                {% for group in groups %}
+                                                    <option value="{{ group.name }}">{{ group.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </label>
                                     </div>
                                 </div>
                                 <!-- tugadi Guruhi -->
@@ -66,13 +70,15 @@
                                     </label>
                                     <!-- Muhbir -->
                                     <div class="col-md-9">
-                                        <select class="select2 form-select shadow-none"
-                                                style="width: 100%; height: 36px">
-                                            <option>Select</option>
-                                            {% for reporter in reporters %}
-                                                <option value="{{ reporter.name }}">{{ reporter.name }}</option>
-                                            {% endfor %}
-                                        </select>
+                                        <label>
+                                            <select class="select2 form-select shadow-none"
+                                                    style="width: 100%; height: 36px" name="reporter">
+                                                <option>Select</option>
+                                                {% for reporter in reporters %}
+                                                    <option value="{{ reporter.name }}">{{ reporter.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </label>
                                     </div>
                                 </div>
                                 <!-- Tugadi Корреспондент Muhbir -->
@@ -84,13 +90,15 @@
                                     </label>
                                     <!-- Hujjat turi -->
                                     <div class="col-md-9">
-                                        <select class="select2 form-select shadow-none"
-                                                style="width: 100%; height: 36px">
-                                            <option>Select</option>
-                                            {% for document_type in document_types %}
-                                                <option value="{{ document_type.name }}">{{ document_type.name }}</option>
-                                            {% endfor %}
-                                        </select>
+                                        <label>
+                                            <select class="select2 form-select shadow-none"
+                                                    style="width: 100%; height: 36px" name="document_type">
+                                                <option>Select</option>
+                                                {% for document_type in document_types %}
+                                                    <option value="{{ document_type.name }}">{{ document_type.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </label>
                                     </div>
                                 </div>
                                 <!-- tugadi Тип документа Hujjat turi -->
@@ -114,11 +122,11 @@
                                     </label>
                                     <div class="col-md-6">
                                         <input type="text" class="form-control col-md-6" id="fname"
-                                               placeholder="First Name Here"/>
+                                               placeholder="0124" name="registration_number"/>
                                     </div>
                                     <div class="col-md-6">
                                         <input type="date" class="form-control col-md-6" id="fname"
-                                               placeholder="First Name Here"/>
+                                               name="registration_date"/>
                                     </div>
                                 </div>
                                 <!-- tugadi Ro'yhatga olingan raqami va sanasi Тип документа: -->
@@ -135,11 +143,11 @@
                                     </label>
                                     <div class="col-md-6">
                                         <input type="text" class="form-control" id="fname"
-                                               placeholder="First Name Here"/>
+                                               placeholder="03-456" name="document_number"/>
                                     </div>
                                     <div class="col-md-6">
                                         <input type="date" class="form-control" id="fname"
-                                               placeholder="First Name Here"/>
+                                               name="document_date"/>
                                     </div>
 
                                 </div>
@@ -153,16 +161,20 @@
                                         </div>
                                     </div>
                                 </div> <!-- Chiziq -->
-                                
+                                <br>
+                                <br>
+
                                 <!-- Xulosa Краткое содержание: -->
                                 <div class="form-group row">
                                     <label for="cono1" class="col-sm-3 text-end control-label col-form-label">
                                         Xulosa
                                     </label>
                                     <div class="col-sm-9">
-                                        <textarea class="form-control" name="summery">
-
-                                        </textarea>
+                                        <label class="col-md-12">
+                                            <textarea class="form-control" name="summary">
+                                                Xulosa
+                                            </textarea>
+                                        </label>
                                     </div>
                                 </div>
                                 <!-- tugadi Xulosa Краткое содержание: -->
@@ -174,7 +186,7 @@
                                     </label>
                                     <div class="col-sm-9">
                                         <input type="date" class="form-control" id="fname"
-                                               placeholder="First Name Here"/>
+                                               name="lifetime"/>
                                     </div>
                                 </div>
                                 <!-- tugadi Muddat Срок: -->
@@ -185,9 +197,11 @@
                                         Rezolutsiya
                                     </label>
                                     <div class="col-sm-9">
-                                        <textarea class="form-control" name="summery">
-
-                                        </textarea>
+                                        <label>
+                                            <textarea class="form-control" name="resolution">
+                                                
+                                            </textarea>
+                                        </label>
                                     </div>
                                 </div>
                                 <!-- tugadi Rezolutsiya Резолюция: -->
@@ -199,13 +213,15 @@
                                     </label>
                                     <!-- qaror muallifi -->
                                     <div class="col-md-9">
-                                        <select class="select2 form-select shadow-none"
-                                                style="width: 100%; height: 36px">
-                                            <option>Select</option>
-                                            {% for author_resolution in author_resolutions %}
-                                                <option value="{{ author_resolution.name }}">{{ author_resolution.name }}</option>
-                                            {% endfor %}
-                                        </select>
+                                        <label>
+                                            <select class="select2 form-select shadow-none"
+                                                    style="width: 100%; height: 36px" name="auth_resolution">
+                                                <option>Select</option>
+                                                {% for author_resolution in author_resolutions %}
+                                                    <option value="{{ author_resolution.name }}">{{ author_resolution.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </label>
                                     </div>
                                 </div>
                                 <!-- tugadi Qaror muallifi: -->
@@ -217,13 +233,15 @@
                                     </label>
                                     <!-- yechim turi -->
                                     <div class="col-md-9">
-                                        <select class="select2 form-select shadow-none"
-                                                style="width: 100%; height: 36px">
-                                            <option>Select</option>
-                                            {% for type_solution in type_solutions %}
-                                                <option value="{{ type_solution.name }}">{{ type_solution.name }}</option>
-                                            {% endfor %}
-                                        </select>
+                                        <label>
+                                            <select class="select2 form-select shadow-none"
+                                                    style="width: 100%; height: 36px" name="type_solution">
+                                                <option>Select</option>
+                                                {% for type_solution in type_solutions %}
+                                                    <option value="{{ type_solution.name }}">{{ type_solution.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </label>
                                     </div>
                                 </div>
                                 <!-- tugadi Yechim turi: -->
@@ -234,7 +252,8 @@
                                         Buyruq:
                                     </label>
                                     <div class="col-sm-9">
-                                        <input type="file" class="form-control" id="validatedCustomFile" required/>
+                                        <input type="file" name="check_file" class="form-control"
+                                               id="validatedCustomFile" required/>
                                         <div class="invalid-feedback">
                                             Example invalid custom file feedback
                                         </div>
@@ -244,20 +263,25 @@
 
                                 <div class="">
                                     <label for="centers">Bo'limlarni tanlang:</label>
-                                    <select name="centers" id="cars" multiple="multiple" style="width: 350px" size="15">
-                                        {% for center in centers %}
-                                            <option value="{{ center.name }}">{{ center.name }}
-                                                - {{ center.user.first_name }} {{ center.user.last_name }}</option>
-                                        {% endfor %}
-                                        
-                                    </select>
+                                    <label for="cars"></label>
+                                    <select name="centers" id="cars" multiple="multiple"
+                                                                      style="width: 350px" size="15">
+                                    {% for center in centers %}
+                                        <option value="{{ center.name }}">
+                                            {{ center.name }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
                                 </div>
                                 <br><br>
                             </div>
+                            <span class="save-del">
+                                <input class="btn btn-primary" type="submit" value="Сохранить">
+                            </span>
                             <div class="border-top">
                                 <div class="card-body">
-                                    <button type="button" class="btn btn-lg btn-outline-success" id="ts-success">
-                                        Success
+                                    <button type="button" class="btn btn-primary">
+                                        Submit
                                     </button>
                                 </div>
                             </div>
@@ -331,5 +355,5 @@
             theme: "snow",
         });
     </script>
-    
+
 {% endblock %}

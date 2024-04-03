@@ -1,20 +1,11 @@
 from datetime import datetime
 
-from .models import Center, Manager, ControlCard, Group, Reporter, DocumentType, AuthorResolution, TypeSolution
+from django.contrib.contenttypes.models import ContentType
+from django.shortcuts import redirect
 
-
-# def all_manager_count(request):
-#     center = Center.objects.get(user__username=request.user.username)
-#     manager = Manager.objects.all()
-#     managers = []
-#
-#     if not center.user.is_superuser:
-#         for man in manager:
-#             if center in man.get_centers:
-#                 managers.append(man)
-#     else:
-#         managers = manager
-#
+from .forms import LetterForm
+from .models import Center, Manager, ControlCard, Group, Reporter, DocumentType, AuthorResolution, TypeSolution, \
+    CheckFile, Letter
 
 
 def content_need(request):
@@ -100,3 +91,43 @@ def get_models_list(request):
         'type_solutions': TypeSolution.objects.all(),  # Вид решения Yechim turi
     }
     return content
+
+
+def create_check_file(request):
+    file = request.FILES['check_file']
+    check_file = CheckFile.objects.create(file=file)
+    check_file.save()
+    return check_file
+
+
+def get_centers_post(request):
+    center_name = request.POST.getlist('centers')
+    centers = []
+    for center in center_name:
+        centers.append(Center.objects.get(name=center))
+    return centers
+
+
+def create_letter(request, selects):
+
+    letter = Letter.objects.create(
+        control_card=selects['control_card'],
+        group=selects['group'],
+        reporter=selects['reporter'],
+        document_type=selects['document_type'],
+        registration_date=request.POST['registration_date'],
+        registration_number=request.POST['registration_number'],
+        document_number=request.POST['document_number'],
+        document_date=request.POST['document_date'],
+        summary=request.POST['summary'],
+        resolution=request.POST['resolution'],
+        auth_resolution=selects['auth_resolution'],
+        type_solution=selects['type_solution']
+    )
+    if letter:
+        letter.save()
+        return letter
+    else:
+        return redirect('main:manager-add')
+
+
