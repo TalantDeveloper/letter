@@ -11,6 +11,7 @@ urlpatterns = [
     path('timeout/', views.manager_out_view, name='timeout'),
 
     path('manager-add/', views.create_manager_view, name='manager-add'),
+    path('manager-view/<int:manager_id>/', views.view_manager, name='manager-view'),
 
+    path('add-user/', views.employee_add, name='add-user'),
 ]
-

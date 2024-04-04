@@ -4,7 +4,7 @@ from .models import Manager, CheckFile, ControlFile, Letter, Center, ControlCard
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from .functions import content_need, manager_today, manager_control_file, manager_out, get_models_list, \
-    create_check_file, create_letter, get_centers_post
+    create_check_file, create_letter, get_centers_post, superuser_required
 
 
 def login_view(request):
@@ -74,12 +74,28 @@ def create_manager_view(request):
         )
         manager.centers.add(*centers)
         manager.save()
-
+        return redirect('main:welcome')
     return render(request, 'main/home_create.html', context=content)
 
 
+@login_required
+def view_manager(request, manager_id):
+    content = content_need(request)
+    manager = Manager.objects.get(id=manager_id)
+    content['manager'] = manager
+
+    return render(request, 'main/home_update.html', context=content)
 
 
-
+@login_required
+@superuser_required
+def employee_add(request):
+    content = content_need(request)
+    content['centers'] = Center.objects.all()
+    if request.method == 'POST':
+        print(request.POST)
+    if request.method == 'GET':
+        print(request.GET)
+    return render(request, 'user/add_user.html', context=content)
 
 

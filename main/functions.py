@@ -1,11 +1,9 @@
 from datetime import datetime
-
-from django.contrib.contenttypes.models import ContentType
+from django.http import HttpResponseForbidden
 from django.shortcuts import redirect
-
-from .forms import LetterForm
 from .models import Center, Manager, ControlCard, Group, Reporter, DocumentType, AuthorResolution, TypeSolution, \
     CheckFile, Letter
+from django.contrib.auth.models import User
 
 
 def content_need(request):
@@ -81,7 +79,15 @@ def manager_out(request):
 
 
 def get_models_list(request):
+    content = content_need(request)
     content = {
+        'managers': content['managers'],
+        'center': content['center'],
+        'jami': content['jami'],
+        'nazoratda': content['nazoratda'],
+        'bajarilgan': content['bajarilgan'],
+        'muddati_utgan': content['muddati_utgan'],
+        'muddat_bor': content['muddat_bor'],
         'centers': Center.objects.all(),  # Markazlar.
         'control_cards': ControlCard.objects.all(),  # Тип контрольной карточки Nazorat kartasining turi
         'groups': Group.objects.all(),  # Группа Guruh
@@ -109,7 +115,6 @@ def get_centers_post(request):
 
 
 def create_letter(request, selects):
-
     letter = Letter.objects.create(
         control_card=selects['control_card'],
         group=selects['group'],
@@ -130,4 +135,32 @@ def create_letter(request, selects):
     else:
         return redirect('main:manager-add')
 
+
+def superuser_required(view_func):
+    """
+    Decorator for views that checks whether the user is a superuser,
+    and returns HttpResponseForbidden if not.
+    """
+
+    def _wrapped_view(request, *args, **kwargs):
+        if not request.user.is_superuser:
+            return redirect('main:welcome')
+        return view_func(request, *args, **kwargs)
+
+    return _wrapped_view
+
+
+def create_user(request):
+    if request.method == 'POST':
+        full_name = request.POST['full_name']
+        username = request.POST['username']
+        password = request.POST['password']
+        confirm_password = request.POST['confirm_password']
+
+        if password != confirm_password:
+            user = User.objects.create_user(username=username, password=password, first_name=full_name)
+            user.save()
+            center = Center.objects.get(name=request.POST['center'])
+            center.user.add(user)
+            center.save()
 

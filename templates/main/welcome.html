@@ -112,7 +112,13 @@
                                     <tbody>
                                     {% for manager in managers %}
                                         <tr>
-                                            <td>{{ manager.letter.id }}</td>
+                                            <td>
+                                                <a href="{% url 'main:manager-view' manager.id %}">
+                                                    <span class="btn btn-outline-success d-flex align-items-center justify-content-center ">
+                                                        {{ manager.id }}
+                                                    </span>
+                                                </a>
+                                                </td>
                                             <td>{{ manager.letter.registration_number }}
                                                 / {{ manager.letter.document_number }}</td>
                                             <td>{{ manager.letter.registration_date }}</td>
