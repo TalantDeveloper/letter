@@ -156,11 +156,44 @@ def create_user(request):
         username = request.POST['username']
         password = request.POST['password']
         confirm_password = request.POST['confirm_password']
+        if password == confirm_password:
+            user = User.objects.create(
+                username=username,
+                password=password,
+                first_name=full_name)
+            if user:
+                user.save()
+                return redirect('main:users')
+            else:
+                return redirect('main:add-user')
+        else:
+            return redirect('main:add-user')
 
-        if password != confirm_password:
-            user = User.objects.create_user(username=username, password=password, first_name=full_name)
-            user.save()
-            center = Center.objects.get(name=request.POST['center'])
-            center.user.add(user)
-            center.save()
+
+def get_center_edit(request, center_id):
+    content = content_need(request)
+    center = Center.objects.get(id=center_id)
+    content['center_up'] = center
+    content['centers'] = Center.objects.all()
+    content['users'] = User.objects.all()
+    return content
+
+
+def center_edit(request, center_id):
+    center = Center.objects.get(id=center_id)
+    user = User.objects.get(id=request.POST['user_id'])
+    center.name = request.POST['name']
+    center.short = request.POST['short']
+    center.user = user
+    center.save()
+    return redirect('main:centers')
+
+
+def center_create(request):
+    name = request.POST['center_name']
+    short = request.POST['center_short']
+    center = Center(name=name, short=short)
+    if center:
+        center.save()
+        return redirect('main:centers')
 

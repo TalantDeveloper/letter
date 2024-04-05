@@ -1,15 +1,16 @@
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from .models import Manager, CheckFile, ControlFile, Letter, Center, ControlCard, Group, Reporter, DocumentType, \
     AuthorResolution, TypeSolution
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from .functions import content_need, manager_today, manager_control_file, manager_out, get_models_list, \
-    create_check_file, create_letter, get_centers_post, superuser_required
+    create_check_file, create_letter, get_centers_post, superuser_required, create_user, center_edit, get_center_edit, \
+    center_create
 
 
 def login_view(request):
     if request.method == 'POST':
-        print("Post")
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
@@ -20,6 +21,11 @@ def login_view(request):
         else:
             return redirect('main:login')
     return render(request, 'user/login.html')
+
+
+def logout_view(request):
+    logout(request)
+    return redirect('main:login')
 
 
 @login_required
@@ -89,13 +95,55 @@ def view_manager(request, manager_id):
 
 @login_required
 @superuser_required
-def employee_add(request):
+def create_user_view(request):
     content = content_need(request)
     content['centers'] = Center.objects.all()
     if request.method == 'POST':
-        print(request.POST)
-    if request.method == 'GET':
-        print(request.GET)
+        return create_user(request)
     return render(request, 'user/add_user.html', context=content)
 
 
+@login_required
+@superuser_required
+def view_centers(request):
+    if request.method == 'POST':
+        return center_create(request)
+    content = content_need(request)
+    centers = Center.objects.all()
+    content['centers'] = centers
+    return render(request, 'center/view_center.html', context=content)
+
+
+@login_required
+@superuser_required
+def center_edit_view(request, center_id):
+    if request.method == 'POST':
+        return center_edit(request, center_id)
+    content = get_center_edit(request, center_id)
+    return render(request, 'center/center_update.html', context=content)
+
+
+@login_required
+@superuser_required
+def delete_center(request, center_id):
+    if request.method == 'POST':
+        center = Center.objects.get(id=center_id)
+        center.delete()
+        return redirect('main:centers')
+    content = content_need(request)
+    return render(request, 'center/view_center.html', context=content)
+
+
+@login_required
+@superuser_required
+def view_users(request):
+    content = content_need(request)
+    content['users'] = User.objects.all()
+    return render(request, 'user/users.html', context=content)
+
+
+def view_user(request, user_id):
+    content = content_need(request)
+    content['user'] = User.objects.get(id=user_id)
+
+    return render(request, 'user/user_view.html', context=content)

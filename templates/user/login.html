@@ -36,7 +36,7 @@
             <div class="login100-pic js-tilt" data-tilt>
                 <img src="{% static 'images/logotip.png' %}" alt="IMG">
             </div>
-            <form class="login100-form validate-form" action="{% url 'main:login' %}" method="post">
+            <form class="login100-form validate-form" method="post">
                 {% csrf_token %}
                 <span class="login100-form-title">
 						Elektron xujjat almashuv platformasi

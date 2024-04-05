@@ -32,7 +32,7 @@ def upload_file_control(instance, filename):
 class Center(models.Model):
     name = models.CharField(max_length=256, verbose_name="Markaz")
     short = models.CharField(max_length=255, verbose_name="Short Name", null=True, blank=True)
-    user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name="Xodim")
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, verbose_name="Xodim", null=True, blank=True)
 
     create_at = models.DateTimeField(auto_now_add=True, verbose_name="Yaratilgan vaqt")
     update_at = models.DateTimeField(auto_now=True, verbose_name="O'zgartirilgan vaqt")

@@ -1,0 +1,69 @@
+{% extends 'center/view_center.html' %}
+
+{% block center %}
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <form class="form-horizontal" method="post" action="{% url 'main:center-edit' center_up.id %}">
+                {% csrf_token %}
+                    <div class="card-body">
+                        <h4 class="card-title"><b>{{ center_up.name }}</b> o'zgartirish.</h4>
+                        <div class="form-group row">
+                            <label for="id" class="col-sm-3 text-end control-label col-form-label">
+                                Bo'lim ID:
+                            </label>
+                            <div class="col-sm-9">
+                                <input type="number" name="number" class="form-control" id="id" value="{{ center_up.id }}" disabled/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="name" class="col-sm-3 text-end control-label col-form-label">
+                                Bo'lim nomi:
+                            </label>
+                            <div class="col-sm-9">
+                                <input type="text" name="name" class="form-control" id="name" value="{{ center_up.name }}"/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="short" class="col-sm-3 text-end control-label col-form-label">
+                                Qisqa nomi:
+                            </label>
+                            <div class="col-sm-9">
+                                <input type="text" name="short" class="form-control" id="short" value="{{ center_up.short }}"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="fname" class="col-sm-3 text-end control-label col-form-label">
+                                Xodim:
+                            </label>
+                            <!-- Nazorat kartasining turi:  Тип РКК-->
+                            <div class="col-md-9">
+                                <label>
+                                    <select class="select2 form-select shadow-none"
+                                            style="width: 100%; height: 36px" name="user_id">
+                                        <option value="{{ center_up.user.id }}">
+                                            {{ center_up.user.username }}
+                                        </option>
+                                        {% for user in users %}
+                                            <option value="{{ user.id }}">
+                                                {{ user.username }} - {{ user.first_name }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <span class="center" style="margin: 10%;">
+                        <input class="btn btn-primary center" type="submit" value="XATNI SAQLASH">
+                    </span>
+                    <br>
+                </form>
+                <br>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
