@@ -1,1 +1,84 @@
-salom
+{% extends 'user/users.html' %}
+
+{% block user %}
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title mb-0">
+                    <a href="{% url 'main:users' %}">
+                        <i class="mdi mdi-arrow-left-bold"></i>
+                        xodimlar
+                    </a>
+                </h3>
+            </div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">Username</th>
+                    <th scope="col">{{ user.username }}</th>
+                    <th scope="col">Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>F.I.O.</td>
+                    <td class="text-success">
+                        {{ user.first_name }} {{ user.last_name }}
+                    </td>
+                    <td>
+                        <a href="#" data-toggle="tooltip" data-placement="top" title="Update">
+                            <i class="mdi mdi-check"></i>
+                        </a>
+                        <a href="#" data-toggle="tooltip" data-placement="top" title="Delete">
+                            <i class="mdi mdi-close"></i>
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Status</td>
+                    {% if user.is_superuser %}
+                        <td class="text-success font-16">
+                            admin
+                        </td>
+                    {% else %}
+                        <td class="text-warning font-16">
+                            xodim
+                        </td>
+
+                    {% endif %}
+
+                    <td>
+                        <a href="#" data-toggle="tooltip" data-placement="top" title="Update">
+                            <i class="mdi mdi-check"></i>
+                        </a>
+                        <a href="#" data-toggle="tooltip" data-placement="top" title="Delete">
+                            <i class="mdi mdi-close"></i>
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Bo'lim</td>
+                    <td class="text-warning">
+                        {% if user_center %}
+                            {% for user_cet in user_center %}
+                                <a class="text-warning" href="{% url 'main:center-edit' user_cet.id %}">
+                                    {{ user_cet.name }}
+                                </a>
+                            {% endfor %}
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="#" data-toggle="tooltip" data-placement="top" title="Update">
+                            <i class="mdi mdi-check"></i>
+                        </a>
+                        <a href="#" data-toggle="tooltip" data-placement="top" title="Delete">
+                            <i class="mdi mdi-close"></i>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock %}

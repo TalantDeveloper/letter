@@ -93,15 +93,6 @@ def view_manager(request, manager_id):
     return render(request, 'main/home_update.html', context=content)
 
 
-@login_required
-@superuser_required
-def create_user_view(request):
-    content = content_need(request)
-    content['centers'] = Center.objects.all()
-    if request.method == 'POST':
-        return create_user(request)
-    return render(request, 'user/add_user.html', context=content)
-
 
 @login_required
 @superuser_required
@@ -145,5 +136,20 @@ def view_users(request):
 def view_user(request, user_id):
     content = content_need(request)
     content['user'] = User.objects.get(id=user_id)
-
+    user = User.objects.get(id=user_id)
+    center = [center for center in Center.objects.all() if center.user_id == user.id]
+    content['user_center'] = center
+    content['users'] = User.objects.all()
     return render(request, 'user/user_view.html', context=content)
+
+
+@login_required
+@superuser_required
+def create_user_view(request):
+    content = content_need(request)
+    content['centers'] = Center.objects.all()
+    content['users'] = User.objects.all()
+    if request.method == 'POST':
+        return create_user(request)
+    return render(request, 'user/add_user.html', context=content)
+

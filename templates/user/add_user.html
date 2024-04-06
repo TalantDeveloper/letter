@@ -11,36 +11,20 @@
                     <label for="userName">
                         To'liq ismi *
                     </label>
-                    <input id="userName" name="full_name" type="text" class="required form-control col-md-6"/>
+                    <input id="userName" name="full_name" type="text" class="required form-control col-md-6" required/>
                     <label for="userName">
                         Foydalanuvchi nomi *
                     </label>
-                    <input id="userName" name="username" type="text" class="required form-control"/>
+                    <input id="userName" name="username" type="text" class="required form-control" required/>
                     <label for="password">Parol *</label>
-                    <input id="password" name="password" type="password" class="required form-control"/>
+                    <input id="password" name="password" type="password" class="required form-control" required/>
                     <label for="confirm">Parolni qayta yozing *</label>
                     <input id="confirm" name="confirm_password" type="password"
-                           class="required form-control"/>
-{#                    <hr>#}
-{#                    <label for="fname" class="col-sm-3 control-label col-form-label">#}
-{#                        Bo'limni tanlang:#}
-{#                    </label>#}
-                    <!-- Hujjat turi -->
-{#                    <div class="col-md-9">#}
-{#                        <label>#}
-{#                            <select class="select2 form-select shadow-none"#}
-{#                                    style="width: 100%; height: 36px" name="center">#}
-{#                                <option>Tanlang</option>#}
-{#                                {% for center in centers %}#}
-{#                                    <option value="{{ center.name }}">{{ center.name }}</option>#}
-{#                                {% endfor %}#}
-{#                            </select>#}
-{#                        </label>#}
-{#                    </div>#}
-
+                           class="required form-control" required/>
+                    <br>
                     <span class="center" style="display: flex; justify-content: center;">
-                                    <input class="btn btn-primary center" type="submit" value="Xodim qo'shish">
-                                </span>
+                        <input class="btn btn-primary center" type="submit" value="Xodim qo'shish">
+                    </span>
                 </div>
             </form>
         </div>
