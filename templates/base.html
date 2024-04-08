@@ -103,32 +103,13 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                            data-bs-toggle="dropdown" aria-expanded="false">
-                  <span class="d-none d-md-block">
-                      Elektron hujjatlar
-                      <i class="fa fa-angle-down"></i>
-                  </span>
+                            <span class="d-none d-md-block font-20">
+                                Toshkent davlat stomatologiya institutining axborot almashinuv platformasi
+                            </span>
                             <span class="d-block d-md-none">
                                 <i class="fa fa-plus"></i>
                             </span>
                         </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li>
-                                <a class="dropdown-item" href="{% url 'main:manager-add' %}">
-                                    Yangi Xat qo'shish
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="#">
-                                    Another action
-                                </a>
-                            </li>
-                            <li>
-                                <hr class="dropdown-divider"/>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="#">Something else here</a>
-                            </li>
-                        </ul>
                     </li>
                     <!-- ============================================================== -->
                     <!-- Search -->
@@ -139,25 +120,6 @@
                 <!-- Right side toggle and nav items -->
                 <!-- ============================================================== -->
                 <ul class="navbar-nav float-end">
-                    <!-- ============================================================== -->
-                    <!-- Comment -->
-                    <!-- ============================================================== -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                           data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="mdi mdi-bell font-24"></i>
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="{% url 'main:welcome' %}">Barcha hatlar</a></li>
-                            <li><a class="dropdown-item" href="{% url 'main:today' %}">Bunga hatlar</a></li>
-                            <li>
-                                <a class="dropdown-item" href="{% url 'main:finish' %}">Muddati tugagan</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <!-- ============================================================== -->
-                    <!-- End Comment -->
-                    <!-- ============================================================== -->
                     <!-- ============================================================== -->
                     <!-- Messages -->
                     <!-- ============================================================== -->
@@ -171,22 +133,70 @@
                                 <li>
                                     <div class="">
                                         <!-- Message -->
-                                        <a href="javascript:void(0)" class="link border-top">
+                                        <a href="{% url 'main:welcome' %}" class="link border-top">
                                             <div class="d-flex no-block align-items-center p-10">
                                                 <span class="btn btn-success btn-circle d-flex align-items-center justify-content-center ">
                                                     <i class="mdi mdi-calendar text-white fs-4"></i>
                                                 </span>
                                                 <div class="ms-2">
                                                     <h5 class="mb-0">
-                                                        Event today
+                                                        Barcha hatlar
                                                     </h5>
                                                     <span class="mail-desc">
-                                                        Just a reminder that event
+                                                        Sizni bo'limingizga kelgan xatlar
                                                     </span>
                                                 </div>
                                             </div>
                                         </a>
                                         <!-- Message -->
+
+                                        <a href="{% url 'main:today' %}" class="link border-top">
+                                            <div class="d-flex no-block align-items-center p-10">
+                                                <span class="btn btn-success btn-circle d-flex align-items-center justify-content-center ">
+                                                    <i class="mdi mdi-calendar text-white fs-4"></i>
+                                                </span>
+                                                <div class="ms-2">
+                                                    <h5 class="mb-0">
+                                                        Bugungi xatlar
+                                                    </h5>
+                                                    <span class="mail-desc">
+                                                        Bugun oxirgi kun bo'lgan xatlar
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <!-- Message -->
+                                        <a href="{% url 'main:finish' %}" class="link border-top">
+                                            <div class="d-flex no-block align-items-center p-10">
+                                                <span class="btn btn-success btn-circle d-flex align-items-center justify-content-center ">
+                                                    <i class="mdi mdi-calendar text-white fs-4"></i>
+                                                </span>
+                                                <div class="ms-2">
+                                                    <h5 class="mb-0">
+                                                        Bajarilgan xatlar
+                                                    </h5>
+                                                    <span class="mail-desc">
+                                                        Bo'limga kelgan xatlarni yopilgani
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <!-- Message -->
+                                        <a href="{% url 'main:timeout' %}" class="link border-top">
+                                            <div class="d-flex no-block align-items-center p-10">
+                                                <span class="btn btn-success btn-circle d-flex align-items-center justify-content-center ">
+                                                    <i class="mdi mdi-calendar text-white fs-4"></i>
+                                                </span>
+                                                <div class="ms-2">
+                                                    <h5 class="mb-0">
+                                                        Muddati tugagan
+                                                    </h5>
+                                                    <span class="mail-desc">
+                                                        Yopilmagan xatlar
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </a>
                                     </div>
                                 </li>
                             </ul>
@@ -206,21 +216,21 @@
                                  width="31"/>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end user-dd animated" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="#">
+                            <a class="dropdown-item font-16" href="#">
                                 <i class="mdi mdi-account me-2 ms-2"></i>
                                 {{ center.user.username }}
                             </a>
-
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">
+                            <a class="dropdown-item font-16" href="#">
                                 <i class="fa fa-power-off me-1 ms-1"></i>
                                 {{ center }}
                             </a>
-                            <div class="ps-4 p-10">
-                                <a href="{% url 'main:logout' %}" class="btn btn-sm btn-success btn-rounded text-white">
-                                    Logout
-                                </a>
+                            <div class="dropdown-divider">
                             </div>
+                            <a class="dropdown-item font-16" href="{% url 'main:logout' %}">
+                                <i class="fa fa-power-off me-1 ms-1"></i>
+                                Logout
+                            </a>
                         </ul>
                     </li>
                     <!-- ============================================================== -->
@@ -242,6 +252,60 @@
             <!-- Sidebar navigation-->
             <nav class="sidebar-nav">
                 <ul id="sidebarnav" class="pt-4">
+                    <li class="sidebar-item">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{% url 'main:manager-add' %}"
+                           aria-expanded="false">
+                            <i class="mdi mdi-lead-pencil"></i>
+                            <span class="hide-menu">
+                                Yangi xat yuborish
+                            </span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{% url 'main:welcome' %}"
+                           aria-expanded="false">
+                            <i class="mdi mdi-chart-bar"></i>
+                            <span class="hide-menu">
+                                Barcha xatlar
+                            </span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{% url 'main:today' %}"
+                           aria-expanded="false">
+                            <i class="mdi mdi-chart-bubble"></i>
+                            <span class="hide-menu">
+                                Bugungi xatlar
+                            </span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{% url 'main:finish' %}"
+                           aria-expanded="false">
+                            <i class="mdi mdi-border-inside"></i>
+                            <span class="hide-menu">
+                                Bajarilgan xatlar
+                            </span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{% url 'main:timeout' %}"
+                           aria-expanded="false">
+                            <i class="mdi mdi-calendar"></i>
+                            <span class="hide-menu">
+                                Yopilmagan xatlar
+                            </span>
+                        </a>
+                    </li>
+
+                    <div class="mt-3">
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped bg-success"
+                                 style="width: 100%" aria-valuenow="10" aria-valuemin="0"
+                                 aria-valuemax="100">
+                            </div>
+                        </div>
+                    </div>  <!-- chiziq -->
 
                     {% if center.user_is_status %}
                         <li class="sidebar-item">
@@ -262,43 +326,17 @@
                             </span>
                             </a>
                         </li>
+                        <div class="mt-3">
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-striped bg-success"
+                                     style="width: 100%" aria-valuenow="10" aria-valuemin="0"
+                                     aria-valuemax="100">
+                                </div>
+                            </div>
+                        </div>  <!-- chiziq -->
                     {% endif %}
-                    <li class="sidebar-item">
-                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{% url 'main:welcome' %}"
-                           aria-expanded="false">
-                            <i class="mdi mdi-view-dashboard"></i>
-                            <span class="hide-menu">
-                                Dashboard
-                            </span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{% url 'main:welcome' %}"
-                           aria-expanded="false">
-                            <i class="mdi mdi-chart-bar"></i>
-                            <span class="hide-menu">
-                                Jami
-                            </span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{% url 'main:finish' %}"
-                           aria-expanded="false">
-                            <i class="mdi mdi-chart-bubble"></i>
-                            <span class="hide-menu">
-                                Bajarildi
-                            </span>
-                        </a>
-                    </li>
-                    <li class="sidebar-item">
-                        <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{% url 'main:timeout' %}"
-                           aria-expanded="false">
-                            <i class="mdi mdi-border-inside"></i>
-                            <span class="hide-menu">
-                                Muddati o'tgan
-                            </span>
-                        </a>
-                    </li>
+
+
                     <li class="sidebar-item">
                         <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)"
                            aria-expanded="false">

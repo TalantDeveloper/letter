@@ -176,7 +176,6 @@
                                                 </a>
                                                 <form method="post" action="{% url 'main:center-delete' center.pk %}">
                                                     {% csrf_token %}
-                                                    
                                                     <button type="submit" class="btn btn-danger btn-sm text-white"
                                                             onclick="return confirm('Siz haqiqatdan ham {{ center.name }} bo\'limni o\'chirmoqchimisiz?')">
                                                         Delete

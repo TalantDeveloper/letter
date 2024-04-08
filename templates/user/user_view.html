@@ -16,7 +16,6 @@
                 <tr>
                     <th scope="col">Username</th>
                     <th scope="col">{{ user.username }}</th>
-                    <th scope="col">Status</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -24,14 +23,6 @@
                     <td>F.I.O.</td>
                     <td class="text-success">
                         {{ user.first_name }} {{ user.last_name }}
-                    </td>
-                    <td>
-                        <a href="#" data-toggle="tooltip" data-placement="top" title="Update">
-                            <i class="mdi mdi-check"></i>
-                        </a>
-                        <a href="#" data-toggle="tooltip" data-placement="top" title="Delete">
-                            <i class="mdi mdi-close"></i>
-                        </a>
                     </td>
                 </tr>
                 <tr>
@@ -46,15 +37,6 @@
                         </td>
 
                     {% endif %}
-
-                    <td>
-                        <a href="#" data-toggle="tooltip" data-placement="top" title="Update">
-                            <i class="mdi mdi-check"></i>
-                        </a>
-                        <a href="#" data-toggle="tooltip" data-placement="top" title="Delete">
-                            <i class="mdi mdi-close"></i>
-                        </a>
-                    </td>
                 </tr>
                 <tr>
                     <td>Bo'lim</td>
@@ -66,14 +48,6 @@
                                 </a>
                             {% endfor %}
                         {% endif %}
-                    </td>
-                    <td>
-                        <a href="#" data-toggle="tooltip" data-placement="top" title="Update">
-                            <i class="mdi mdi-check"></i>
-                        </a>
-                        <a href="#" data-toggle="tooltip" data-placement="top" title="Delete">
-                            <i class="mdi mdi-close"></i>
-                        </a>
                     </td>
                 </tr>
                 </tbody>

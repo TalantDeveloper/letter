@@ -1,9 +1,21 @@
 from datetime import datetime
-from django.http import HttpResponseForbidden
+
+from django.contrib.auth import authenticate, login
 from django.shortcuts import redirect
 from .models import Center, Manager, ControlCard, Group, Reporter, DocumentType, AuthorResolution, TypeSolution, \
     CheckFile, Letter
 from django.contrib.auth.models import User
+
+
+def login_function(request):
+    username = request.POST.get('username')
+    password = request.POST.get('password')
+    user = authenticate(request, username=username, password=password)
+    if user:
+        login(request, user)
+        return redirect("main:welcome")
+    else:
+        return redirect('main:login')
 
 
 def content_need(request):
@@ -49,18 +61,18 @@ def manager_today(request):
     manager = content['managers']
     managers = []
     for man in manager:
-        if man.lifetime == datetime.now().date():
+        if man.time_today:
             managers.append(man)
     content['managers'] = managers
     return content
 
 
-def manager_control_file(request):
+def manager_control(request):
     content = content_need(request)
     manager = content['managers']
     managers = []
     for man in manager:
-        if man.control_file:
+        if man.control:
             managers.append(man)
     content['managers'] = managers
     return content
@@ -71,8 +83,7 @@ def manager_out(request):
     manager = content['managers']
     managers = []
     for man in manager:
-        # print(man.time_on)
-        if not man.control_file and man.lifetime < datetime.now().date():
+        if man.time_off:
             managers.append(man)
     content['managers'] = managers
     return content
@@ -108,9 +119,11 @@ def create_check_file(request):
 
 def get_centers_post(request):
     center_name = request.POST.getlist('centers')
+    print(center_name)
     centers = []
     for center in center_name:
         centers.append(Center.objects.get(name=center))
+    print(centers)
     return centers
 
 
@@ -136,17 +149,27 @@ def create_letter(request, selects):
         return redirect('main:manager-add')
 
 
+def manager_create(request, content):
+    manager = Manager.objects.create(
+        letter=content['letter'],
+        check_file=content['file'],
+        lifetime=request.POST.get('lifetime')
+    )
+    for center in request.POST.getlist('centers'):
+        manager.centers.add(Center.objects.get(name=center))
+    manager.save()
+    return manager
+
+
 def superuser_required(view_func):
     """
     Decorator for views that checks whether the user is a superuser,
     and returns HttpResponseForbidden if not.
     """
-
     def _wrapped_view(request, *args, **kwargs):
         if not request.user.is_superuser:
             return redirect('main:welcome')
         return view_func(request, *args, **kwargs)
-
     return _wrapped_view
 
 
@@ -168,6 +191,22 @@ def create_user(request):
                 return redirect('main:add-user')
         else:
             return redirect('main:add-user')
+
+
+def get_user_function(request, user_id):
+    content = content_need(request)
+    user = User.objects.get(pk=user_id)
+    center = [center for center in Center.objects.all() if center.user == user]
+    content['user'] = user
+    content['user_center'] = center
+    content['users'] = User.objects.all()
+    return content
+
+
+def delete_user(request, user_id):
+    user = User.objects.get(pk=user_id)
+    user.delete()
+    return redirect('main:users')
 
 
 def get_center_edit(request, center_id):

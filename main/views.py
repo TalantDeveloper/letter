@@ -3,23 +3,15 @@ from django.shortcuts import render, redirect
 from .models import Manager, CheckFile, ControlFile, Letter, Center, ControlCard, Group, Reporter, DocumentType, \
     AuthorResolution, TypeSolution
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login, logout
-from .functions import content_need, manager_today, manager_control_file, manager_out, get_models_list, \
+from django.contrib.auth import logout
+from .functions import content_need, manager_today, manager_out, get_models_list, \
     create_check_file, create_letter, get_centers_post, superuser_required, create_user, center_edit, get_center_edit, \
-    center_create
+    center_create, get_user_function, delete_user, login_function, manager_create, manager_control
 
 
 def login_view(request):
     if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = authenticate(request, username=username, password=password)
-        if user:
-            print("Kirdi")
-            login(request, user)
-            return redirect("main:welcome")
-        else:
-            return redirect('main:login')
+        return login_function(request)
     return render(request, 'user/login.html')
 
 
@@ -42,7 +34,7 @@ def today_view(request):
 
 @login_required
 def finish_view(request):
-    content = manager_control_file(request)
+    content = manager_control(request)
     return render(request, 'main/welcome.html', context=content)
 
 
@@ -56,7 +48,7 @@ def manager_out_view(request):
 def create_manager_view(request):
     content = get_models_list(request)
     if request.method == 'POST':
-        file = create_check_file(request)
+
         control_card = ControlCard.objects.get(name=request.POST['control_card'])
         group = Group.objects.get(name=request.POST.get('group'))
         reporter = Reporter.objects.get(name=request.POST.get('reporter'))
@@ -73,13 +65,13 @@ def create_manager_view(request):
         }
         letter = create_letter(request, selects)
         centers = get_centers_post(request)
-        manager = Manager.objects.create(
-            letter=letter,
-            check_file=file,
-            lifetime=request.POST.get('lifetime')
-        )
-        manager.centers.add(*centers)
-        manager.save()
+        file = create_check_file(request)
+        mana = {
+            'letter': letter,
+            'centers': centers,
+            'file': file
+        }
+        manager = manager_create(request, mana)
         return redirect('main:welcome')
     return render(request, 'main/home_create.html', context=content)
 
@@ -89,9 +81,7 @@ def view_manager(request, manager_id):
     content = content_need(request)
     manager = Manager.objects.get(id=manager_id)
     content['manager'] = manager
-
     return render(request, 'main/home_update.html', context=content)
-
 
 
 @login_required
@@ -133,13 +123,12 @@ def view_users(request):
     return render(request, 'user/users.html', context=content)
 
 
+@login_required
+@superuser_required
 def view_user(request, user_id):
-    content = content_need(request)
-    content['user'] = User.objects.get(id=user_id)
-    user = User.objects.get(id=user_id)
-    center = [center for center in Center.objects.all() if center.user_id == user.id]
-    content['user_center'] = center
-    content['users'] = User.objects.all()
+    if request.method == 'POST':
+        return delete_user(request, user_id)
+    content = get_user_function(request, user_id)
     return render(request, 'user/user_view.html', context=content)
 
 

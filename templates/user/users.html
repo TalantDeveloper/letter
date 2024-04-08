@@ -87,6 +87,7 @@
                 <!-- Column -->
                 <!-- Column -->
             </div>
+            
             {% block user %}
 
             {% endblock %}
@@ -128,7 +129,7 @@
                                     {% for user in users %}
                                         <tr>
                                             <td>
-                                                <a href="#">
+                                                <a href="{% url 'main:user_view' user.id %}">
                                                     <span class="btn btn-outline-success d-flex align-items-center justify-content-center ">
                                                         {{ user.id }}
                                                     </span>
@@ -153,10 +154,10 @@
                                                         Edit
                                                     </button>
                                                 </a>
-                                                <form method="post">
+                                                <form method="post" action="{% url 'main:user_view' user.id %}">
                                                     {% csrf_token %}
                                                     <button type="submit" class="btn btn-danger btn-sm text-white"
-                                                            onclick="return confirm('Siz haqiqatdan ham {{ user.username }} bo\'limni o\'chirmoqchimisiz?')">
+                                                            onclick="return confirm('Siz haqiqatdan ham {{ user.username }} o\'chirmoqchimisiz?')">
                                                         Delete
                                                     </button>
                                                 </form>

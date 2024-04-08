@@ -115,7 +115,6 @@ class Letter(models.Model):
     document_date = models.DateField(verbose_name="Hujjat sanasi")
     summary = models.TextField(verbose_name="Xulosa", null=True, blank=True)
     control = models.BooleanField(default=False, verbose_name="Boshqaruv")
-    # lifetime = models.DateField(verbose_name="Muddat")
     resolution = models.TextField(verbose_name="Rezolutsiya", null=True, blank=True)
     auth_resolution = models.ForeignKey(AuthorResolution, on_delete=models.SET_NULL, null=True,
                                         verbose_name="Qaror muallifi")
@@ -168,7 +167,7 @@ class Manager(models.Model):
 
     @property
     def time_off(self):
-        if self.lifetime < datetime.now().date():
+        if not self.control_file and self.lifetime < datetime.now().date():
             return True
         else:
             return False
