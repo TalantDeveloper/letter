@@ -11,9 +11,11 @@ def login_function(request):
     username = request.POST.get('username')
     password = request.POST.get('password')
     user = authenticate(request, username=username, password=password)
-    if user:
+    print(username, password, user)
+    if user is not None:
+        print('salom')
         login(request, user)
-        return redirect("main:welcome")
+        return redirect('main:welcome')
     else:
         return redirect('main:login')
 
@@ -137,7 +139,6 @@ def create_letter(request, selects):
         registration_number=request.POST['registration_number'],
         document_number=request.POST['document_number'],
         document_date=request.POST['document_date'],
-        summary=request.POST['summary'],
         resolution=request.POST['resolution'],
         auth_resolution=selects['auth_resolution'],
         type_solution=selects['type_solution']

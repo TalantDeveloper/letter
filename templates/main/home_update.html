@@ -38,7 +38,7 @@
                             </tr>
                             <tr>
                                 <td><a href="#" class="link">Hujjat sanasi</a></td>
-                                <td>{{ manager.letter.document_date }}</td>
+                                <td>{{ manager.letter.document_date|date:'d-m-Y' }}</td>
                             </tr>
 
                             </tbody>
@@ -59,12 +59,9 @@
 
                             <tr>
                                 <td><a href="#" class="link">Ro'yhatga olingan sana</a></td>
-                                <td>{{ manager.letter.registration_date }}</td>
+                                <td>{{ manager.letter.registration_date|date:'d-m-Y' }}</td>
                             </tr>
-                            <tr>
-                                <td><a href="#" class="link">Xulosa:</a></td>
-                                <td>{{ manager.letter.summary }}</td>
-                            </tr>
+
                             <tr>
                                 <td><a href="#" class="link">Qaror muallifi:</a></td>
                                 <td>{{ manager.letter.auth_resolution }}</td>
@@ -77,7 +74,10 @@
                                 <td><a href="#" class="link">Rezolutsiya:</a></td>
                                 <td>{{ manager.letter.resolution }}</td>
                             </tr>
-
+                            <tr>
+                                <td><a href="#" class="link">Xulosa:</a></td>
+                                <td>{{ manager.letter.summary }}</td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
@@ -97,11 +97,11 @@
                             <tbody>
                             <tr>
                                 <td><a href="#" class="link">Muddat:</a></td>
-                                <td>{{ manager.lifetime }}</td>
+                                <td>{{ manager.lifetime|date:'d-m-Y' }}</td>
                             </tr>
                             <tr>
                                 <td><a href="#" class="link">Buyruq:</a></td>
-                                <td><a href="/media/{{ manager.check_file.file }}">File</a></td>
+                                <td><a href="{{ manager.check_file.file.url }}">File</a></td>
                             </tr>
                             <tr>
                                 <td><a href="#" class="link">Markaz:</a></td>
@@ -112,28 +112,13 @@
                                 <td>{{ center.user.first_name }} {{ center.user.last_name }}</td>
                             </tr>
                             <tr>
-                                {% if manager.control_file %}
-                                    <tr>
-                                        <td><a href="#" class="link">Javob fayl</a></td>
-                                        <td>
-                                            <a href="/media/{{ manager.control_file.file }}">
-                                                Fayl
-                                            </a>
-                                        </td>
-                                    </tr>
-                                {% else %}
-                                    <form action="" method="post">
-                                    {% csrf_token %}
-                                        <label for="">Javob fayl</label>
-                                        <input type="file" name="control_file">
-                                    </form>
-                                {% endif %}
-
-
+                                <td><a href="#" class="link">Javob fayl</a></td>
+                                <td>
+                                    <a href="{{ manager.control_file.file.url }}">
+                                        Fayl
+                                    </a>
+                                </td>
                             </tr>
-                            {% if manager.control %}
-
-                            {% endif %}
                             </tbody>
                         </table>
                     </div>
@@ -141,6 +126,48 @@
             </div>
             <!-- ============================================================== -->
             <!-- End PAge Content -->
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <form action="" class="form-horizontal">
+                                {% if manager.control_file %}
+
+                                {% endif %}
+
+                                <div class="form-group row">
+                                    <label class="col-md-3">Checkboxes</label>
+                                    <div class="col-md-9">
+                                        <div class="form-check mr-sm-2">
+                                            <input type="checkbox" class="form-check-input"
+                                                   id="customControlAutosizing1"/>
+                                            <label class="form-check-label mb-0" for="customControlAutosizing1">
+                                                First
+                                            </label>
+                                        </div>
+                                        <div class="form-check mr-sm-2">
+                                            <input type="checkbox" class="form-check-input"
+                                                   id="customControlAutosizing2"/>
+                                            <label class="form-check-label mb-0" for="customControlAutosizing2">
+                                                Second One
+                                            </label>
+                                        </div>
+                                        <div class="form-check mr-sm-2">
+                                            <input type="checkbox" class="form-check-input"
+                                                   id="customControlAutosizing3"/>
+                                            <label class="form-check-label mb-0" for="customControlAutosizing3">
+                                                Third One
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </div>
 

@@ -100,7 +100,7 @@
                                     <tr>
                                         <th>ID</th>
                                         <th>Reg / №</th>
-                                        <th>Ro'yxatga olingan sana</th>
+                                        <th>Reg sana</th>
                                         <th>Nazorat kartasi</th>
                                         <th>Hujjat turi</th>  <!-- Вид документа -->
                                         <th>Muhbir</th>  <!-- Корреспондент Muhbir -->
@@ -121,11 +121,11 @@
                                                 </td>
                                             <td>{{ manager.letter.registration_number }}
                                                 / {{ manager.letter.document_number }}</td>
-                                            <td>{{ manager.letter.registration_date }}</td>
+                                            <td>{{ manager.letter.registration_date|date:'d-m-Y' }}</td>
                                             <td>{{ manager.letter.control_card }}</td>
                                             <td>{{ manager.letter.document_type }}</td>
                                             <td>{{ manager.letter.reporter }}</td>
-                                            <td>{{ manager.lifetime }}</td>
+                                            <td>{{ manager.lifetime|date:'d-m-Y' }}</td>
                                             <td>{{ manager.time_on }}</td>
                                             <td>
                                                 <a href="{% url 'main:welcome' %}">
@@ -145,7 +145,7 @@
                                     <tr>
                                         <th>ID</th>
                                         <th>Reg / №</th>
-                                        <th>Ro'yxatga olingan sana</th>
+                                        <th>Reg sana</th>
                                         <th>Nazorat kartasi</th>
                                         <th>Hujjat turi</th>  <!-- Вид документа -->
                                         <th>Muhbir</th>  <!-- Корреспондент Muhbir -->
