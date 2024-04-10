@@ -1,0 +1,646 @@
+* {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    list-style: none;
+    box-sizing: border-box;
+}
+
+.clred {
+    color: red !important;
+}
+
+.clyellow {
+    color: yellow;
+}
+
+.cltomato {
+    color: orange;
+}
+
+.clgreen {
+    color: green !important;
+}
+
+.clprint {
+    color: #20B2AA;
+    font-size: 18px;
+}
+
+.order-editor {
+    color: rgb(255, 153, 2) !important
+}
+
+.tag-none {
+    display: none;
+}
+
+.none {
+    display: none !important;
+}
+
+.print {
+    color: #fff;
+    background: #20B2AA;
+    outline: none;
+    border: #20B2AA;
+    padding: 10px 15px;
+}
+
+.print:hover {
+    background: #40B2AA;
+    cursor: pointer
+}
+
+body {
+    overflow: hidden;
+    min-width: 1400px;
+    background: #EDF1F6
+}
+
+header {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    display: flex;
+}
+
+#header {
+    background-color: #002C40;
+    color: #FFF;
+}
+
+header nav {
+    background-color: #002C40;
+    box-shadow: 0 0 1px #f2f2ed;
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+}
+
+header nav img, header span img {
+    width: 25px;
+}
+
+header span {
+    display: flex;
+    align-items: center;
+    float: right;
+    flex: 1;
+    justify-content: right;
+    padding-right: 25px;
+    column-gap: 10px;
+}
+
+header span img {
+    border-radius: 100%;
+}
+
+header .title {
+    padding: 15px;
+}
+
+header p i {
+    animation-name: spin-img;
+    animation-duration: 4s;
+    animation-iteration-count: infinite;
+}
+
+header .title {
+    font-size: 18px;
+    color: #FFF;
+}
+
+header .title i {
+    margin-right: 5px;
+}
+
+.list-box {
+    display: flex;
+    padding: 6px 0;
+    font-weight: bold;
+    justify-content: space-evenly;
+    box-shadow: 0 2px 5px #ccc;
+}
+
+.list-box li {
+    position: relative;
+    padding: 6px 0;
+}
+
+.list-box li::after {
+    content: "";
+    width: 0;
+    height: 1px;
+    bottom: 0;
+    left: 0;
+    background-color: blueviolet;
+    position: absolute;
+}
+
+.active::after {
+    width: 100% !important;
+}
+
+.img-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.img-box img {
+    width: 140px;
+}
+
+.spin-image {
+    animation-name: spin-img;
+    animation-duration: 4s;
+    animation-iteration-count: infinite;
+}
+
+@-webkit-keyframes spin-img {
+    0% {
+        transform: rotateY(0deg);
+    }
+    50% {
+        transform: rotateY(180deg);
+    }
+    100% {
+        transform: rotateY(0deg);
+    }
+}
+
+.select-lists {
+    position: relative;
+    width: 620px
+}
+
+.select-lists i {
+    position: absolute;
+    top: 2px;
+    right: 5px;
+    color: #000
+}
+
+.select-lists input {
+    cursor: default;
+    width: 100%;
+    padding: 2px;
+    font-size: 12px
+}
+
+.select-lists nav {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    max-height: 400px;
+    overflow-Y: auto;
+    background: #fcfcfC;;
+    border: 1px solid #ccc;
+    position: absolute;
+    display: none;
+}
+
+.select-lists li {
+    padding: 2px 5px;
+    font-size: 14px
+}
+
+.select-lists li:hover {
+    background: #c2c2c2;
+    color: #fff;
+    cursor: pointer
+}
+
+/* miniadmin */
+.mini-admin .main .content {
+    display: flex;
+}
+
+.mini-admin .left-bar {
+    flex: 1;
+    background-color: rgb(27, 38, 53);
+    height: 100vh;
+}
+
+.left-bar h3 {
+    color: #fff;
+    padding: 20px 10px 5px;
+    margin: 0 10px;
+    border-top: 1px solid rgba(138, 152, 169, 0.1);
+}
+
+.left-bar .main-stat {
+    color: #fff;
+    padding: 0 20px;
+}
+
+.left-bar .main-stat li {
+    display: flex;
+    column-gap: 15px;
+    padding: 7px 0;
+    cursor: pointer;
+}
+
+.left-bar .main-stat li p {
+    display: flex;
+    column-gap: 10px;
+}
+
+.mini-admin .main-bar {
+    flex: 6;
+    padding: 30px 25px;
+    position: relative;
+    height: 90vh;
+    overflow: auto;
+}
+
+.order-short-info {
+    padding: 30px 25px;
+    background-color: #fcfcfC;
+    border: 1px solid #E6E6E6;
+    border-radius: 5px;
+}
+
+.data-sort {
+    color: #002C40;
+    padding: 10px;
+}
+
+.data-sort li {
+    padding: 10px 15px;
+    cursor: pointer;
+    border-left: 4px solid #fff;
+    margin-bottom: 10px;
+}
+
+.data-sort li:hover {
+    background: rgb(0, 44, 64, 0.5);
+}
+
+.data-sort li a {
+    color: #fff;
+    font-weight: bold
+}
+
+.data-sort li input {
+    margin-right: 5px;
+    color: deepskyblue;
+}
+
+.data-sort li label {
+    cursor: pointer;
+}
+
+.welcome {
+    display: flex;
+    flex-direction: column;
+    background: #FFF;
+    border: 1px solid #E6E6E6;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.table {
+    height: 360px !important;
+    overflow-y: scroll;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.delete-order {
+    display: none;
+    position: fixed;
+    top: 20%;
+    left: 45%;
+    background-color: #f2f2ed;
+    padding: 25px;
+    border-radius: 2px;
+    box-shadow: 0 0 5px red;
+}
+
+#delete_id {
+    padding: 5px;
+    outline: none;
+}
+
+.delete-order nav {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.delete-order p {
+    background-color: deepskyblue;
+    color: #FFF;
+    padding: 2px 10px;
+    cursor: pointer;
+}
+
+.delete-order button {
+    background-color: red;
+    outline: none;
+    border: none;
+    padding: 4px 10px;
+    border-radius: 1px;
+    color: #FFF;
+    cursor: pointer;
+}
+
+.table::-webkit-scrollbar {
+    width: 0.2em;
+}
+
+.table::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px #ccc;
+}
+
+.table::-webkit-scrollbar-thumb {
+    background-color: darkgrey;
+    outline: 1px solid #ddd;
+}
+
+#customers {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    height: 200px;
+    background-color: rgb(249, 249, 249);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 14px;
+}
+
+#customers td, #customers th {
+    border: 1px solid transparent;
+    padding: 8px;
+    cursor: default;
+
+}
+
+#customers .td-edit {
+    display: flex;
+    column-gap: 15px;
+}
+
+#customers .td-edit i:first-child {
+    cursor: pointer;
+    color: #232f3e;
+}
+
+#customers .td-edit i:last-child {
+    cursor: pointer;
+    color: red;
+}
+
+#customers tr:nth-child(even) {
+    background-color: #fff;
+}
+
+#customers tr:hover {
+    background-color: #ddd;
+}
+
+#customers th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    border-bottom: 1px solid rgb(255, 153, 2);
+    color: #222;
+}
+
+.add-order-btn {
+    background-color: green;
+    color: #FFF;
+    padding: 5px 10px;
+    float: left;
+    border-radius: 2px;
+    margin-bottom: 10px;
+}
+
+.back-effect {
+    background-color: transparent;
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+.order-control .close {
+    color: red;
+    position: absolute;
+    top: 7px;
+    left: 7px;
+    cursor: pointer;
+}
+
+.order_delete .save-del input[type='submit'] {
+    background-color: red !important;
+}
+
+.order-control {
+    width: auto;
+    position: absolute;
+}
+
+.order-control .povtor-data, .order-control .spismo-data {
+    display: none;
+    margin-left: 25px;
+}
+
+.order-control nav span {
+    display: flex;
+    align-items: center;
+    column-gap: 25px;
+    justify-content: space-between;
+}
+
+.order-control nav:not(:first-child) {
+    padding: 20px 0
+}
+
+.order-control nav:first-child {
+    padding-bottom: 20px;
+}
+
+.order-control form {
+    position: relative;
+    box-shadow: 0 0 1px #555;
+    padding: 20px;
+    overflow-y: scroll;
+    height: 85vh;
+    background-color: rgb(249, 249, 249);
+}
+
+.order-control .order_delete {
+    height: auto;
+}
+
+.order-control form textarea {
+    width: 100%;
+    outline: none;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.order-control form input {
+    outline: none;
+    padding: 3px 5px;
+}
+
+.order-control form::-webkit-scrollbar {
+    width: 0.2em;
+}
+
+.order-control form::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px #ccc;
+}
+
+.order-control form::-webkit-scrollbar-thumb {
+    background-color: darkgrey;
+    outline: 1px solid #ddd;
+}
+
+.fa-users, .fa-folder {
+    color: #666;
+}
+
+.order-control form hr {
+    border: none;
+    border-bottom: 1px solid rgb(255, 153, 2, 0.2);
+}
+
+.order-control nav .save-del {
+    justify-content: right;
+}
+
+.order-control input[type=submit] {
+    background-color: deepskyblue;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 1px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.order-control input[type=submit]:hover {
+    background-color: rgb(0, 191, 255, 0.8);
+}
+
+.order-control form select {
+    outline: none;
+}
+
+.add-content {
+    background-color: #fff;
+    border-radius: 5px;
+    border: 1px solid #E6E6E6;
+    padding: 15px;
+}
+
+.add-content-title {
+    border-bottom: 1px solid #f2f2ed;
+    padding: 7px 0;
+}
+
+.file {
+    background-color: green;
+    color: #FFF;
+    padding: 5px 10px;
+    border-radius: 2px;
+}
+
+.person-list form {
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+}
+
+.person-list form button {
+    border: none;
+    outline: none;
+    background-color: transparent;
+}
+
+.savestatus i {
+    color: green !important;
+}
+
+.added-file, .savestatus {
+    display: none;
+}
+
+.added-file li {
+    display: flex;
+    column-gap: 25px;
+}
+
+.added-file li p {
+    display: flex;
+    column-gap: 15px;
+}
+
+.file-box, .file-box-update {
+    position: absolute;
+    top: 40px;
+    left: 30%;
+    display: none;
+}
+
+.markaz-delete, .markaz-update {
+    display: none
+}
+
+.markaz-section {
+    display: flex;
+    column-gap: 25px;
+    font-size: 17px;
+    height: 100%
+}
+
+.markaz-section form {
+    background: #fff;
+    padding: 15px;
+    border-top: 2px solid #c1c1c1;
+    border-radius: 3px;
+    width: 360px
+}
+
+.markaz-section form .ctrbox {
+    display: flex;
+    justify-content: right;
+    column-gap: 10px;
+    padding: 25px 0 15px;
+    border-top: 1px solid #f1f1f1
+}
+
+.markaz-section form input {
+    outline: none;
+    border: 1px solid #999;
+    padding: 5px 7px;
+    width: 100%;
+    font-size: 16px;
+    color: #444
+}
+
+.markaz-section form input[type='button'], .markaz-section form input[type='submit'] {
+    width: auto;
+    font-size: 12px;
+    padding: 6px 15px
+}
+
+.markaz-section form .delbtn {
+    background: tomato;
+    color: #fff;
+    border: 1px solid tomato;
+}
+
+.markaz-section form .savebtn {
+    background: #318CE7;
+    color: #fff;
+    border: 1px solid #318CE7;
+}
+
+.markaz-section form p {
+    color: #444;
+    padding: 7px 0
+}

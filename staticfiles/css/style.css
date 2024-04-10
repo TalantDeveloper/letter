@@ -1,0 +1,547 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style: none;
+}
+
+body {
+    overflow: hidden;
+    background-color: rgb(27, 38, 53);
+    font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+.bg-yellow {
+    background: rgb(245, 124, 0) !important;
+}
+
+.bg-red {
+    background: rgb(244, 67, 54) !important;
+}
+
+.bg-green {
+    background: rgb(76, 175, 80) !important;
+}
+
+.bg-blue {
+    background: rgb(71, 130, 218) !important;
+}
+
+.cl-blue {
+    color: rgb(71, 130, 218) !important;
+}
+
+.tag-none {
+    display: none !important;
+}
+
+.container {
+    display: flex;
+    column-gap: 25px;
+}
+
+.container .right-bar {
+    background-color: rgb(35, 48, 68);
+    height: 100vh;
+    min-width: 187px;
+}
+
+.container .right-bar .nav-list {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: 16px;
+    flex-wrap: wrap;
+}
+
+.container .right-bar .nav-list:hover {
+    background-color: rgb(27, 38, 53, 0.6)
+}
+
+.container .right-bar .nav-list p {
+    color: rgb(238, 238, 238);
+    font-size: 14px;
+    padding: 10px 16px;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+.container .right-bar .nav-list i {
+    color: rgb(238, 238, 238);
+    background-color: rgb(71, 130, 218);
+    font-size: 12px;
+    padding: 1px 5px;
+    border-radius: 2px;
+}
+
+.main {
+    flex-grow: 1;
+    padding-right: 25px;
+}
+
+.main .head-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgb(255, 255, 255, 0.12)
+}
+
+.main .head-bar .head-search {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    column-gap: 5px;
+}
+
+.main .head-bar .head-search i {
+    color: rgb(238, 238, 238);
+    font-size: 13px;
+    margin-right: 5px;
+}
+
+.main .head-bar .head-search input {
+    outline: none;
+    border: none;
+    background-color: transparent;
+    color: rgb(238, 238, 238);
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.5;
+    padding-left: 5px;
+}
+
+.main .head-bar .head-search #searchbtn {
+    font-size: 12px;
+    border: none;
+    outline: none;
+    color: rgb(238, 238, 238);
+    padding: 3px 10px 2px;
+    border-radius: 1px;
+    background-color: rgb(71, 130, 218)
+}
+
+.main .head-bar .head-profil {
+    display: flex;
+    align-items: center;
+    column-gap: 15px;
+    padding: 5px 0;
+}
+
+.fa-sign-out {
+    color: rgb(71, 130, 218);
+    margin-right: 3px;
+}
+
+.main .head-bar .head-profil h4 {
+    color: rgb(238, 238, 238, 0.8);
+    font-family: Cambria
+}
+
+.main .head-bar .head-profil p {
+    color: rgb(238, 238, 238, 0.5);
+    font-size: 14px;
+}
+
+.dashboard-table {
+    background-color: rgb(35, 48, 68);
+    border-radius: 5px;
+    display: block;
+    position: relative;
+    overflow: auto
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: rgb(71, 130, 218, 0.6);
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #rgb(71, 130, 218);
+}
+
+.dashboard-table .table-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: rgb(238, 238, 238, 0.5);
+    text-align: right;
+    padding: 15px 20px;
+}
+
+.dashboard-table .table-info .file-addbtn {
+    padding: 4px 10px 5px 10px;
+    background-color: rgb(76, 175, 80);
+    color: rgb(238, 238, 238);
+    border-radius: 2px;
+    cursor: pointer
+}
+
+.dashboard-table .table-info .pagination {
+    display: flex;
+    column-gap: 10px;
+}
+
+.dashboard-table .table-info .pagination .page-item .page-link {
+    color: rgb(238, 238, 238, 0.5);
+}
+
+.dashboard-table .table-info .pagination .active .page-link {
+    color: #fff;
+}
+
+#table .fa-trash:hover {
+    background-color: red !important
+}
+
+#table {
+    color: rgb(238, 238, 238, 0.8);
+    line-height: 1.5;
+    font-size: 14px;
+    border-collapse: collapse;
+    width: 100%;
+    overflow: auto
+}
+
+#table td, #table th {
+    padding: 15px;
+    border: none;
+    text-align: left;
+}
+
+#table tr {
+    border: none;
+    border-bottom: 1px solid rgb(81, 81, 81);
+}
+
+#table tr:not(:first-child):hover {
+    background-color: rgb(255, 255, 255, 0.1);
+}
+
+#table tr .td-status {
+    min-width: 135px;
+}
+
+#table tr .td-status i {
+    padding: 0 5px 2px 5px;
+    border-radius: 2px;
+    font-size: 13px;
+    background-color: rgb(71, 130, 218);
+}
+
+#table tr .td-action {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+#table tr .td-action em {
+    cursor: pointer;
+    padding: 5px 5px 3.5px;
+    border-radius: 2px;
+    font-size: 13px;
+    background-color: rgb(71, 130, 218);
+}
+
+#table tr .td-action em:last-child {
+    background-color: tomato;
+}
+
+#table .inner-tr {
+    display: none;
+}
+
+#addfile-input {
+    opacity: 0;
+}
+
+#table .inner-tr .inner-td .file-addbtn {
+    display: inline-block;
+    background-color: rgb(71, 130, 218);
+    color: rgb(238, 238, 238);
+    font-size: 13px;
+    padding: 3px 10px 4px 10px;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+#table .inner-tr .inner-td hr {
+    border: none;
+    border-bottom: 1px solid rgb(238, 238, 238, 0.4)
+}
+
+#table .inner-tr .inner-td .file-info {
+    padding: 7px 0;
+}
+
+#table .inner-tr .inner-td .file-info input {
+    padding: 3px 10px;
+    font-size: 12px;
+    background-color: rgb(76, 175, 80);
+    border: none;
+    color: rgb(238, 238, 238);
+    border-radius: 2px;
+    margin-left: 25px;
+    display: none;
+    cursor: pointer
+}
+
+#table .inner-tr .inner-td .files-info {
+    display: inline-block;
+    padding-bottom: 10px;
+}
+
+#table .inner-tr .inner-td .files-info li {
+    flex: 1;
+    padding: 5px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    column-gap: 15px;
+}
+
+#table .inner-tr .inner-td .files-info li .fa-trash {
+    color: rgb(238, 238, 238);
+    padding: 3px;
+    border: 1px solid rgb(238, 238, 238);
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+#table .inner-tr .inner-td .files-info li .fa-trash:hover {
+    border-color: red;
+    background-color: red
+}
+
+#table .inner-tr .inner-td .files-info li i {
+    color: rgb(238, 238, 238);
+    font-size: 13px;
+}
+
+#table .inner-tr .inner-td .files-info li a i:hover {
+    color: rgb(71, 130, 218)
+}
+
+#persontable {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 12px;
+}
+
+#persontable th, #persontable td {
+    padding: 8px;
+    text-align: left;
+}
+
+#persontable .td-action em {
+    font-size: 11px !important;
+}
+
+.abs-box {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(255, 255, 255, 0.3);
+    flex-wrap: wrap;
+    position: absolute;
+    height: 100vh;
+    width: 100%;
+    overflow: auto
+}
+
+.abs-box textarea {
+    outline: none;
+    padding: 5px;
+    margin-top: 10px;
+    resize: none;
+}
+
+.abs-box .create-order, .abs-box .appoint {
+    display: none;
+}
+
+.abs-box .abs-content {
+    position: relative;
+    background-color: rgb(35, 48, 68);
+    border-radius: 5px;
+    font-size: 14px;
+    padding: 15px 0;
+}
+
+.abs-box .abs-content .fa-close {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: rgb(238, 238, 238);
+    background-color: tomato;
+    padding: 5px;
+    border-bottom-right-radius: 50%;
+}
+
+.abs-box .abs-content select, .abs-box .abs-content input {
+    outline: none;
+    border: none;
+    border-radius: 2px;
+    padding: 2px;
+    font-size: 13px;
+}
+
+.abs-box .abs-content .abs-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    column-gap: 35px;
+    color: rgb(238, 238, 238, 0.9);
+    padding: 10px 20px;
+}
+
+.abs-box .abs-content .abs-nav #correspond-nav {
+    position: relative;
+}
+
+.abs-box .abs-content .abs-nav #order-group {
+    font-size: 12px;
+}
+
+.abs-box .abs-content .abs-nav #correspond {
+    width: 330px;
+    font-size: 12px;
+}
+
+.abs-box .abs-content .abs-nav .correspond-lists {
+    background-color: rgb(238, 238, 238);
+    border-radius: 3px;
+    position: absolute;
+    top: 30px;
+    right: 0;
+    z-index: 1;
+    overflow: auto;
+    display: none;
+    height: 500px;
+    font-size: 12px;
+}
+
+.abs-box .abs-content .abs-nav .correspond-list {
+    padding: 3px;
+    color: #222
+}
+
+.abs-box .abs-content .abs-nav .correspond-list:hover {
+    background-color: rgb(71, 130, 218, 0.5);
+    cursor: default
+}
+
+.abs-box .abs-content .abs-nav-btn {
+    justify-content: right;
+}
+
+.abs-box .abs-content .abs-nav-btn .file-addbtn {
+    padding: 4px 10px;
+    background-color: rgb(76, 175, 80);
+    color: rgb(238, 238, 238);
+    outline: none;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer
+}
+
+.abs-box .abs-content .abs-nav-flex {
+    color: rgb(238, 238, 238, 0.9);
+    padding: 10px 20px;
+}
+
+.abs-box .abs-content .abs nav i {
+    color: rgb(238, 238, 238, 0.5);
+    margin-right: 5px;
+}
+
+@media only screen and (max-width: 1550px) {
+    .center-page .abs-content {
+        margin-top: 50px;
+    }
+}
+
+.center-page {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 30px;
+    overflow: auto;
+}
+
+.center-page .dashboard-table {
+}
+
+/* .center-page .abs-content{position:relative;background-color:rgb(35,48,68);border-radius: 5px;font-size:14px;padding: 15px 0;} */
+.center-page .abs-content form {
+    position: relative;
+    background-color: rgb(35, 48, 68);
+    border-radius: 5px;
+    font-size: 14px;
+    padding: 15px 0;
+}
+
+.center-page .abs-content input, .center-page .abs-content select {
+    outline: none;
+    border: none;
+    border-radius: 2px;
+    padding: 5px;
+    font-size: 13px;
+    margin-top: 5px;
+    width: 240px;
+}
+
+.center-page .abs-content .data-id {
+    background-color: rgb(255, 255, 255, 0.1);
+    color: rgb(255, 255, 250)
+}
+
+.center-page .abs-content .abs-nav {
+    color: rgb(238, 238, 238, 0.9);
+    padding: 7px 20px;
+}
+
+.center-page .abs-content .abs-nav-btn {
+    display: flex;
+    justify-content: right;
+}
+
+.center-page .abs-content .abs-nav-btn .file-addbtn {
+    padding: 4px 10px;
+    background-color: rgb(76, 175, 80);
+    color: rgb(238, 238, 238);
+    outline: none;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    width: auto
+}
+
+.center-page .abs-content .abs-nav-btn .editbtn {
+    padding: 4px 10px;
+    background: rgb(238, 238, 238);
+    color: rgb(27, 38, 53);
+    margin-right: 10px;
+    display: none;
+}
+
+.center-page .abs-content .abs-nav-btn .delbtn {
+    background: rgb(244, 67, 54);
+    display: none;
+}
+
+.center-page .center {
+    display: inline-block
+}

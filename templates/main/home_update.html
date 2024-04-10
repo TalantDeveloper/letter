@@ -9,7 +9,7 @@
                 <div class="col-md-4">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title mb-0">Xat ma'lumotlari</h5>
+                            <h5 class="card-title mb-0">Xatning dastlabki ma'lumotlari</h5>
                         </div>
                         <table class="table">
                             <thead>
@@ -48,7 +48,7 @@
                 <div class="col-md-4">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title mb-0">Website statistics</h5>
+                            <h5 class="card-title mb-0">Institut ichidagi ma'lumotlar</h5>
                         </div>
                         <table class="table">
                             <tbody>
@@ -74,10 +74,7 @@
                                 <td><a href="#" class="link">Rezolutsiya:</a></td>
                                 <td>{{ manager.letter.resolution }}</td>
                             </tr>
-                            <tr>
-                                <td><a href="#" class="link">Xulosa:</a></td>
-                                <td>{{ manager.letter.summary }}</td>
-                            </tr>
+
                             </tbody>
                         </table>
                     </div>
@@ -88,12 +85,6 @@
                             <h5 class="card-title mb-0">Visited Pages</h5>
                         </div>
                         <table class="table">
-                            <thead>
-                            <tr>
-                                <th scope="col">Page</th>
-                                <th scope="col">Visits</th>
-                            </tr>
-                            </thead>
                             <tbody>
                             <tr>
                                 <td><a href="#" class="link">Muddat:</a></td>
@@ -101,7 +92,12 @@
                             </tr>
                             <tr>
                                 <td><a href="#" class="link">Buyruq:</a></td>
-                                <td><a href="{{ manager.check_file.file.url }}">File</a></td>
+                                <td>
+                                    <i class="mdi mdi-cloud-download font-20"></i>
+                                    <a href="{{ manager.check_file.file.url }}" target="_blank">
+                                        xat fayli
+                                    </a>
+                                </td>
                             </tr>
                             <tr>
                                 <td><a href="#" class="link">Markaz:</a></td>
@@ -114,10 +110,19 @@
                             <tr>
                                 <td><a href="#" class="link">Javob fayl</a></td>
                                 <td>
-                                    <a href="{{ manager.control_file.file.url }}">
-                                        Fayl
-                                    </a>
+                                    {% if manager.control_file %}
+                                        <a href="{{ manager.control_file.file.url }}">
+                                            <i class="mdi mdi-cloud-download font-20"></i>
+                                            Fayl
+                                        </a>
+                                    {% else %}
+                                        Javob xati yo'q
+                                    {% endif %}
                                 </td>
+                            </tr>
+                            <tr>
+                                <td><a href="#" class="link">Xulosa:</a></td>
+                                <td>{{ manager.letter.summary }}</td>
                             </tr>
                             </tbody>
                         </table>

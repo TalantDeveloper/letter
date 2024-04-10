@@ -24,7 +24,7 @@ SECRET_KEY = 'django-insecure-ickk&c@a7uih!sfszjn4v7e25d2&@v#t!h)*s9n4)bf=#7yx5d
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 
 # Application definition
 
@@ -49,7 +49,10 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+
 ROOT_URLCONF = 'letter.urls'
+
+handler404 = 'main.views.handler404_view'
 
 TEMPLATES = [
     {
@@ -114,6 +117,7 @@ USE_TZ = True
 
 LOGIN_URL = 'main:login'
 LOGIN_REDIRECT_URL = 'main:welcome'
+LOGOUT_REDIRECT_URL = "main:login"  # Route defined in home/urls.py
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)

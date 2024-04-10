@@ -142,3 +142,6 @@ def create_user_view(request):
         return create_user(request)
     return render(request, 'user/add_user.html', context=content)
 
+
+def handler404_view(request, exception):
+    return render(request, 'handler/404.html', status=404)
