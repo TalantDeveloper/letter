@@ -3,7 +3,7 @@ from datetime import datetime
 from django.contrib.auth import authenticate, login
 from django.shortcuts import redirect
 from .models import Center, Manager, ControlCard, Group, Reporter, DocumentType, AuthorResolution, TypeSolution, \
-    CheckFile, Letter
+    CheckFile, Letter, ControlFile
 from django.contrib.auth.models import User
 
 
@@ -11,9 +11,7 @@ def login_function(request):
     username = request.POST.get('username')
     password = request.POST.get('password')
     user = authenticate(request, username=username, password=password)
-    print(username, password, user)
     if user is not None:
-        print('salom')
         login(request, user)
         return redirect('main:welcome')
     else:
@@ -117,6 +115,35 @@ def create_check_file(request):
     check_file = CheckFile.objects.create(file=file)
     check_file.save()
     return check_file
+
+
+def update_manager(request, manager_id):
+    if request.method == 'POST':
+        file = request.FILES['control_file']
+        control_file = ControlFile.objects.create(file=file)
+        control_file.save()
+        summary = request.POST['summary']
+        type_solution = TypeSolution.objects.get(name=request.POST['type_solution'])
+        manager = Manager.objects.get(id=manager_id)
+        manager.letter.summary = summary
+        manager.control_file = control_file
+        manager.letter.type_solution = type_solution
+        if request.user.is_superuser:
+            control = request.POST['control']
+            if control == 'ok':
+                manager.control = True
+            elif control == 'no':
+                manager.control = False
+
+        manager.save()
+
+        print(request.POST.get('type_solution'))
+        print(request.FILES['control_file'])
+        print(request.POST.get('summary'))
+
+
+def admin_update_manager(request, manager_id):
+    pass
 
 
 def get_centers_post(request):

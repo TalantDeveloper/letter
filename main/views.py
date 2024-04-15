@@ -6,7 +6,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from .functions import content_need, manager_today, manager_out, get_models_list, \
     create_check_file, create_letter, get_centers_post, superuser_required, create_user, center_edit, get_center_edit, \
-    center_create, get_user_function, delete_user, login_function, manager_create, manager_control
+    center_create, get_user_function, delete_user, login_function, manager_create, manager_control, update_manager, \
+    admin_update_manager
 
 
 def login_view(request):
@@ -78,9 +79,15 @@ def create_manager_view(request):
 
 @login_required
 def view_manager(request, manager_id):
+    if request.method == 'POST':
+        if request.user.is_superuser:
+            return admin_update_manager(request, manager_id)
+
+        update_manager(request, manager_id)
     content = content_need(request)
     manager = Manager.objects.get(id=manager_id)
     content['manager'] = manager
+    content['type_solutions'] = TypeSolution.objects.all()
     return render(request, 'main/home_update.html', context=content)
 
 

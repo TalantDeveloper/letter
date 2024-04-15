@@ -9,19 +9,17 @@
         <div class="page-breadcrumb">
             <div class="row">
                 <div class="col-12 d-flex no-block align-items-center">
-                    <h4 class="page-title">
-                        Toshkent davlat stomatologiya institutining axborot almashinuv platformasi
-                    </h4>
+                    
                     <div class="ms-auto text-end">
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item">
-                                    <a href="#">
-                                        Dashboard
+                                    <a href="{% url 'main:welcome' %}">
+                                        E-xat Stomatologiya
                                     </a>
                                 </li>
                                 <li class="breadcrumb-item active" aria-current="page">
-                                    Library
+                                    welcome
                                 </li>
                             </ol>
                         </nav>
@@ -110,31 +108,110 @@
                                     </thead>
                                     <tbody>
                                     {% for manager in managers %}
-                                        <tr>
-                                            <td>
-                                                <a href="{% url 'main:manager-view' manager.id %}">
+                                        {% if manager.check_control %}
+                                            <tr class="alert alert-success">
+                                                <td>
+                                                    <a href="{% url 'main:manager-view' manager.id %}">
                                                     <span class="btn btn-outline-success d-flex align-items-center justify-content-center ">
                                                         {{ manager.id }}
                                                     </span>
-                                                </a>
+                                                    </a>
                                                 </td>
-                                            <td>{{ manager.letter.registration_number }}
-                                                / {{ manager.letter.document_number }}</td>
-                                            <td>{{ manager.letter.registration_date|date:'d-m-Y' }}</td>
-                                            <td>{{ manager.letter.control_card }}</td>
-                                            <td>{{ manager.letter.document_type }}</td>
-                                            <td>{{ manager.letter.reporter }}</td>
-                                            <td>{{ manager.lifetime|date:'d-m-Y' }}
-{#                                                {{ manager.lifetime|timeuntil }}#}
-                                            </td>
-                                            <td>
-                                                <a href="{% url 'main:welcome' %}">
+                                                <td>{{ manager.letter.registration_number }}
+                                                    / {{ manager.letter.document_number }}</td>
+                                                <td>{{ manager.letter.registration_date|date:'d-m-Y' }}</td>
+                                                <td>{{ manager.letter.control_card }}</td>
+                                                <td>{{ manager.letter.document_type }}</td>
+                                                <td>{{ manager.letter.reporter }}</td>
+                                                <td>{{ manager.lifetime|date:'d-m-Y' }}
+                                                    {#                                                {{ manager.lifetime|timeuntil }}#}
+                                                </td>
+                                                <td>
+                                                    <a href="{% url 'main:welcome' %}">
                                                     <span class="btn btn-success btn-circle d-flex align-items-center justify-content-center ">
                                                         <i class="mdi mdi-pencil text-white fs-4"></i>
                                                     </span>
-                                                </a>
-                                            </td>
-                                        </tr>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        {% elif manager.time_off %}
+                                            <tr class="alert alert-danger">
+                                                <td>
+                                                    <a href="{% url 'main:manager-view' manager.id %}">
+                                                    <span class="btn btn-outline-danger d-flex align-items-center justify-content-center ">
+                                                        {{ manager.id }}
+                                                    </span>
+                                                    </a>
+                                                </td>
+                                                <td>{{ manager.letter.registration_number }}
+                                                    / {{ manager.letter.document_number }}</td>
+                                                <td>{{ manager.letter.registration_date|date:'d-m-Y' }}</td>
+                                                <td>{{ manager.letter.control_card }}</td>
+                                                <td>{{ manager.letter.document_type }}</td>
+                                                <td>{{ manager.letter.reporter }}</td>
+                                                <td>{{ manager.lifetime|date:'d-m-Y' }}
+                                                </td>
+                                                <td>
+                                                    <a href="{% url 'main:manager-view' manager.id %}">
+                                                    <span class="btn btn-danger btn-circle d-flex align-items-center justify-content-center ">
+                                                        <i class="mdi mdi-pencil text-white fs-4"></i>
+                                                    </span>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        {% elif manager.controlled %}
+                                            <tr class="alert alert-warning">
+                                                <td>
+                                                    <a href="{% url 'main:manager-view' manager.id %}">
+                                                    <span class="btn btn-outline-warning d-flex align-items-center justify-content-center ">
+                                                        {{ manager.id }}
+                                                    </span>
+                                                    </a>
+                                                </td>
+                                                <td>{{ manager.letter.registration_number }}
+                                                    / {{ manager.letter.document_number }}</td>
+                                                <td>{{ manager.letter.registration_date|date:'d-m-Y' }}</td>
+                                                <td>{{ manager.letter.control_card }}</td>
+                                                <td>{{ manager.letter.document_type }}</td>
+                                                <td>{{ manager.letter.reporter }}</td>
+                                                <td>{{ manager.lifetime|date:'d-m-Y' }}
+                                                </td>
+                                                <td>
+                                                    <a href="{% url 'main:manager-view' manager.id %}">
+                                                    <span class="btn btn-warning btn-circle d-flex align-items-center justify-content-center ">
+                                                        <i class="mdi mdi-pencil text-white fs-4"></i>
+                                                    </span>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        {% else %}
+                                            <tr class="">
+                                                <td>
+                                                    <a href="{% url 'main:manager-view' manager.id %}">
+                                                    <span class="btn btn-outline-success d-flex align-items-center justify-content-center ">
+                                                        {{ manager.id }}
+                                                    </span>
+                                                    </a>
+                                                </td>
+                                                <td>{{ manager.letter.registration_number }}
+                                                    / {{ manager.letter.document_number }}</td>
+                                                <td>{{ manager.letter.registration_date|date:'d-m-Y' }}</td>
+                                                <td>{{ manager.letter.control_card }}</td>
+                                                <td>{{ manager.letter.document_type }}</td>
+                                                <td>{{ manager.letter.reporter }}</td>
+                                                <td>{{ manager.lifetime|date:'d-m-Y' }}
+                                                    {#                                                {{ manager.lifetime|timeuntil }}#}
+                                                </td>
+                                                <td>
+                                                    <a href="{% url 'main:manager-view' manager.id %}">
+                                                    <span class="btn btn-success btn-circle d-flex align-items-center justify-content-center ">
+                                                        <i class="mdi mdi-pencil text-white fs-4"></i>
+                                                    </span>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        {% endif %}
+
                                     {% empty %}
                                         <td valign="top" colspan="8" class="dataTables_empty">
                                             Jadvalda ma'lumotlar mavjud emas

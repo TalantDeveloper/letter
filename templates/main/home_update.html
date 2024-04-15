@@ -136,37 +136,92 @@
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-body">
-                            <form action="" class="form-horizontal">
-                                {% if manager.control_file %}
+                            <form action="" class="form-horizontal" method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
 
+                                <!-- Yechim turi: -->
+                                <div class="form-group row">
+                                    <label for="fname" class="col-sm-3 text-start control-label col-form-label">
+                                        Yechim turi:
+                                    </label>
+                                    <!-- yechim turi -->
+                                    <div class="col-md-9">
+                                        <label>
+                                            <select class="select2 form-select shadow-none"
+                                                    style="width: 100%; height: 36px" name="type_solution">
+                                                <option value="{{ manager.letter.type_solution }}">
+                                                    {{ manager.letter.type_solution }}
+                                                </option>
+                                                {% for type_solution in type_solutions %}
+                                                    <option value="{{ type_solution.name }}">{{ type_solution.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </label>
+                                    </div>
+                                </div>
+                                <!-- tugadi Yechim turi: -->
+
+                                {% if manager.control_file %}
+                                    <div class="">
+                                        <label for="fname" class="">
+                                            Javob fayl:
+                                            <a href="{{ manager.control_file.file.url }}">
+                                                {{ manager.control_file }}
+                                            </a>
+                                        </label>
+                                    </div>
                                 {% endif %}
 
+
                                 <div class="form-group row">
-                                    <label class="col-md-3">Checkboxes</label>
-                                    <div class="col-md-9">
-                                        <div class="form-check mr-sm-2">
-                                            <input type="checkbox" class="form-check-input"
-                                                   id="customControlAutosizing1"/>
-                                            <label class="form-check-label mb-0" for="customControlAutosizing1">
-                                                First
-                                            </label>
-                                        </div>
-                                        <div class="form-check mr-sm-2">
-                                            <input type="checkbox" class="form-check-input"
-                                                   id="customControlAutosizing2"/>
-                                            <label class="form-check-label mb-0" for="customControlAutosizing2">
-                                                Second One
-                                            </label>
-                                        </div>
-                                        <div class="form-check mr-sm-2">
-                                            <input type="checkbox" class="form-check-input"
-                                                   id="customControlAutosizing3"/>
-                                            <label class="form-check-label mb-0" for="customControlAutosizing3">
-                                                Third One
-                                            </label>
+                                    <label for="fname" class="col-md-3 text-start control-label col-form-label">
+                                        Javob fayl:
+                                    </label>
+                                    <div class="col-sm-9">
+                                        <input type="file" name="control_file" class="form-control"
+                                               id="validatedCustomFile"/>
+                                        <div class="invalid-feedback">
+                                            Example invalid custom file feedback
                                         </div>
                                     </div>
                                 </div>
+
+                                <div class="form-group row">
+                                    <label for="cono1" class="col-sm-3 text-start control-label col-form-label">
+                                        Xulosa
+                                    </label>
+                                    <div class="col-sm-9">
+                                        <label>
+                                            <textarea class="form-control" name="summary" rows="3"
+                                                      cols="50">{{ manager.letter.summary }}</textarea>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                {% if center.user.is_superuser %}
+                                    <div class="form-group row">
+                                        <label class="col-md-3">Checkboxes</label>
+                                        <div class="col-md-9">
+                                            <div class="form-check mr-sm-2">
+                                                <input type="checkbox" class="form-check-input"
+                                                       id="customControlAutosizing1" name="control" value="ok"/>
+                                                <label class="form-check-label mb-0" for="customControlAutosizing1">
+                                                    Tasdiqlash
+                                                </label>
+                                            </div>
+                                            <div class="form-check mr-sm-2">
+                                                <input type="checkbox" class="form-check-input"
+                                                       id="customControlAutosizing2" name="control" value="no"/>
+                                                <label class="form-check-label mb-0" for="customControlAutosizing2">
+                                                    Rad etish
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                                <span class="center">
+                                    <input class="btn btn-primary center" type="submit" value="XATNI SAQLASH">
+                                </span>
                             </form>
                         </div>
                     </div>

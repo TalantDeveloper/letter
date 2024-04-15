@@ -172,8 +172,16 @@ class Manager(models.Model):
         else:
             return False
 
+    @property
     def check_control(self):
         if self.control:
+            return True
+        else:
+            return False
+
+    @property
+    def controlled(self):
+        if not self.control and self.control_file:
             return True
         else:
             return False
