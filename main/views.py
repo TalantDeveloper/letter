@@ -81,9 +81,7 @@ def create_manager_view(request):
 def view_manager(request, manager_id):
     if request.method == 'POST':
         if request.user.is_superuser:
-            return admin_update_manager(request, manager_id)
-
-        update_manager(request, manager_id)
+            return update_manager(request, manager_id)
     content = content_need(request)
     manager = Manager.objects.get(id=manager_id)
     content['manager'] = manager

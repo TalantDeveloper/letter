@@ -125,7 +125,11 @@ def update_manager(request, manager_id):
         summary = request.POST['summary']
         type_solution = TypeSolution.objects.get(name=request.POST['type_solution'])
         manager = Manager.objects.get(id=manager_id)
-        manager.letter.summary = summary
+        letter = Letter.objects.get(id=manager.letter.id)
+
+        letter.summary = summary
+        letter.control = True
+        letter.save()
         manager.control_file = control_file
         manager.letter.type_solution = type_solution
         if request.user.is_superuser:
@@ -134,12 +138,8 @@ def update_manager(request, manager_id):
                 manager.control = True
             elif control == 'no':
                 manager.control = False
-
         manager.save()
-
-        print(request.POST.get('type_solution'))
-        print(request.FILES['control_file'])
-        print(request.POST.get('summary'))
+        return redirect('main:welcome')
 
 
 def admin_update_manager(request, manager_id):
