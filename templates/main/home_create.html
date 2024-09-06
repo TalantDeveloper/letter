@@ -114,7 +114,7 @@
                                     </div>
                                 </div>  <!-- chiziq -->
 
-                                <!-- Ro'yhatga olingan raqami va sanasi Тип документа: -->
+                                <!-- Ro'yhatga olingan raqami va sanasi -->
                                 <div class="form-group row">
                                     <label for="fname" class="col-md-6 control-label col-form-label">
                                         Ro'yhatga olingan raqami:
@@ -250,6 +250,7 @@
                                     <label for="cars"></label>
                                     <select name="centers" id="cars" multiple="multiple"
                                                                       style="width: 350px" size="15">
+                                    
                                     {% for center in centers %}
                                         <option value="{{ center.name }}">
                                             {{ center.name }}
