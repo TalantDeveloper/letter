@@ -116,14 +116,13 @@ def create_check_file(request):
     return check_file
 
 
-def update_manager(request, manager_id):
+def update_manager(request, manager):
     if request.method == 'POST':
         file = request.FILES['control_file']
         control_file = ControlFile.objects.create(file=file)
         control_file.save()
         summary = request.POST['summary']
         type_solution = TypeSolution.objects.get(name=request.POST['type_solution'])
-        manager = Manager.objects.get(id=manager_id)
         letter = Letter.objects.get(id=manager.letter.id)
 
         letter.summary = summary

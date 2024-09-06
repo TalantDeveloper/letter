@@ -79,11 +79,11 @@ def create_manager_view(request):
 
 @login_required
 def view_manager(request, manager_id):
+    manager = Manager.objects.get(id=manager_id)
     if request.method == 'POST':
         if request.user.is_superuser:
-            return update_manager(request, manager_id)
+            return update_manager(request, manager)
     content = content_need(request)
-    manager = Manager.objects.get(id=manager_id)
     content['manager'] = manager
     content['type_solutions'] = TypeSolution.objects.all()
     return render(request, 'main/home_update.html', context=content)
